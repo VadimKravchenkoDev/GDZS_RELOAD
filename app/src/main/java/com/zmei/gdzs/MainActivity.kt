@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         binding.buttonNext.setOnClickListener {
             val intent = Intent(this, MainActivity2::class.java)
             startActivity(intent)
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+           overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
     }

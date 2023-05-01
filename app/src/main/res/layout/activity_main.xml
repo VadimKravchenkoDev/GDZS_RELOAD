@@ -33,11 +33,15 @@
 
     <TextView
         android:id="@+id/textWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="330dp"
+        android:layout_height="60dp"
         android:layout_marginTop="32dp"
+        android:fontFamily="serif"
+        android:gravity="center"
         android:text="@string/welcome"
         android:textColor="#040303"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageFireman" />
