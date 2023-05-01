@@ -20,8 +20,10 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        val spinner: Spinner = binding.spinnerAction
+/* сделать функцию чтобы она обрабатывала код всех моих списков
+сделать так чтобы при выборе элемента в списке добавлялось описание- например пожежа - Вид роботи : пожежа
+ */
+      /*  val spinner: Spinner = binding.spinnerAction
         val spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.action, R.layout.spinner_prompt_item)
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_item)
         spinner.adapter = spinnerAdapter
