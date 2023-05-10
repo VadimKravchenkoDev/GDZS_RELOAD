@@ -12,6 +12,20 @@
         <item>Заняття</item>
         <item>Навчання</item>
     </string-array>
+    
+    <string-array name="apparatus">
+        <item>Оберіть тип апарату:</item>
+        <item>Drager PSS 400</item>
+        <item>АСП-2</item>
+        <item>Інший тип</item>
+    </string-array>
+
+    <string-array name="workload">
+        <item>Оберіть тип навантаження:</item>
+        <item>Середнє навантаження</item>
+        <item>Тяжке навантаження</item>
+    </string-array>
+    
     <string name="title_activity_main3">MainActivity3</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

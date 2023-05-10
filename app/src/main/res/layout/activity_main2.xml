@@ -38,6 +38,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerAction" />
 
+    <Spinner
+        android:id="@+id/spinnerAction3"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:dropDownSelector="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerAction2" />
+
     <TextView
         android:id="@+id/textAction"
         android:layout_width="wrap_content"
