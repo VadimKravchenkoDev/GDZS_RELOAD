@@ -11,33 +11,36 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.GridLayoutManager
 import com.zmei.gdzs.databinding.ActivityMain2Binding
 import com.zmei.gdzs.databinding.ActivityMainBinding
 
 class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     lateinit var binding : ActivityMain2Binding
+    private val adapter = AdapterClass()
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         val spinner1: Spinner = binding.spinnerAction
         val spinnerAdapter1 = ArrayAdapter.createFromResource(this, R.array.action, R.layout.spinner_prompt_item)
         spinnerAdapter1.setDropDownViewResource(R.layout.spinner_item)
         spinner1.adapter = spinnerAdapter1
         spinner1.onItemSelectedListener = this
-
+        /* додаемо спинер з вибором активности */
         val spinner2: Spinner = binding.spinnerAction2
         val spinnerAdapter2 = ArrayAdapter.createFromResource(this, R.array.apparatus, R.layout.spinner_prompt_item)
         spinnerAdapter2.setDropDownViewResource(R.layout.spinner_item)
         spinner2.adapter = spinnerAdapter2
         spinner2.onItemSelectedListener = this
-
+        /* додаемо спинер з вибором типу апаратів */
         val spinner3: Spinner = binding.spinnerAction3
         val spinnerAdapter3 = ArrayAdapter.createFromResource(this, R.array.workload, R.layout.spinner_prompt_item)
         spinnerAdapter3.setDropDownViewResource(R.layout.spinner_item)
         spinner3.adapter = spinnerAdapter3
         spinner3.onItemSelectedListener = this
+        /* додаемо спинер з вибором типу навантаження */
+        init()
     }
     fun onClick(view: View) {
         val spinner1: Spinner = binding.spinnerAction
@@ -46,11 +49,12 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val selected1 = spinner1.selectedItemPosition
         val selected2 = spinner2.selectedItemPosition
         val selected3 = spinner3.selectedItemPosition
-
+        /*перевіряємо чи зроблен вибір на спінерах*/
         when {
             selected1 == 0 -> showErrorMessage("Оберіть вид роботи!")
             selected2 == 0 -> showErrorMessage("Оберіть вид апаратів")
             selected3 == 0 -> showErrorMessage("Оберіть вид навантаження")
+            /* якщо на усіх спінерах зроблено вибір то при тисненні кнопки запускається єкран розрахунків*/
             else -> {
                 val intent = Intent(this, MainActivity3::class.java)
                 startActivity(intent)
@@ -71,6 +75,16 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
     override fun onNothingSelected(parent: AdapterView<*>) {
 
+    }
+    private fun init(){
+        binding.apply {
+            recyclerView.layoutManager = GridLayoutManager(this@MainActivity2, 1)
+            recyclerView.adapter = adapter
+            buttonAdd.setOnClickListener {
+                val plant = PlantDataClass(imageIdList[index], "Plant $index")
+                adapter.addPlant(plant)
+            }
+        }
     }
 }
 
