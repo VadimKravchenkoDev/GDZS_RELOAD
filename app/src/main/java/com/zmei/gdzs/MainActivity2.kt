@@ -3,19 +3,15 @@ package com.zmei.gdzs
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zmei.gdzs.databinding.ActivityMain2Binding
-import com.zmei.gdzs.databinding.ActivityMainBinding
+import drawable.ItemOffsetDecoration
 
 class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     lateinit var binding : ActivityMain2Binding
@@ -59,6 +55,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         binding.btAdd.setOnClickListener {
             adapter.addZveno()
         }
+        binding.recyclerView.addItemDecoration(ItemOffsetDecoration(16))
     }
     fun onClick(view: View) {
         val spinner1: Spinner = binding.spinnerAction
@@ -72,7 +69,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             selected1 == 0 -> showErrorMessage("Оберіть вид роботи!")
             selected2 == 0 -> showErrorMessage("Оберіть вид апаратів")
             selected3 == 0 -> showErrorMessage("Оберіть вид навантаження")
-            /* якщо на усіх спінерах зроблено вибір то при тисненні кнопки запускається єкран розрахунків*/
+            /* якщо на усіх спінерах зроблено вибір то при тисненні кнопки запускається екран розрахунків*/
             else -> {
                 val intent = Intent(this, MainActivity3::class.java)
                 startActivity(intent)
