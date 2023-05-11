@@ -19,9 +19,9 @@
     
     <string-array name="apparatus">
         <item>Оберіть тип апарату:</item>
-        <item>Drager PSS 400</item>
+        <item>Drager</item>
         <item>АСП-2</item>
-        <item>Інший тип</item>
+        <item>MSA</item>
     </string-array>
 
     <string-array name="workload">
