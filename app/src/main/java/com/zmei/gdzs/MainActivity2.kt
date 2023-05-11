@@ -15,7 +15,7 @@ import drawable.ItemOffsetDecoration
 
 class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     lateinit var binding : ActivityMain2Binding
-    private lateinit var recyclerView: RecyclerView
+
     private lateinit var adapter: AdapterClass
 
 
@@ -41,19 +41,15 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         spinner3.adapter = spinnerAdapter3
         spinner3.onItemSelectedListener = this
         /* додаемо спинер з вибором типу навантаження */
-
-
         adapter = AdapterClass()
-
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
-
         // добавляем первый элемент
         adapter.addZveno()
-
         // при нажатии на кнопку добавляем новый элемент
         binding.btAdd.setOnClickListener {
-            adapter.addZveno()
+            if(adapter.zvenoList.size < 5)  adapter.addZveno()
+            else if (adapter.zvenoList.size>=5) Toast.makeText(this, "Максимум 5 чол. у звені", Toast.LENGTH_SHORT).show()
         }
         binding.recyclerView.addItemDecoration(ItemOffsetDecoration(16))
     }

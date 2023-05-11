@@ -7,7 +7,7 @@
 
     <EditText
         android:id="@+id/edPressure"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:background="@drawable/edit_text_border"
@@ -20,7 +20,7 @@
 
     <EditText
         android:id="@+id/edSername"
-        android:layout_width="257dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:background="@drawable/edit_text_border"
