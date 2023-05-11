@@ -12,12 +12,17 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.zmei.gdzs.databinding.ActivityMain2Binding
 import com.zmei.gdzs.databinding.ActivityMainBinding
 
 class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     lateinit var binding : ActivityMain2Binding
-    private val adapter = AdapterClass()
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: AdapterClass
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -40,7 +45,20 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         spinner3.adapter = spinnerAdapter3
         spinner3.onItemSelectedListener = this
         /* додаемо спинер з вибором типу навантаження */
-        init()
+
+
+        adapter = AdapterClass()
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
+
+        // добавляем первый элемент
+        adapter.addZveno()
+
+        // при нажатии на кнопку добавляем новый элемент
+        binding.btAdd.setOnClickListener {
+            adapter.addZveno()
+        }
     }
     fun onClick(view: View) {
         val spinner1: Spinner = binding.spinnerAction
@@ -76,15 +94,6 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>) {
 
     }
-    private fun init(){
-        binding.apply {
-            recyclerView.layoutManager = GridLayoutManager(this@MainActivity2, 1)
-            recyclerView.adapter = adapter
-            buttonAdd.setOnClickListener {
-                val plant = PlantDataClass(imageIdList[index], "Plant $index")
-                adapter.addPlant(plant)
-            }
-        }
-    }
+
 }
 

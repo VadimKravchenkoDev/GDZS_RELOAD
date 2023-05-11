@@ -14,7 +14,7 @@
         android:ems="10"
         android:gravity="center"
         android:hint="@string/pressure"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintStart_toEndOf="@+id/edSername"
         app:layout_constraintTop_toTopOf="parent" />
 
