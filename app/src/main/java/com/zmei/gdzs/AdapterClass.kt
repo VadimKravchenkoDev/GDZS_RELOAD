@@ -13,7 +13,7 @@ class AdapterClass : RecyclerView.Adapter <AdapterClass.HolderClass>(){
         fun bind(zveno: ZvenoDataClass)=with(binding){
 
             edSername.setText(zveno.sername)
-            edPressure.setText(zveno.plessure.toString())
+            edPressure.setText(zveno.pressure.toString())
 
         }
     }

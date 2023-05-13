@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.zmei.gdzs.databinding.ActivityMain2Binding
 import drawable.ItemOffsetDecoration
 
@@ -49,10 +48,14 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         // при нажатии на кнопку добавляем новый элемент
         binding.btAdd.setOnClickListener {
             if(adapter.zvenoList.size < 5)  adapter.addZveno()
+
             else if (adapter.zvenoList.size>=5) Toast.makeText(this, "Максимум 5 чол. у звені", Toast.LENGTH_SHORT).show()
+
         }
         binding.recyclerView.addItemDecoration(ItemOffsetDecoration(16))
     }
+
+
     fun onClick(view: View) {
         val spinner1: Spinner = binding.spinnerAction
         val spinner2: Spinner = binding.spinnerAction2
@@ -61,18 +64,27 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val selected2 = spinner2.selectedItemPosition
         val selected3 = spinner3.selectedItemPosition
         /*перевіряємо чи зроблен вибір на спінерах*/
+        /*var i = 0
+        var minPressure = 400
+        for(i in 0 until adapter.zvenoList.size) {
+
+            if (adapter.zvenoList[i].pressure < minPressure) {
+                minPressure = adapter.zvenoList[i].pressure}}*/
         when {
             selected1 == 0 -> showErrorMessage("Оберіть вид роботи!")
             selected2 == 0 -> showErrorMessage("Оберіть вид апаратів")
             selected3 == 0 -> showErrorMessage("Оберіть вид навантаження")
             /* якщо на усіх спінерах зроблено вибір то при тисненні кнопки запускається екран розрахунків*/
             else -> {
+
                 val intent = Intent(this, MainActivity3::class.java)
+                intent.putExtra("action", selected3)
+                intent.putExtra("myAdapter", adapter.zvenoList)
                 startActivity(intent)
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             }
         }
-    }
+            }
 
     private fun showErrorMessage(errorMessage: String) {
         binding.textAction.visibility = View.VISIBLE
