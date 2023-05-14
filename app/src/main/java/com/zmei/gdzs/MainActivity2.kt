@@ -53,6 +53,9 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             }
             else if (adapter.zvenoList.size>=5) Toast.makeText(this, "Максимум 5 чол. у звені", Toast.LENGTH_SHORT).show()
         }
+        binding.btRemove.setOnClickListener {
+            removeLastItem()
+        }
         binding.recyclerView.addItemDecoration(ItemOffsetDecoration(16))
 /*обираємо час входу ланки*/
         binding.btnSelectTime.setOnClickListener {
@@ -124,6 +127,15 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
         return true
     }
+
+    private fun removeLastItem() {
+        val lastIndex = adapter.zvenoList.lastIndex
+        if (lastIndex > 0) {
+            adapter.zvenoList.removeAt(lastIndex)
+            adapter.notifyItemRemoved(lastIndex)
+        }
+    }
+
 
 }
 
