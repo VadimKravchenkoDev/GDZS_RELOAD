@@ -1,5 +1,6 @@
 package com.zmei.gdzs
 
+import AdapterClass
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -47,7 +48,10 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         adapter.addZveno()
         // при нажатии на кнопку добавляем новый элемент
         binding.btAdd.setOnClickListener {
-            if(adapter.zvenoList.size < 5)  adapter.addZveno()
+            if(adapter.zvenoList.size < 5)  {
+                adapter.addZveno()
+
+            }
 
             else if (adapter.zvenoList.size>=5) Toast.makeText(this, "Максимум 5 чол. у звені", Toast.LENGTH_SHORT).show()
 
@@ -64,12 +68,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val selected2 = spinner2.selectedItemPosition
         val selected3 = spinner3.selectedItemPosition
         /*перевіряємо чи зроблен вибір на спінерах*/
-        /*var i = 0
-        var minPressure = 400
-        for(i in 0 until adapter.zvenoList.size) {
 
-            if (adapter.zvenoList[i].pressure < minPressure) {
-                minPressure = adapter.zvenoList[i].pressure}}*/
         when {
             selected1 == 0 -> showErrorMessage("Оберіть вид роботи!")
             selected2 == 0 -> showErrorMessage("Оберіть вид апаратів")
@@ -78,8 +77,13 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             else -> {
 
                 val intent = Intent(this, MainActivity3::class.java)
+
+
+                val minPressure = adapter.zvenoList.minByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 400
+
+
+                intent.putExtra("myAdapter", minPressure)
                 intent.putExtra("action", selected3)
-                intent.putExtra("myAdapter", adapter.zvenoList)
                 startActivity(intent)
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             }
@@ -93,8 +97,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-        val selectedItem = parent.getItemAtPosition(position).toString()
-        Toast.makeText(this, "Ви обрали: $selectedItem", Toast.LENGTH_SHORT).show()
+
     }
     override fun onNothingSelected(parent: AdapterView<*>) {
 

@@ -7,6 +7,8 @@
     <string name="add">+</string>
     <string name="sername">Прізвище та ім`я</string>
     <string name="pressure">Тиск</string>
+    <string name="zero">0</string>
+
 
 
     <string-array name="action">
