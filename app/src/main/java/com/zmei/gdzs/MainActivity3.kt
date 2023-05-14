@@ -12,7 +12,7 @@ import java.util.*
     2. добавить поле с расчетом времени
     3. добавить поле где нужно выбрать минимальное давление при подходе к очагу
     4. добавить поле где нужно выбрать время когда звено подошло к очагу
- 
+
 class MainActivity3 : AppCompatActivity() {
     lateinit var binding: ActivityMain3Binding
     override fun onCreate(savedInstanceState: Bundle?) {
