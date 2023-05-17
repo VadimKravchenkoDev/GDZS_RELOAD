@@ -87,7 +87,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             else -> {
                 binding.textAction.visibility = View.GONE
                 val intent = Intent(this, MainActivity3::class.java)
-                val minPressure = adapter.zvenoList.minByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 300
+                val minPressure = adapter.zvenoList.minByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 400
                 /*пошук мінімального тиску*/
                 intent.putExtra("minPressure", minPressure)
                 intent.putExtra("action", selected3)
