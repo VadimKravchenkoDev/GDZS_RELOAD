@@ -3,7 +3,7 @@
     <string name="next">Далі</string>
     <string name="welcome">Вітаємо в електронному табелі роботи ланок ГДЗС</string>
     <string name="calculate">Калькулятор поста безпеки</string>
-    <string name="calculate1">Розрахувати час </string>
+    <string name="calculate1">Розрахувати час та тиск </string>
     <string name="add">+</string>
     <string name="remove">-</string>
     <string name="sername">Прізвище та ім`я</string>
@@ -14,6 +14,17 @@
     <string name="time_actual">Фактичний час виходу ланки:</string>
     <string name="time">-Обрати час-</string>
     <string name="billing_data">Розрахункові дані</string>
+    <string name="firePlace">Початок роботи в осередку пожежі</string>
+    <string name="minPleasure">Найменший тиск в ланці: </string>
+    <string name="timeFind">Час виявлення осередку: </string>
+    <string name="pressure_end" >Розрахунок тиску </string>
+    <string name="pressureExit">Тиск при якому потрібно виходити :</string>
+    <string name="pressureGo">Тиск використанний на прямування до осередку:</string>
+    <string name="timeEnd">Розрахунок часу</string>
+    <string name="timeExit">Час повернення</string>
+    <string name="timeWork">Час роботи в задимленому середовищі</string>
+    <string name="timeProtect">Час захисної дії апарату</string>
+
 
 
 
