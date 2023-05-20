@@ -22,10 +22,10 @@ class MainActivity3 : AppCompatActivity() {
         binding = ActivityMain3Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       val action = intent.getIntExtra("action", 0)
-       val minPressure = intent.getIntExtra("minPressure",0)
-       val timeAction = intent.getStringExtra("timeAction")
-       binding.textTimeEnter.text = timeAction
+        val action = intent.getIntExtra("action", 0)
+        val minPressure = intent.getIntExtra("minPressure",0)
+        val timeAction = intent.getStringExtra("timeAction")
+        binding.textTimeEnter.text = timeAction
         var timeWork :Int = ((minPressure-60)/7)
         val newTime = addMinutesToTime(timeAction.toString(), timeWork)
         binding.textTimeExpected.text = newTime
@@ -90,19 +90,18 @@ class MainActivity3 : AppCompatActivity() {
                     binding.textExit.text = exitTime
                 }
                 else if (action == 2){
-                        var pressureExit : Int = (2*pressureGo) + 60
-                        var timeWork : Int = (((minPressure-(pressureGo*3))-60)/7)
-                        binding.textWork.text = timeWork.toString()+"хв." //  час роботи біля осередку пожежі
-                        binding.textPressureExit.text = pressureExit.toString()+"атм." //тиск при котрому потрібно виходити
-                        var minutesExit : Int = (pressureGo/7)*2 + timeWork
-                        val exitTime = addMinutesToTime(timeAction.toString(), minutesExit)//час на годиннику коли потрібно виходити
-                        binding.textExit.text = exitTime
+                    var pressureExit : Int = (2*pressureGo) + 60
+                    var timeWork : Int = (((minPressure-(pressureGo*3))-60)/7)
+                    binding.textWork.text = timeWork.toString()+"хв." //  час роботи біля осередку пожежі
+                    binding.textPressureExit.text = pressureExit.toString()+"атм." //тиск при котрому потрібно виходити
+                    var minutesExit : Int = (pressureGo/7)*2 + timeWork
+                    val exitTime = addMinutesToTime(timeAction.toString(), minutesExit)//час на годиннику коли потрібно виходити
+                    binding.textExit.text = exitTime
                 }
             }
         }
 
-            }
-
+    }
     private fun addMinutesToTime(time: String, minutes: Int): String {
         //функция для добавления минут к реальному времени
         val calendar = Calendar.getInstance()
