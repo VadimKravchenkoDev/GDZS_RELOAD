@@ -77,6 +77,7 @@ class MainActivity3 : AppCompatActivity() {
 
                 //вычисляем давление которое потратили на проход к очагу
                 binding.constraintPressure.visibility = View.VISIBLE
+                binding.constraintTime.visibility = View.VISIBLE
 
                 binding.textPressureGo.text = pressureGo.toString()+"атм." //тиск використанний на прямування до осередку
 
