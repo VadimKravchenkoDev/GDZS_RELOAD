@@ -22,8 +22,8 @@
     <string name="pressureGo">Тиск використанний на шлях:</string>
     <string name="timeEnd">Розрахунок часу</string>
     <string name="timeExit">Час коли потрібно повертатись</string>
-    <string name="timeWork">Час роботи в задимленому середовищі</string>
-    <string name="timeProtect">Час захисної дії апарату</string>
+    <string name="timeWork">Час роботи біля осередку пожежі</string>
+    <string name="timeProtect">Час захисної дії апаратів</string>
 
 
 
