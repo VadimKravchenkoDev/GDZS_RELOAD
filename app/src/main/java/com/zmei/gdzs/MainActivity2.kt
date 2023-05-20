@@ -90,6 +90,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 val minPressure = adapter.zvenoList.minByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 400
                 /*пошук мінімального тиску*/
                 intent.putExtra("minPressure", minPressure)
+                intent.putExtra("aparat", selected2)
                 intent.putExtra("action", selected3)
                 intent.putExtra("timeAction", timeBt)
                 startActivity(intent)
