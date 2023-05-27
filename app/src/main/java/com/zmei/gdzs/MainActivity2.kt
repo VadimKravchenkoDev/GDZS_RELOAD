@@ -15,57 +15,58 @@ import java.util.*
 
 class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     lateinit var binding : ActivityMain2Binding
-
     private lateinit var adapter: AdapterClass
     private lateinit var timeTextView: TextView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val spinner1: Spinner = binding.spinnerAction
-        val spinnerAdapter1 = ArrayAdapter.createFromResource(this, R.array.action, R.layout.spinner_prompt_item)
-        spinnerAdapter1.setDropDownViewResource(R.layout.spinner_item)
-        spinner1.adapter = spinnerAdapter1
-        spinner1.onItemSelectedListener = this
-        /* додаемо спинер з вибором активности */
-        val spinner2: Spinner = binding.spinnerAction2
-        val spinnerAdapter2 = ArrayAdapter.createFromResource(this, R.array.apparatus, R.layout.spinner_prompt_item)
-        spinnerAdapter2.setDropDownViewResource(R.layout.spinner_item)
-        spinner2.adapter = spinnerAdapter2
-        spinner2.onItemSelectedListener = this
-        /* додаемо спинер з вибором типу апаратів */
-        val spinner3: Spinner = binding.spinnerAction3
-        val spinnerAdapter3 = ArrayAdapter.createFromResource(this, R.array.workload, R.layout.spinner_prompt_item)
-        spinnerAdapter3.setDropDownViewResource(R.layout.spinner_item)
-        spinner3.adapter = spinnerAdapter3
-        spinner3.onItemSelectedListener = this
-        /* додаемо спинер з вибором типу навантаження */
-        adapter = AdapterClass()
+        spinners()  // функція для роботи спінерів
+        adapter = AdapterClass() //ініціалізація списку ланки ГДЗС
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
-        // добавляем первый элемент
-        adapter.addZveno()
-        // при нажатии на кнопку добавляем новый элемент
-        binding.btAdd.setOnClickListener {
+        repeat(2) {
+            adapter.addZveno() }
+        binding.btAdd.setOnClickListener {// при тиснені на кнопку додается поле для додаткового газодимозахисника
             if(adapter.zvenoList.size < 5)  {
                 adapter.addZveno()
             }
             else if (adapter.zvenoList.size>=5) Toast.makeText(this, "Максимум 5 чол. у звені", Toast.LENGTH_SHORT).show()
         }
-        binding.btRemove.setOnClickListener {
+        binding.btRemove.setOnClickListener {// при тиснені на кнопку прибирается 1 поле для газодимозахисника
             removeLastItem()
         }
         binding.recyclerView.addItemDecoration(ItemOffsetDecoration(16))
-/*обираємо час входу ланки*/
-        binding.btnSelectTime.setOnClickListener {
+        binding.btnSelectTime.setOnClickListener {/*обираємо час входу ланки*/
             showTimePickerDialog()
         }
     }
 
 
-    fun onClick(view: View) {
-        /*перевіряємо чи введені данні*/
+
+// функція для роботи спінерів
+    fun spinners(){
+    val spinner1: Spinner = binding.spinnerAction
+    val spinnerAdapter1 = ArrayAdapter.createFromResource(this, R.array.action, R.layout.spinner_prompt_item)
+    spinnerAdapter1.setDropDownViewResource(R.layout.spinner_item)
+    spinner1.adapter = spinnerAdapter1
+    spinner1.onItemSelectedListener = this
+    /* додаемо спинер з вибором активности */
+    val spinner2: Spinner = binding.spinnerAction2
+    val spinnerAdapter2 = ArrayAdapter.createFromResource(this, R.array.apparatus, R.layout.spinner_prompt_item)
+    spinnerAdapter2.setDropDownViewResource(R.layout.spinner_item)
+    spinner2.adapter = spinnerAdapter2
+    spinner2.onItemSelectedListener = this
+    /* додаемо спинер з вибором типу апаратів */
+    val spinner3: Spinner = binding.spinnerAction3
+    val spinnerAdapter3 = ArrayAdapter.createFromResource(this, R.array.workload, R.layout.spinner_prompt_item)
+    spinnerAdapter3.setDropDownViewResource(R.layout.spinner_item)
+    spinner3.adapter = spinnerAdapter3
+    spinner3.onItemSelectedListener = this
+    /* додаемо спинер з вибором типу навантаження */
+}
+    fun onClick(view: View) { //функція яка перевіряє введені данні, відправляє їх на слудуючу сторінку, відкриває новий єкран
+
         val spinner1: Spinner = binding.spinnerAction
         val spinner2: Spinner = binding.spinnerAction2
         val spinner3: Spinner = binding.spinnerAction3
@@ -73,9 +74,8 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val selected2 = spinner2.selectedItemPosition
         val selected3 = spinner3.selectedItemPosition
         var sizeList = adapter.zvenoList.size
-
         var timeBt = binding.btnSelectTime.text.toString()
-        when {
+        when { /*перевіряємо чи введені данні*/
             selected1 == 0 -> showErrorMessage("Оберіть вид роботи!")
             selected2 == 0 -> showErrorMessage("Оберіть вид апаратів")
             selected3 == 0 -> showErrorMessage("Оберіть вид навантаження")
@@ -87,8 +87,9 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             else -> {
                 binding.textAction.visibility = View.GONE
                 val intent = Intent(this, MainActivity3::class.java)
-                val minPressure = adapter.zvenoList.minByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 400
                 /*пошук мінімального тиску*/
+                val minPressure = adapter.zvenoList.minByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 400
+                //відправка отриманих данних на слідуючий єкран
                 intent.putExtra("minPressure", minPressure)
                 intent.putExtra("aparat", selected2)
                 intent.putExtra("action", selected3)
@@ -101,7 +102,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private fun showErrorMessage(errorMessage: String) {
         binding.textAction.visibility = View.VISIBLE
         binding.textAction.text = errorMessage
-        /*функция которую мы используем для вывода ошибки*/
+        /*функція яка використовується для виводу повідомлень*/
     }
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
     }
@@ -129,7 +130,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         return true
     }
 
-    private fun removeLastItem() {
+    private fun removeLastItem() { //фунція для видалення поля у звені ГДЗС
         val lastIndex = adapter.zvenoList.lastIndex
         if (lastIndex > 0) {
             adapter.zvenoList.removeAt(lastIndex)
