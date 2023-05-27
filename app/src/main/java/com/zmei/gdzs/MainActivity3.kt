@@ -1,6 +1,7 @@
 package com.zmei.gdzs
 
 import android.app.TimePickerDialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import com.zmei.gdzs.databinding.ActivityMain3Binding
@@ -67,6 +69,8 @@ class MainActivity3 : AppCompatActivity() {
 
 
         binding.buttonCalcExit.setOnClickListener {
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
 //выбираем тип аппаратов с расходом 7 атмосфер
             if (typeAparat == 1 || typeAparat == 3) {
                 var minPressureNearFire: Int = binding.edMinPressure.text.toString().toIntOrNull() ?: 0
