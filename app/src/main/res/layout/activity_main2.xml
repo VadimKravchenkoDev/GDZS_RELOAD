@@ -49,50 +49,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="28dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/containerSpinners" />
-
-    <Button
-        android:id="@+id/btAdd"
-        android:layout_width="44dp"
-        android:layout_height="41dp"
-        android:backgroundTint="#0FA1B4"
-        android:text="@string/add"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerView"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
-
-    <Button
-        android:id="@+id/btRemove"
-        android:layout_width="44dp"
-        android:layout_height="41dp"
-        android:layout_marginEnd="1dp"
-        android:backgroundTint="#0FA1B4"
-        android:text="@string/remove"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/btAdd"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/time_enter"
-        android:textColor="#0B0A0A"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/containerSpinners"
-        app:layout_constraintStart_toStartOf="@+id/containerSpinners"
-        app:layout_constraintTop_toBottomOf="@+id/btAdd" />
-
     <Button
         android:id="@+id/btnSelectTime"
         android:layout_width="wrap_content"
@@ -121,9 +77,9 @@
 
         <Spinner
             android:id="@+id/spinnerAction"
-            android:layout_width="380dp"
+            android:layout_width="360dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
             android:dropDownSelector="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -149,5 +105,78 @@
             app:layout_constraintStart_toStartOf="@+id/spinnerAction2"
             app:layout_constraintTop_toBottomOf="@+id/spinnerAction2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_text_border"
+        app:layout_constraintEnd_toEndOf="@+id/containerSpinners"
+        app:layout_constraintStart_toStartOf="@+id/containerSpinners"
+        app:layout_constraintTop_toBottomOf="@+id/containerSpinners">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:foregroundGravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/leftSpace"
+            app:layout_constraintEnd_toStartOf="@id/rightSpace"
+            tools:layout_editor_absoluteX="180dp" />
+
+        <Button
+            android:id="@+id/btAdd"
+            android:layout_width="44dp"
+            android:layout_height="41dp"
+            android:backgroundTint="#0FA1B4"
+            android:text="@string/add"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+        <Button
+            android:id="@+id/btRemove"
+            android:layout_width="44dp"
+            android:layout_height="41dp"
+            android:backgroundTint="#0FA1B4"
+            android:text="@string/remove"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/btAdd"
+            app:layout_constraintTop_toTopOf="@+id/btAdd" />
+
+        <Space
+            android:id="@+id/leftSpace"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toStartOf="@id/recyclerView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Space
+            android:id="@+id/rightSpace"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@id/recyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/time_enter"
+        android:textColor="#0B0A0A"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/btnSelectTime"
+        app:layout_constraintStart_toStartOf="@+id/btnSelectTime"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

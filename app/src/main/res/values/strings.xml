@@ -4,7 +4,7 @@
     <string name="welcome">Вітаємо в електронному табелі роботи ланок ГДЗС</string>
     <string name="calculate">Калькулятор поста безпеки</string>
     <string name="calculate1">Розрахувати час та тиск </string>
-    <string name="add">+ 1</string>
+    <string name="add">+</string>
     <string name="remove">-</string>
     <string name="sername">Прізвище та ім`я</string>
     <string name="pressure">Тиск</string>
