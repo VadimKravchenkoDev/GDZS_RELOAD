@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF9800"
+    android:background="#D1D0D0"
     tools:context=".MainActivity3"
     android:paddingLeft="5dp"
     android:paddingRight="5dp">
@@ -253,7 +253,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/calculate1"
-        android:backgroundTint="#B4180F"
+        android:backgroundTint="#0FA1B4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
