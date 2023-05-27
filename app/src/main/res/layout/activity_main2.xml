@@ -7,39 +7,6 @@
     android:background="#FF9800"
     tools:context=".MainActivity2">
 
-    <Spinner
-        android:id="@+id/spinnerAction"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:dropDownSelector="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <Spinner
-        android:id="@+id/spinnerAction2"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:dropDownSelector="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerAction" />
-
-    <Spinner
-        android:id="@+id/spinnerAction3"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:dropDownSelector="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerAction2" />
-
     <TextView
         android:id="@+id/textAction"
         android:layout_width="wrap_content"
@@ -70,9 +37,9 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="177dp"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="81dp"
         android:fontFamily="serif"
         android:text="@string/calculate"
         android:textColor="#0B0A0A"
@@ -86,12 +53,11 @@
         android:id="@+id/recyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
 
-        app:layout_constraintEnd_toEndOf="@+id/spinnerAction3"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/spinnerAction3"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerAction3" />
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/containerSpinners" />
 
     <Button
         android:id="@+id/btAdd"
@@ -118,14 +84,13 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/time_enter"
         android:textColor="#0B0A0A"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/spinnerAction3"
+        app:layout_constraintEnd_toEndOf="@+id/containerSpinners"
+        app:layout_constraintStart_toStartOf="@+id/containerSpinners"
         app:layout_constraintTop_toBottomOf="@+id/btAdd" />
 
     <Button
@@ -138,5 +103,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerSpinners"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/edit_text_border"
+        android:paddingLeft="5dp"
+        android:paddingTop="8dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <Spinner
+            android:id="@+id/spinnerAction"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:dropDownSelector="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinnerAction2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:dropDownSelector="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/spinnerAction"
+            app:layout_constraintStart_toStartOf="@+id/spinnerAction"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerAction" />
+
+        <Spinner
+            android:id="@+id/spinnerAction3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:dropDownSelector="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/spinnerAction2"
+            app:layout_constraintStart_toStartOf="@+id/spinnerAction2"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerAction2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
