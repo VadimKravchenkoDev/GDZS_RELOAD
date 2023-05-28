@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.zmei.gdzs.constant.Constant
 import com.zmei.gdzs.databinding.ActivityMain2Binding
 import drawable.ItemOffsetDecoration
 import java.text.SimpleDateFormat
@@ -95,10 +96,10 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 val minPressure = adapter.zvenoList.minByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 0 /*поиск минимального давления*/
                 val maxPressure = adapter.zvenoList.maxByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 0 /*поиск максимального давления*/
             when {
-                (minPressure<=269 && (selected2 == 1 || selected2 == 3))->showErrorMessage("Мінімальний тиск 270 атм.!")
-                (minPressure<=179 && selected2 == 2)-> showErrorMessage("Мінімальний тиск 180 атм.!")
-                (maxPressure>=331 && (selected2 == 1 || selected2 == 3)) ->showErrorMessage("Максимальний тиск 330 атм.!")
-                (maxPressure>=231 && selected2 == 2) ->showErrorMessage("Максимальний тиск 230 атм.!")
+                (minPressure<=Constant.minPressureDrager && (selected2 == 1 || selected2 == 3))->showErrorMessage("Мінімальний тиск 270 атм.!")
+                (minPressure<=Constant.minPressureASP && selected2 == 2)-> showErrorMessage("Мінімальний тиск 180 атм.!")
+                (maxPressure>=Constant.maxPressureDrager && (selected2 == 1 || selected2 == 3)) ->showErrorMessage("Максимальний тиск 330 атм.!")
+                (maxPressure>=Constant.maxPressureASP && selected2 == 2) ->showErrorMessage("Максимальний тиск 230 атм.!")
             else ->{
                 //відправка отриманих данних на слідуючий єкран
                 intent.putExtra("minPressure", minPressure)
