@@ -75,28 +75,40 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val selected3 = spinner3.selectedItemPosition
         var sizeList = adapter.zvenoList.size
         var timeBt = binding.btnSelectTime.text.toString()
-        when { /*перевіряємо чи введені данні*/
+
+
+
+
+        when { /*перевіряємо чи вірно введені данні*/
             selected1 == 0 -> showErrorMessage("Оберіть вид роботи!")
             selected2 == 0 -> showErrorMessage("Оберіть вид апаратів")
             selected3 == 0 -> showErrorMessage("Оберіть вид навантаження")
             timeBt == "-Обрати час-" -> showErrorMessage("Оберіть час входу ланки")
-            sizeList == 1 ->showErrorMessage("Мінімум 2 чол. в ланці")
+            sizeList == 1 -> showErrorMessage("Мінімум 2 чол. в ланці")
             checkAllFieldsFilled() == false -> showErrorMessage("Введіть призвища та тиск")
 
-                        /* якщо все заповнено то при тисненні кнопки запускається екран розрахунків*/
+
+            /* якщо все заповнено вірно то при тисненні кнопки запускається екран розрахунків*/
             else -> {
                 binding.textAction.visibility = View.GONE
                 val intent = Intent(this, MainActivity3::class.java)
-                /*пошук мінімального тиску*/
-                val minPressure = adapter.zvenoList.minByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 400
+                val minPressure = adapter.zvenoList.minByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 0 /*поиск минимального давления*/
+                val maxPressure = adapter.zvenoList.maxByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 0 /*поиск максимального давления*/
+            when {
+                (minPressure<=269 && (selected2 == 1 || selected2 == 3))->showErrorMessage("Мінімальний тиск 270 атм.!")
+                (minPressure<=179 && selected2 == 2)-> showErrorMessage("Мінімальний тиск 180 атм.!")
+                (maxPressure>=331 && (selected2 == 1 || selected2 == 3)) ->showErrorMessage("Максимальний тиск 330 атм.!")
+                (maxPressure>=231 && selected2 == 2) ->showErrorMessage("Максимальний тиск 230 атм.!")
+            else ->{
                 //відправка отриманих данних на слідуючий єкран
                 intent.putExtra("minPressure", minPressure)
                 intent.putExtra("aparat", selected2)
                 intent.putExtra("action", selected3)
                 intent.putExtra("timeAction", timeBt)
                 startActivity(intent)
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)}}
             }
+
         }
             }
     private fun showErrorMessage(errorMessage: String) {
