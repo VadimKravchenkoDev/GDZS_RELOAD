@@ -2,10 +2,13 @@ package com.zmei.gdzs
 
 import AdapterClass
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zmei.gdzs.constant.Constant
@@ -40,6 +43,15 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener
             binding.btnSelectTime.setOnClickListener {/*обираємо час входу ланки*/
                 showTimePickerDialog()
             }
+        val rootView = findViewById<View>(android.R.id.content)
+        // Додаємо обробник подій натискання на кореневе представлення
+        rootView.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                // Скрываем клавиатуру
+                hideKeyboard()
+            }
+            false
+        }
     }
 // функція для роботи спінерів
     fun spinners()
@@ -147,6 +159,16 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener
         {
             adapter.zvenoList.removeAt(lastIndex)
             adapter.notifyItemRemoved(lastIndex)
+        }
+    }
+    private fun hideKeyboard() //фунція для приховування клавіатури при натисканні на єкран
+    {
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentFocusView = currentFocus
+        if (currentFocusView != null)
+        {
+            inputMethodManager.hideSoftInputFromWindow(currentFocusView.windowToken, 0)
         }
     }
 }

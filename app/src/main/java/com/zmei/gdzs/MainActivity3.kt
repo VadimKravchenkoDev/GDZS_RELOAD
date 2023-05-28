@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -134,6 +135,15 @@ class MainActivity3 : AppCompatActivity()
                 }
             }
         }
+        val rootView = findViewById<View>(android.R.id.content)
+        // Додаємо обробник подій натискання на кореневе представлення
+        rootView.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                // Скрываем клавиатуру
+                hideKeyboard()
+            }
+            false
+        }
     }
     private fun addMinutesToTime(time: String, minutes: Int): String
     {
@@ -155,6 +165,16 @@ class MainActivity3 : AppCompatActivity()
             callback(selectedTime)
         }, hourOfDay, minute, true)
         timePickerDialog.show()
+    }
+    private fun hideKeyboard() //фунція для приховування клавіатури при натисканні на єкран
+    {
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentFocusView = currentFocus
+        if (currentFocusView != null)
+        {
+            inputMethodManager.hideSoftInputFromWindow(currentFocusView.windowToken, 0)
+        }
     }
 }
 
