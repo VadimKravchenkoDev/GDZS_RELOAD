@@ -12,6 +12,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextClock
 import android.widget.Toast
 import com.zmei.gdzs.databinding.ActivityMain3Binding
 import java.text.SimpleDateFormat
@@ -24,6 +25,8 @@ class MainActivity3 : AppCompatActivity()
         super.onCreate(savedInstanceState)
         binding = ActivityMain3Binding.inflate(layoutInflater)
         setContentView(binding.root)
+        val textClock =  binding.textClock //  годинник
+        textClock.format24Hour = "HH:mm:ss" // Формат часу 24-годинний
         //отримуємо введені данні
         val action = intent.getIntExtra("action", 0)
         val minPressure = intent.getIntExtra("minPressure",0)
