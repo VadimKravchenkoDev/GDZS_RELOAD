@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
@@ -13,7 +14,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextClock
+import android.widget.TextView
 import android.widget.Toast
+import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.zmei.gdzs.databinding.ActivityMain3Binding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -147,6 +150,23 @@ class MainActivity3 : AppCompatActivity()
             }
             false
         }
+        val timerTextView: TextView = findViewById(R.id.tvTimer)
+
+        val timer = object : CountDownTimer(40 * 60 * 1000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val minutes = millisUntilFinished / (60 * 1000)
+                val seconds = (millisUntilFinished % (60 * 1000)) / 1000
+                val timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+                timerTextView.text = timeLeftFormatted
+            }
+
+            override fun onFinish() {
+                timerTextView.text = "Время истекло"
+            }
+        }
+
+        timer.start()
+
     }
     private fun addMinutesToTime(time: String, minutes: Int): String
     {
