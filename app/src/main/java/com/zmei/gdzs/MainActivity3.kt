@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
@@ -29,20 +30,16 @@ class MainActivity3 : AppCompatActivity()
         super.onCreate(savedInstanceState)
         binding = ActivityMain3Binding.inflate(layoutInflater)
         setContentView(binding.root)
-        val textClock =  binding.textClock //  годинник
-        textClock.format24Hour = "HH:mm:ss" // Формат часу 24-годинний
-        //отримуємо введені данні
-
-        // Получаем ссылку на TextInputEditText
-        val textInputEditText = findViewById<TextInputEditText>(R.id.tvTimer)
-
-// Получаем текущее время
-        val currentTime = SimpleDateFormat("HH:mm").format(Date())
-
-// Устанавливаем значение времени в TextInputEditText
-        textInputEditText.setText(currentTime)
-
-
+        val textInputEditText = binding.watch //годинник
+        val handler = Handler()
+        val updateRunnable = object : Runnable {
+            override fun run() {
+                val currentTime = SimpleDateFormat("HH:mm:ss").format(Date())
+                textInputEditText.setText(currentTime)
+                handler.postDelayed(this, 1000) // оновлення тексту годинника кожну секунду
+            }
+        }
+        handler.postDelayed(updateRunnable, 0)
         val action = intent.getIntExtra("action", 0)
         val minPressure = intent.getIntExtra("minPressure",0)
         val timeAction = intent.getStringExtra("timeAction")
