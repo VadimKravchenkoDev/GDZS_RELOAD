@@ -1,10 +1,10 @@
 package com.zmei.gdzs
 
-import android.R
 import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
@@ -16,14 +16,11 @@ import android.widget.EditText
 import android.widget.TextClock
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.zmei.gdzs.constant.Constant
 import com.zmei.gdzs.databinding.ActivityMain3Binding
 import java.text.SimpleDateFormat
 import java.util.*
-
-
 class MainActivity3 : AppCompatActivity()
 {
     lateinit var binding: ActivityMain3Binding
@@ -36,14 +33,15 @@ class MainActivity3 : AppCompatActivity()
         textClock.format24Hour = "HH:mm:ss" // Формат часу 24-годинний
         //отримуємо введені данні
 
-        val textClock = findViewById<TextClock>(R.id.textClock)
-        
+        // Получаем ссылку на TextInputEditText
         val textInputEditText = findViewById<TextInputEditText>(R.id.tvTimer)
 
-        val currentTime = textClock.text
+// Получаем текущее время
+        val currentTime = SimpleDateFormat("HH:mm").format(Date())
 
-
+// Устанавливаем значение времени в TextInputEditText
         textInputEditText.setText(currentTime)
+
 
         val action = intent.getIntExtra("action", 0)
         val minPressure = intent.getIntExtra("minPressure",0)
