@@ -1,0 +1,18 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Задний фон с разрывом -->
+    <item android:drawable="@drawable/border" />
+
+    <!-- Текстовый фон -->
+    <item android:top="10dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+        </shape>
+    </item>
+
+    <!-- Текст -->
+    <item android:top="10dp" android:bottom="10dp" android:left="20dp" android:right="20dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/black" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,10 +1,10 @@
 package com.zmei.gdzs
 
+import android.R
 import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
@@ -16,10 +16,14 @@ import android.widget.EditText
 import android.widget.TextClock
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.internal.ViewUtils.hideKeyboard
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.TextInputEditText
+import com.zmei.gdzs.constant.Constant
 import com.zmei.gdzs.databinding.ActivityMain3Binding
 import java.text.SimpleDateFormat
 import java.util.*
+
+
 class MainActivity3 : AppCompatActivity()
 {
     lateinit var binding: ActivityMain3Binding
@@ -31,13 +35,25 @@ class MainActivity3 : AppCompatActivity()
         val textClock =  binding.textClock //  годинник
         textClock.format24Hour = "HH:mm:ss" // Формат часу 24-годинний
         //отримуємо введені данні
+
+        val textClock = findViewById<TextClock>(R.id.textClock)
+        
+        val textInputEditText = findViewById<TextInputEditText>(R.id.tvTimer)
+
+        val currentTime = textClock.text
+
+
+        textInputEditText.setText(currentTime)
+
         val action = intent.getIntExtra("action", 0)
         val minPressure = intent.getIntExtra("minPressure",0)
         val timeAction = intent.getStringExtra("timeAction")
         val typeAparat = intent.getIntExtra("aparat",0)
         binding.textTimeEnter.text = timeAction
-        var timeWork :Int = ((minPressure-60)/7)
-        val newTime = addMinutesToTime(timeAction.toString(), timeWork)
+        var timeProtect :Int =0 //очікуваний час на годиннику коли ланка повинна вийти із зони непридатної до дихання
+        if (typeAparat==1||typeAparat==3) timeProtect = ((minPressure-Constant.reservDrager)/7)
+        else if (typeAparat==2) timeProtect = ((minPressure-Constant.reservASV)/5)
+        val newTime = addMinutesToTime(timeAction.toString(), timeProtect)
         //час виходу ланки
         binding.textTimeExpected.text = newTime
         binding.textTimeActual.setOnClickListener {
@@ -79,17 +95,17 @@ class MainActivity3 : AppCompatActivity()
                 if (minPressureNearFire == 0) Toast.makeText(this, "Введіть тиск ", Toast.LENGTH_SHORT).show()
                 else
                 {
-                    var pressureGo = minPressure - minPressureNearFire
-                    binding.textProtection.text =
-                        (minPressure / 7).toString() + "хв." //  час захисної дії апарату
+                    var pressureGo = minPressure - minPressureNearFire //  час захисної дії апарату
+                    var timeProtection = (minPressure / 7).toString() + "хв."
+                    binding.textProtection.text = timeProtection
                     //рахуеємо тиск який витратили на шлях до осередку пожежі
                     binding.constraintPressure.visibility = View.VISIBLE
                     binding.constraintTime.visibility = View.VISIBLE
                     binding.textPressureGo.text = pressureGo.toString() + "атм."
                     if (action == 1)
                         {//при виборі середнього навантаження роботи
-                            var pressureExit: Int = pressureGo + 60
-                            var timeWork: Int = (((minPressure - (pressureGo * 2)) - 60) / 7)
+                            var pressureExit: Int = pressureGo + Constant.reservDrager
+                            var timeWork: Int = (((minPressure - (pressureGo * 2)) - Constant.reservDrager) / 7)
                             binding.textWork.text = timeWork.toString() + "хв." //  час роботи біля осередку пожежі
                             binding.textPressureExit.text = pressureExit.toString() + "атм." //тиск при котрому потрібно виходити
                             var minutesExit: Int = (pressureGo / 7) + timeWork
@@ -98,8 +114,8 @@ class MainActivity3 : AppCompatActivity()
 
                         } else if (action == 2)
                             {//при виборі важкого навантаження роботи
-                                var pressureExit: Int = (2 * pressureGo) + 60
-                                var timeWork: Int = (((minPressure - (pressureGo * 3)) - 60) / 7)
+                                var pressureExit: Int = (2 * pressureGo) + Constant.reservDrager
+                                var timeWork: Int = (((minPressure - (pressureGo * 3)) - Constant.reservDrager) / 7)
                                 binding.textWork.text = timeWork.toString() + "хв." //  час роботи біля осередку пожежі
                                 binding.textPressureExit.text = pressureExit.toString() + "атм." //тиск при якому потрібно виходити
                                 var minutesExit: Int = (pressureGo / 7) * 2 + timeWork
@@ -121,8 +137,8 @@ class MainActivity3 : AppCompatActivity()
                     binding.textPressureGo.text = pressureGo.toString() + "атм." //тиск використанний на прямування до осередку
                         if (action == 1)
                         {
-                            var pressureExit: Int = pressureGo + 60
-                            var timeWork: Int = (((minPressure - (pressureGo * 2)) - 60) / 5)
+                            var pressureExit: Int = pressureGo + Constant.reservASV
+                            var timeWork: Int = (((minPressure - (pressureGo * 2)) - Constant.reservASV) / 5)
                             binding.textWork.text = timeWork.toString() + "хв." //  час роботи біля осередку пожежі
                             binding.textPressureExit.text = pressureExit.toString() + "атм." //тиск при якому потрібно виходити
                             var minutesExit: Int = (pressureGo / 5) + timeWork
@@ -130,8 +146,8 @@ class MainActivity3 : AppCompatActivity()
                             binding.textExit.text = exitTime
                         } else if (action == 2)
                             {
-                                var pressureExit: Int = (2 * pressureGo) + 60
-                                var timeWork: Int = (((minPressure - (pressureGo * 3)) - 60) / 5)
+                                var pressureExit: Int = (2 * pressureGo) + Constant.reservASV
+                                var timeWork: Int = (((minPressure - (pressureGo * 3)) - Constant.reservASV) / 5)
                                 binding.textWork.text = timeWork.toString() + "хв." //  час роботи біля осередку пожежі
                                 binding.textPressureExit.text = pressureExit.toString() + "атм." //тиск при котрому потрібно виходити
                                 var minutesExit: Int = (pressureGo / 5) * 2 + timeWork
@@ -150,23 +166,19 @@ class MainActivity3 : AppCompatActivity()
             }
             false
         }
-        val timerTextView: TextView = findViewById(R.id.tvTimer)
-
-        val timer = object : CountDownTimer(40 * 60 * 1000, 1000) {
+        val timerTextView: TextView = findViewById(R.id.tvTimer) //таймер
+        val timer = object : CountDownTimer(timeProtect.toLong() * 60 * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = millisUntilFinished / (60 * 1000)
                 val seconds = (millisUntilFinished % (60 * 1000)) / 1000
                 val timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
                 timerTextView.text = timeLeftFormatted
             }
-
             override fun onFinish() {
-                timerTextView.text = "Время истекло"
+                timerTextView.text = "00.00"
             }
         }
-
         timer.start()
-
     }
     private fun addMinutesToTime(time: String, minutes: Int): String
     {

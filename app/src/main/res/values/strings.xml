@@ -25,6 +25,8 @@
     <string name="timeExit">Час коли потрібно повертатись</string>
     <string name="timeWork">Час роботи біля осередку пожежі</string>
     <string name="timeProtect">Час захисної дії апаратів</string>
+    <string name="timer">Час роботи</string>
+    <string name="realTime">Годинник</string>
 
 
 
