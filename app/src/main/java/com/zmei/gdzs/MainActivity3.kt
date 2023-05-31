@@ -4,6 +4,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -28,7 +29,8 @@ class MainActivity3 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMain3Binding.inflate(layoutInflater)
         setContentView(binding.root)
-        val textInputEditText = binding.watch //годинник
+
+     val textInputEditText = binding.watch //годинник
         val handler = Handler()
         val updateRunnable = object : Runnable {
             override fun run() {
@@ -161,11 +163,13 @@ class MainActivity3 : AppCompatActivity() {
                 timerTextView.text = timeLeftFormatted
             }
             override fun onFinish() {
+                val mediaPlayer = MediaPlayer.create(applicationContext, R.raw.gudok) // звуковий сигнал що оповіщуе про закінчення часу
+                mediaPlayer.start()
                 timerTextView.text = "00.00"
             }
         }
         timer.start()
-        val timerFireText: TextView = binding.tvTimerFire //таймер
+        val timerFireText: TextView = binding.tvTimerFire //таймер зв'зку
         val timerFire = object : CountDownTimer(10 * 60 * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = millisUntilFinished / (60 * 1000)
@@ -174,7 +178,9 @@ class MainActivity3 : AppCompatActivity() {
                 timerFireText.text = timeLeftFormatted
             }
             override fun onFinish() {
-                timerFireText.text = "00.00"
+                val mediaPlayer = MediaPlayer.create(applicationContext, R.raw.gudok) // звуковий сигнал що оповіщуе про час перевірки зв'язку
+                mediaPlayer.start()
+                start()
             }
         }
         timerFire.start()
