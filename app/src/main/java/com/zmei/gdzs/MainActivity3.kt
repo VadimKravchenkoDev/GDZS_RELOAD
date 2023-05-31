@@ -22,11 +22,9 @@ import com.zmei.gdzs.constant.Constant
 import com.zmei.gdzs.databinding.ActivityMain3Binding
 import java.text.SimpleDateFormat
 import java.util.*
-class MainActivity3 : AppCompatActivity()
-{
+class MainActivity3 : AppCompatActivity() {
     lateinit var binding: ActivityMain3Binding
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMain3Binding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -84,12 +82,10 @@ class MainActivity3 : AppCompatActivity()
             val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
             //при виборі типу апаратів з расходом 7 атмосфер
-            if (typeAparat == 1 || typeAparat == 3)
-            {
+            if (typeAparat == 1 || typeAparat == 3) {
                 var minPressureNearFire: Int = binding.edMinPressure.text.toString().toIntOrNull() ?: 0
                 if (minPressureNearFire == 0) Toast.makeText(this, "Введіть тиск ", Toast.LENGTH_SHORT).show()
-                else
-                {
+                else {
                     var pressureGo = minPressure - minPressureNearFire //  час захисної дії апарату
                     var timeProtection = (minPressure / 7).toString() + "хв."
                     binding.textProtection.text = timeProtection
@@ -97,8 +93,7 @@ class MainActivity3 : AppCompatActivity()
                     binding.constraintPressure.visibility = View.VISIBLE
                     binding.constraintTime.visibility = View.VISIBLE
                     binding.textPressureGo.text = pressureGo.toString() + "атм."
-                    if (action == 1)
-                        {//при виборі середнього навантаження роботи
+                    if (action == 1) {//при виборі середнього навантаження роботи
                             var pressureExit: Int = pressureGo + Constant.reservDrager
                             var timeWork: Int = (((minPressure - (pressureGo * 2)) - Constant.reservDrager) / 7)
                             binding.textWork.text = timeWork.toString() + "хв." //  час роботи біля осередку пожежі
@@ -107,8 +102,7 @@ class MainActivity3 : AppCompatActivity()
                             val exitTime = addMinutesToTime(timeAction.toString(), minutesExit)//час на годиннику коли потрібно виходити
                             binding.textExit.text = exitTime
 
-                        } else if (action == 2)
-                            {//при виборі важкого навантаження роботи
+                        } else if (action == 2) {//при виборі важкого навантаження роботи
                                 var pressureExit: Int = (2 * pressureGo) + Constant.reservDrager
                                 var timeWork: Int = (((minPressure - (pressureGo * 3)) - Constant.reservDrager) / 7)
                                 binding.textWork.text = timeWork.toString() + "хв." //  час роботи біля осередку пожежі
@@ -118,20 +112,17 @@ class MainActivity3 : AppCompatActivity()
                                 binding.textExit.text = exitTime
                             }
                 }
-            } else if (typeAparat ==2)
-            {//при виборі типу апаратів з расходом 5 атмосфер
+            } else if (typeAparat ==2) {//при виборі типу апаратів з расходом 5 атмосфер
                 var minPressureNearFire: Int = binding.edMinPressure.text.toString().toIntOrNull() ?: 0
                 if (minPressureNearFire == 0) Toast.makeText(this, "Введіть тиск ", Toast.LENGTH_SHORT).show()
-                else
-                {
+                else {
                     var pressureGo = minPressure - minPressureNearFire
                     binding.textProtection.text = (minPressure / 5).toString() + "хв." //  час захисної дії апарату
                     //рахуеємо тиск який витратили на шлях до осередку пожежі
                     binding.constraintPressure.visibility = View.VISIBLE
                     binding.constraintTime.visibility = View.VISIBLE
                     binding.textPressureGo.text = pressureGo.toString() + "атм." //тиск використанний на прямування до осередку
-                        if (action == 1)
-                        {
+                        if (action == 1) {
                             var pressureExit: Int = pressureGo + Constant.reservASV
                             var timeWork: Int = (((minPressure - (pressureGo * 2)) - Constant.reservASV) / 5)
                             binding.textWork.text = timeWork.toString() + "хв." //  час роботи біля осередку пожежі
@@ -161,7 +152,7 @@ class MainActivity3 : AppCompatActivity()
             }
             false
         }
-        val timerTextView: TextView = findViewById(R.id.tvTimer) //таймер
+        val timerTextView: TextView = binding.tvTimer //таймер
         val timer = object : CountDownTimer(timeProtect.toLong() * 60 * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = millisUntilFinished / (60 * 1000)
@@ -174,9 +165,21 @@ class MainActivity3 : AppCompatActivity()
             }
         }
         timer.start()
+        val timerFireText: TextView = binding.tvTimerFire //таймер
+        val timerFire = object : CountDownTimer(10 * 60 * 1000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val minutes = millisUntilFinished / (60 * 1000)
+                val seconds = (millisUntilFinished % (60 * 1000)) / 1000
+                val timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+                timerFireText.text = timeLeftFormatted
+            }
+            override fun onFinish() {
+                timerFireText.text = "00.00"
+            }
+        }
+        timerFire.start()
     }
-    private fun addMinutesToTime(time: String, minutes: Int): String
-    {
+    private fun addMinutesToTime(time: String, minutes: Int): String {
         //Функція для додавання хвилин до поточного часу
         val calendar = Calendar.getInstance()
         val timeFormat = SimpleDateFormat("HH:mm")
@@ -184,8 +187,7 @@ class MainActivity3 : AppCompatActivity()
         calendar.add(Calendar.MINUTE, minutes)
         return timeFormat.format(calendar.time)
     }
-    private fun showTimePickerDialog(callback: (String) -> Unit)
-    {
+    private fun showTimePickerDialog(callback: (String) -> Unit) {
         val calendar = Calendar.getInstance()
         val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
@@ -196,8 +198,7 @@ class MainActivity3 : AppCompatActivity()
         }, hourOfDay, minute, true)
         timePickerDialog.show()
     }
-    private fun hideKeyboard() //фунція для приховування клавіатури при натисканні на єкран
-    {
+    private fun hideKeyboard() {//фунція для приховування клавіатури при натисканні на єкран
         val inputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         val currentFocusView = currentFocus

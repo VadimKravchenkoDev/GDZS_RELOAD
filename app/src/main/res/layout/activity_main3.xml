@@ -349,6 +349,28 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:hint="@string/realTime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintTime">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/watch"
+            android:layout_width="118dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/constraintTime"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/digital7"
+            android:inputType="none"
+            android:focusable="false"
+            android:paddingLeft="45dp"
+            android:textColor="@android:color/black"
+            android:textSize="26sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextField"
@@ -375,29 +397,34 @@
             android:textSize="26sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/outlinedTextField2"
+        android:id="@+id/outlinedTextField3"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginStart="8dp"
-        android:hint="@string/realTime"
-        app:layout_constraintStart_toStartOf="parent"
+        android:hint="@string/fireTimer"
+        app:layout_constraintStart_toEndOf="@+id/outlinedTextField"
         app:layout_constraintTop_toBottomOf="@+id/constraintTime">
+
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/watch"
-            android:layout_width="118dp"
+            android:id="@+id/tvTimerFire"
+            android:layout_width="120dp"
             android:layout_height="55dp"
             android:layout_below="@+id/constraintTime"
             android:layout_centerInParent="true"
+            android:focusable="false"
             android:fontFamily="@font/digital7"
             android:inputType="none"
-            android:focusable="false"
             android:paddingLeft="45dp"
             android:textColor="@android:color/black"
             android:textSize="26sp" />
     </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
