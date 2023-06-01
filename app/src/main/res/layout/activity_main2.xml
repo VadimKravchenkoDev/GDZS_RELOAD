@@ -175,7 +175,19 @@
         android:textColor="#0B0A0A"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/btnSelectTime"
+        app:layout_constraintHorizontal_bias="0.561"
         app:layout_constraintStart_toStartOf="@+id/btnSelectTime"
+        app:layout_constraintTop_toBottomOf="@+id/accessToWork" />
+
+    <Switch
+        android:id="@+id/accessToWork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/accessToWork"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

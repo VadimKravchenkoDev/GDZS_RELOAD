@@ -28,6 +28,7 @@
     <string name="timer">Залишок часу</string>
     <string name="realTime">Годинник</string>
     <string name="fireTimer">Таймер зв\'язку</string>
+    <string name="accessToWork">Працювати при тиску нижче ліміту</string>
 
 
 

@@ -17,13 +17,11 @@ import drawable.ItemOffsetDecoration
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener
-{
+class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     lateinit var binding : ActivityMain2Binding
     private lateinit var adapter: AdapterClass
     private lateinit var timeTextView: TextView
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -54,8 +52,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener
         }
     }
 // функція для роботи спінерів
-    fun spinners()
-    {
+    fun spinners() {
         val spinner1: Spinner = binding.spinnerAction
         val spinnerAdapter1 = ArrayAdapter.createFromResource(this, R.array.action, R.layout.spinner_prompt_item)
         spinnerAdapter1.setDropDownViewResource(R.layout.spinner_item)
@@ -75,8 +72,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener
         spinner3.onItemSelectedListener = this
         /* додаемо спинер з вибором типу навантаження */
     }
-    fun onClick(view: View)
-    { //функція яка перевіряє введені данні, відправляє їх на слудуючу сторінку, відкриває новий єкран
+    fun onClick(view: View) { //функція яка перевіряє введені данні, відправляє їх на слудуючу сторінку, відкриває новий єкран
         val spinner1: Spinner = binding.spinnerAction
         val spinner2: Spinner = binding.spinnerAction2
         val spinner3: Spinner = binding.spinnerAction3
@@ -85,8 +81,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener
         val selected3 = spinner3.selectedItemPosition
         var sizeList = adapter.zvenoList.size
         var timeBt = binding.btnSelectTime.text.toString()
-        when
-        { /*перевіряємо чи вірно введені данні*/
+        when { /*перевіряємо чи вірно введені данні*/
             selected1 == 0 -> showErrorMessage("Оберіть вид роботи!")
             selected2 == 0 -> showErrorMessage("Оберіть вид апаратів")
             selected3 == 0 -> showErrorMessage("Оберіть вид навантаження")
@@ -94,21 +89,14 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener
             sizeList == 1 -> showErrorMessage("Мінімум 2 чол. в ланці")
             checkAllFieldsFilled() == false -> showErrorMessage("Введіть призвища та тиск")
             /* якщо все заповнено вірно то при тисненні кнопки запускається екран розрахунків*/
-            else ->
-            {
+            else -> {
                 binding.textAction.visibility = View.GONE
                 val intent = Intent(this, MainActivity3::class.java)
                 val minPressure = adapter.zvenoList.minByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 0 /*пошук мінімального тиску*/
                 val maxPressure = adapter.zvenoList.maxByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 0 /*пошук максимального тиску*/
-                when
-                {
-                    (minPressure<=Constant.minPressureDrager && (selected2 == 1 || selected2 == 3))->showErrorMessage("Мінімальний тиск 270 атм.!")
-                    (minPressure<=Constant.minPressureASP && selected2 == 2)-> showErrorMessage("Мінімальний тиск 180 атм.!")
-                    (maxPressure>=Constant.maxPressureDrager && (selected2 == 1 || selected2 == 3)) ->showErrorMessage("Максимальний тиск 330 атм.!")
-                    (maxPressure>=Constant.maxPressureASP && selected2 == 2) ->showErrorMessage("Максимальний тиск 230 атм.!")
-                    else ->
-                    {
-                     //відправка отриманих данних на слідуючий єкран
+                when {
+                    ((binding.accessToWork.isChecked == true && minPressure<=Constant.minPressureDrager && (selected2 == 1 || selected2 == 3)) || (binding.accessToWork.isChecked == true && (minPressure<=Constant.minPressureASP && selected2 == 2)))-> {
+                        //відправка отриманих данних на слідуючий єкран
                         intent.putExtra("minPressure", minPressure)
                         intent.putExtra("aparat", selected2)
                         intent.putExtra("action", selected3)
@@ -116,12 +104,23 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener
                         startActivity(intent)
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                     }
+                    (minPressure<=Constant.minPressureDrager && (selected2 == 1 || selected2 == 3))->showErrorMessage("Мінімальний тиск 270 атм.!")
+                    (minPressure<=Constant.minPressureASP && selected2 == 2)-> showErrorMessage("Мінімальний тиск 180 атм.!")
+                    (maxPressure>=Constant.maxPressureDrager && (selected2 == 1 || selected2 == 3)) ->showErrorMessage("Максимальний тиск 330 атм.!")
+                    (maxPressure>=Constant.maxPressureASP && selected2 == 2) ->showErrorMessage("Максимальний тиск 230 атм.!")
+                     else ->  {
+                                intent.putExtra("minPressure", minPressure)
+                                intent.putExtra("aparat", selected2)
+                                intent.putExtra("action", selected3)
+                                intent.putExtra("timeAction", timeBt)
+                                startActivity(intent)
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                     }
                 }
             }
         }
     }
-    private fun showErrorMessage(errorMessage: String)
-    {
+    private fun showErrorMessage(errorMessage: String) {
         binding.textAction.visibility = View.VISIBLE
         binding.textAction.text = errorMessage
         /*функція яка використовується для виводу повідомлень*/
@@ -130,8 +129,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener
     }
     override fun onNothingSelected(parent: AdapterView<*>) {
     }
-    private fun showTimePickerDialog()
-    {// функція для вибору часу
+    private fun showTimePickerDialog() {// функція для вибору часу
         val calendar = Calendar.getInstance()
         val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
@@ -141,8 +139,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener
         }, hourOfDay, minute, true)
         timePickerDialog.show()
     }
-    private fun checkAllFieldsFilled(): Boolean
-    {
+    private fun checkAllFieldsFilled(): Boolean {
         for (zveno in adapter.zvenoList)
         {
             if (zveno.sername.isEmpty() || zveno.pressure.isEmpty())
@@ -152,8 +149,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener
         }
         return true
     }
-    private fun removeLastItem()
-    { //фунція для видалення поля у звені ГДЗС
+    private fun removeLastItem() { //фунція для видалення поля у звені ГДЗС
         val lastIndex = adapter.zvenoList.lastIndex
         if (lastIndex > 0)
         {
@@ -161,13 +157,11 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener
             adapter.notifyItemRemoved(lastIndex)
         }
     }
-    private fun hideKeyboard() //фунція для приховування клавіатури при натисканні на єкран
-    {
+    private fun hideKeyboard() {//фунція для приховування клавіатури при натисканні на єкран
         val inputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         val currentFocusView = currentFocus
-        if (currentFocusView != null)
-        {
+        if (currentFocusView != null) {
             inputMethodManager.hideSoftInputFromWindow(currentFocusView.windowToken, 0)
         }
     }
