@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#D1D0D0"
-    android:textAlignment="viewStart"
-    android:padding="16dp"
+    android:paddingStart="30dp"
+    android:paddingBottom="10dp"
     android:textColor="@android:color/black"
     android:textSize="16sp"
     android:spinnerMode="dialog"/>
