@@ -178,7 +178,7 @@ class MainActivity3 : AppCompatActivity() {
                 timerFireText.text = timeLeftFormatted
             }
             override fun onFinish() {
-                val mediaPlayer = MediaPlayer.create(applicationContext, R.raw.gudok) // звуковий сигнал що оповіщуе про час перевірки зв'язку
+                val mediaPlayer = MediaPlayer.create(applicationContext, R.raw.perevirka) // звуковий сигнал що оповіщуе про час перевірки зв'язку
                 mediaPlayer.start()
                 start()
             }
