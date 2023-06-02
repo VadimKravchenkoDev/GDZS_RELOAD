@@ -95,7 +95,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 val minPressure = adapter.zvenoList.minByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 0 /*пошук мінімального тиску*/
                 val maxPressure = adapter.zvenoList.maxByOrNull { it.pressure.toInt() }?.pressure?.toInt() ?: 0 /*пошук максимального тиску*/
                 when {
-                    ((binding.accessToWork.isChecked == true && minPressure<=Constant.minPressureDrager && (selected2 == 1 || selected2 == 3)) || (binding.accessToWork.isChecked == true && (minPressure<=Constant.minPressureASP && selected2 == 2)))-> {
+                    ((binding.accessToWork.isChecked == true && minPressure>=(Constant.reservDrager+2) && (selected2 == 1 || selected2 == 3)) || (binding.accessToWork.isChecked == true && (minPressure>=(Constant.reservASV+2) && selected2 == 2)))-> {
                         //відправка отриманих данних на слідуючий єкран
                         intent.putExtra("minPressure", minPressure)
                         intent.putExtra("aparat", selected2)

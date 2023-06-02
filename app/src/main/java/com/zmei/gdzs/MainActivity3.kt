@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
@@ -28,6 +29,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 class MainActivity3 : AppCompatActivity() {
     lateinit var binding: ActivityMain3Binding
+    private var isActivityPaused = false
+    override fun onPause() {
+        super.onPause()
+        isActivityPaused = true
+    }
+    override fun onResume() {
+        super.onResume()
+        isActivityPaused = false
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMain3Binding.inflate(layoutInflater)
@@ -166,18 +176,17 @@ class MainActivity3 : AppCompatActivity() {
                 timerTextView.text = timeLeftFormatted
             }
             override fun onFinish() {
-                var mediaPlayer = MediaPlayer.create(applicationContext, R.raw.gudok) // звуковий сигнал що оповіщуе про закінчення часу
+                var mediaPlayer = MediaPlayer.create(applicationContext, R.raw.perevirka) // звуковий сигнал що оповіщуе про закінчення часу
                 mediaPlayer.start()
                 mediaPlayer.setOnCompletionListener {
-                    mediaPlayer.release()
-                    mediaPlayer = null
-                    timerTextView.text = "00.00"
+                mediaPlayer?.stop()
+                timerTextView.text = "00.00"
                 }
             }
         }
         timer.start()
         val timerFireText: TextView = binding.tvTimerFire //таймер зв'зку
-        val timerFire = object : CountDownTimer(1 * 60 * 1000, 1000) {
+        val timerFire = object : CountDownTimer(2 * 60 * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = millisUntilFinished / (60 * 1000)
                 val seconds = (millisUntilFinished % (60 * 1000)) / 1000
@@ -188,9 +197,9 @@ class MainActivity3 : AppCompatActivity() {
                 var mediaPlayer = MediaPlayer.create(applicationContext, R.raw.perevirka) // звуковий сигнал що оповіщуе про час перевірки зв'язку
                 mediaPlayer.start()
                 mediaPlayer.setOnCompletionListener {
-                    mediaPlayer.release()
-                    mediaPlayer = null
-                    start()
+                mediaPlayer?.stop()
+                    if (isActivityPaused) cancel()
+                    else start()
                 }
             }
         }
@@ -231,13 +240,13 @@ class MainActivity3 : AppCompatActivity() {
     class MyDialogFragment : DialogFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val builder = AlertDialog.Builder(requireActivity())
-            builder.setTitle("Title")
-            builder.setMessage("Message")
+            builder.setTitle(R.string.warning)
+            builder.setMessage(R.string.warningMassage)
             builder.setPositiveButton("OK") { dialog, which ->
-                // Обработка нажатия кнопки OK
+
+                requireActivity().finish()
             }
             builder.setNegativeButton("Cancel") { dialog, which ->
-                // Обработка нажатия кнопки Cancel
             }
             return builder.create()
         }

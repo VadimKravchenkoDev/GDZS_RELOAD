@@ -29,6 +29,8 @@
     <string name="realTime">Годинник</string>
     <string name="fireTimer">Таймер зв\'язку</string>
     <string name="accessToWork">Працювати при тиску нижче ліміту</string>
+    <string name="warning">Попередження</string>
+    <string name="warningMassage">Всі данні будуть видалені, ви впевненні?</string>
 
 
     <string-array name="action">
