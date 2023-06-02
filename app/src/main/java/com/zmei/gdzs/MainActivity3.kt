@@ -1,5 +1,7 @@
 package com.zmei.gdzs
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Color
@@ -18,6 +20,7 @@ import android.widget.EditText
 import android.widget.TextClock
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.zmei.gdzs.constant.Constant
 import com.zmei.gdzs.databinding.ActivityMain3Binding
@@ -30,7 +33,7 @@ class MainActivity3 : AppCompatActivity() {
         binding = ActivityMain3Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-     val textInputEditText = binding.watch //годинник
+        val textInputEditText = binding.watch //годинник
         val handler = Handler()
         val updateRunnable = object : Runnable {
             override fun run() {
@@ -163,14 +166,18 @@ class MainActivity3 : AppCompatActivity() {
                 timerTextView.text = timeLeftFormatted
             }
             override fun onFinish() {
-                val mediaPlayer = MediaPlayer.create(applicationContext, R.raw.gudok) // звуковий сигнал що оповіщуе про закінчення часу
+                var mediaPlayer = MediaPlayer.create(applicationContext, R.raw.gudok) // звуковий сигнал що оповіщуе про закінчення часу
                 mediaPlayer.start()
-                timerTextView.text = "00.00"
+                mediaPlayer.setOnCompletionListener {
+                    mediaPlayer.release()
+                    mediaPlayer = null
+                    timerTextView.text = "00.00"
+                }
             }
         }
         timer.start()
         val timerFireText: TextView = binding.tvTimerFire //таймер зв'зку
-        val timerFire = object : CountDownTimer(10 * 60 * 1000, 1000) {
+        val timerFire = object : CountDownTimer(1 * 60 * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = millisUntilFinished / (60 * 1000)
                 val seconds = (millisUntilFinished % (60 * 1000)) / 1000
@@ -178,9 +185,13 @@ class MainActivity3 : AppCompatActivity() {
                 timerFireText.text = timeLeftFormatted
             }
             override fun onFinish() {
-                val mediaPlayer = MediaPlayer.create(applicationContext, R.raw.perevirka) // звуковий сигнал що оповіщуе про час перевірки зв'язку
+                var mediaPlayer = MediaPlayer.create(applicationContext, R.raw.perevirka) // звуковий сигнал що оповіщуе про час перевірки зв'язку
                 mediaPlayer.start()
-                start()
+                mediaPlayer.setOnCompletionListener {
+                    mediaPlayer.release()
+                    mediaPlayer = null
+                    start()
+                }
             }
         }
         timerFire.start()
@@ -211,6 +222,24 @@ class MainActivity3 : AppCompatActivity() {
         if (currentFocusView != null)
         {
             inputMethodManager.hideSoftInputFromWindow(currentFocusView.windowToken, 0)
+        }
+    }
+    override fun onBackPressed() {
+        val dialogFragment = MyDialogFragment()
+        dialogFragment.show(supportFragmentManager, "MyDialogFragment")
+    }
+    class MyDialogFragment : DialogFragment() {
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+            val builder = AlertDialog.Builder(requireActivity())
+            builder.setTitle("Title")
+            builder.setMessage("Message")
+            builder.setPositiveButton("OK") { dialog, which ->
+                // Обработка нажатия кнопки OK
+            }
+            builder.setNegativeButton("Cancel") { dialog, which ->
+                // Обработка нажатия кнопки Cancel
+            }
+            return builder.create()
         }
     }
 }

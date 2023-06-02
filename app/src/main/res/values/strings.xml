@@ -18,7 +18,7 @@
     <string name="firePlace">Початок роботи в осередку пожежі</string>
     <string name="minPleasure">Найменший тиск в ланці: </string>
     <string name="timeFind">Час виявлення осередку: </string>
-    <string name="pressure_end" >Розрахунок тиску </string>
+    <string name="pressure_end">Розрахунок тиску </string>
     <string name="pressureExit">Тиск при якому потрібно виходити :</string>
     <string name="pressureGo">Тиск використанний на шлях:</string>
     <string name="timeEnd">Розрахунок часу</string>
@@ -31,8 +31,6 @@
     <string name="accessToWork">Працювати при тиску нижче ліміту</string>
 
 
-
-
     <string-array name="action">
         <item>Оберіть тип роботи:</item>
         <item>Пожежа</item>
@@ -40,7 +38,7 @@
         <item>Заняття</item>
         <item>Навчання</item>
     </string-array>
-    
+
     <string-array name="apparatus">
         <item>Оберіть тип апарату:</item>
         <item>Drager</item>
@@ -53,7 +51,8 @@
         <item>Середнє навантаження</item>
         <item>Тяжке навантаження</item>
     </string-array>
-    
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
