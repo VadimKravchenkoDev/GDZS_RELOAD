@@ -176,17 +176,18 @@ class MainActivity3 : AppCompatActivity() {
                 timerTextView.text = timeLeftFormatted
             }
             override fun onFinish() {
-                var mediaPlayer = MediaPlayer.create(applicationContext, R.raw.perevirka) // звуковий сигнал що оповіщуе про закінчення часу
+                var mediaPlayer = MediaPlayer.create(applicationContext, R.raw.gudok) // звуковий сигнал що оповіщуе про закінчення часу
                 mediaPlayer.start()
                 mediaPlayer.setOnCompletionListener {
                 mediaPlayer?.stop()
                 timerTextView.text = "00.00"
+                cancel()
                 }
             }
         }
         timer.start()
         val timerFireText: TextView = binding.tvTimerFire //таймер зв'зку
-        val timerFire = object : CountDownTimer(2 * 60 * 1000, 1000) {
+        val timerFire = object : CountDownTimer(10 * 60 * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = millisUntilFinished / (60 * 1000)
                 val seconds = (millisUntilFinished % (60 * 1000)) / 1000
@@ -198,12 +199,12 @@ class MainActivity3 : AppCompatActivity() {
                 mediaPlayer.start()
                 mediaPlayer.setOnCompletionListener {
                 mediaPlayer?.stop()
-                    if (isActivityPaused) cancel()
-                    else start()
+                  if (isActivityPaused) cancel()
+                  else start()
                 }
             }
         }
-        timerFire.start()
+        if (isActivityPaused==false) timerFire.start()
     }
     private fun addMinutesToTime(time: String, minutes: Int): String {
         //Функція для додавання хвилин до поточного часу
