@@ -15,7 +15,7 @@
     <string name="time_actual">Фактичний час виходу ланки:</string>
     <string name="time">-Обрати час-</string>
     <string name="billing_data">Розрахункові дані</string>
-    <string name="firePlace">Початок роботи в осередку пожежі</string>
+    <string name="firePlace">Почати роботу в осередку пожежі</string>
     <string name="minPleasure">Найменший тиск в ланці: </string>
     <string name="timeFind">Час виявлення осередку: </string>
     <string name="pressure_end">Розрахунок тиску </string>
@@ -26,12 +26,16 @@
     <string name="timeWork">Час роботи біля осередку пожежі</string>
     <string name="timeProtect">Час захисної дії апаратів</string>
     <string name="timer">Залишок часу</string>
+    <string name="timer2">Таймер виходу</string>
     <string name="realTime">Годинник</string>
     <string name="fireTimer">Таймер зв\'язку</string>
     <string name="accessToWork">Працювати при тиску нижче ліміту</string>
     <string name="warning">Попередження</string>
     <string name="warningMassage">Всі данні будуть видалені, ви впевненні?</string>
-    <string name="startWork">Знайдено осередок пожежі</string>
+    <string name="startWork">Осередок пожежі знайдено!</string>
+    <string name="work">Таймер роботи</string>
+    <string name="notFindFirePart1">Таймер повернення</string>
+    <string name="notFindFirePart2">якщо не знайдено осередку пожежі</string>
 
 
     <string-array name="action">
