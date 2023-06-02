@@ -19,10 +19,10 @@
     <string name="minPleasure">Найменший тиск в ланці: </string>
     <string name="timeFind">Час виявлення осередку: </string>
     <string name="pressure_end">Розрахунок тиску </string>
-    <string name="pressureExit">Тиск при якому потрібно виходити :</string>
+    <string name="pressureExit">Тиск повернення :</string>
     <string name="pressureGo">Тиск використанний на шлях:</string>
     <string name="timeEnd">Розрахунок часу</string>
-    <string name="timeExit">Час коли потрібно повертатись</string>
+    <string name="timeExit">Час повернення</string>
     <string name="timeWork">Час роботи біля осередку пожежі</string>
     <string name="timeProtect">Час захисної дії апаратів</string>
     <string name="timer">Залишок часу</string>
@@ -31,6 +31,7 @@
     <string name="accessToWork">Працювати при тиску нижче ліміту</string>
     <string name="warning">Попередження</string>
     <string name="warningMassage">Всі данні будуть видалені, ви впевненні?</string>
+    <string name="startWork">Знайдено осередок пожежі</string>
 
 
     <string-array name="action">
