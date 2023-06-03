@@ -4,6 +4,7 @@ import AdapterClass
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
@@ -123,6 +124,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private fun showErrorMessage(errorMessage: String) {
         binding.textAction.visibility = View.VISIBLE
         binding.textAction.text = errorMessage
+        binding.textAction.setTextColor(Color.RED)
         /*функція яка використовується для виводу повідомлень*/
     }
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {

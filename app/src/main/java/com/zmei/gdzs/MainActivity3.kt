@@ -69,7 +69,7 @@ class MainActivity3 : AppCompatActivity() {
         binding.textTimeFire.setOnClickListener {
             showTimePickerDialog { selectedTime ->
                 binding.textTimeFire.text = selectedTime
-                binding.textTimeFire.background = ColorDrawable(Color.TRANSPARENT)
+                //binding.textTimeFire.background = ColorDrawable(Color.TRANSPARENT)
             }
         }
         //поле для вводу мінімального тиску при знаходжені осередку пожежі
@@ -95,8 +95,10 @@ class MainActivity3 : AppCompatActivity() {
             var textTimeFire = binding.textTimeFire.text.toString()
             var minPressureNearFire: Int = binding.edMinPressure.text.toString().toIntOrNull() ?: 0
             when {
-            textTimeFire == "-Обрати час-" -> Toast.makeText(this, "Введіть час", Toast.LENGTH_SHORT).show()
+            textTimeFire == "Обрати час" -> Toast.makeText(this, "Введіть час", Toast.LENGTH_SHORT).show()
             minPressureNearFire == 0 -> Toast.makeText(this, "Введіть тиск ", Toast.LENGTH_SHORT).show()
+            minPressureNearFire > minPressure -> Toast.makeText(this, "Некоректний тиск ", Toast.LENGTH_SHORT).show()
+            minPressureNearFire < (minPressure/2+Constant.reservDrager) -> Toast.makeText(this, "Некоректний тиск ", Toast.LENGTH_SHORT).show()
                 else -> {
                     binding.constraintStartWork.visibility = View.VISIBLE
                     val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

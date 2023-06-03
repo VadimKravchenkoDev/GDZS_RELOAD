@@ -13,7 +13,7 @@
     <string name="time_enter">Час входу ланки в задимлену зону:</string>
     <string name="time_expected">Очікуваний час виходу ланки:</string>
     <string name="time_actual">Фактичний час виходу ланки:</string>
-    <string name="time">-Обрати час-</string>
+    <string name="time">Обрати час</string>
     <string name="billing_data">Розрахункові дані</string>
     <string name="firePlace">Почати роботу в осередку пожежі</string>
     <string name="minPleasure">Найменший тиск в ланці: </string>
