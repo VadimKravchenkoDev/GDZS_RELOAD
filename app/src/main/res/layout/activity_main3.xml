@@ -89,15 +89,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout3"
-            android:layout_width="290dp"
+            android:id="@+id/constraintFindFire"
+            android:layout_width="288dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/edit_text_border"
             android:paddingBottom="8dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonCalcFire">
+            app:layout_constraintTop_toBottomOf="@+id/buttonCalcFire"
+            tools:visibility="visible">
 
             <TextView
                 android:id="@+id/textFirePlace2"
@@ -150,28 +152,33 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textTimeFire" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <Button
             android:id="@+id/buttonFire"
-            android:layout_width="wrap_content"
+            android:layout_width="289dp"
             android:layout_height="35dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:backgroundTint="#0FA1B4"
             android:text="@string/firePlace"
             android:textSize="11dp"
-            app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
-            app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintFindFire"
+            tools:visibility="visible" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
+            android:id="@+id/constraintStartWork"
             android:layout_width="289dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/edit_text_border"
             android:paddingBottom="8dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonFire">
+            app:layout_constraintTop_toBottomOf="@+id/buttonFire"
+            tools:visibility="visible">
 
 
             <TextView
@@ -256,7 +263,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.444"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/constraintStartWork"
             app:layout_constraintVertical_bias="0.0">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -338,7 +345,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/outlinedTextField5"
+            android:id="@+id/outlinedTextFieldReturn"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -346,9 +353,9 @@
             android:layout_marginTop="8dp"
             android:hint="@string/timer2"
             app:hintTextColor="#0C0404"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5">
+            app:layout_constraintEnd_toEndOf="@+id/textViewReturn2"
+            app:layout_constraintStart_toStartOf="@+id/textViewReturn2"
+            app:layout_constraintTop_toBottomOf="@+id/textViewReturn2">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/timerNotFind"
@@ -365,39 +372,39 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textViewReturn2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/notFindFirePart2"
             android:textColor="#000000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintEnd_toEndOf="@+id/buttonCalcFire"
+            app:layout_constraintStart_toStartOf="@+id/buttonCalcFire"
+            app:layout_constraintTop_toBottomOf="@+id/textViewReturn1" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textViewReturn1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="@string/notFindFirePart1"
             android:textColor="#000000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+            app:layout_constraintEnd_toEndOf="@+id/buttonCalcFire"
+            app:layout_constraintStart_toStartOf="@+id/buttonCalcFire"
+            app:layout_constraintTop_toBottomOf="@+id/constraintStartWork" />
 
         <Button
             android:id="@+id/buttonCalcFire"
-            android:layout_width="wrap_content"
+            android:layout_width="289dp"
             android:layout_height="35dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:backgroundTint="#0FA1B4"
             android:text="@string/startWork"
             android:textSize="11dp"
-            app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
-            app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
 
