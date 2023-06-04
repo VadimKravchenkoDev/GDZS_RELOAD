@@ -159,7 +159,7 @@
 
         <Button
             android:id="@+id/buttonFire"
-            android:layout_width="289dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginTop="8dp"
             android:backgroundTint="#0FA1B4"
@@ -400,15 +400,15 @@
 
         <Button
             android:id="@+id/buttonCalcFire"
-            android:layout_width="289dp"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="8dp"
             android:backgroundTint="#0FA1B4"
             android:text="@string/startWork"
             android:textSize="11dp"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
 
