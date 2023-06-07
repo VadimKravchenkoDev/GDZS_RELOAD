@@ -187,7 +187,7 @@ class MainActivity3 : AppCompatActivity() {
             }
             false
         }
-        val textTimerNotFind: TextView = binding.timerNotFind //таймер
+        val textTimerNotFind: TextView = binding.timerNotFind //таймер якщо не знайдено осередку
         val timerWorkNotFind = object : CountDownTimer(timeProtect.toLong()/2 * 60 * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = millisUntilFinished / (60 * 1000)
@@ -206,13 +206,17 @@ class MainActivity3 : AppCompatActivity() {
             }
         }
         timerWorkNotFind.start()
-        val timerTextView: TextView = binding.tvTimer //таймер
+        val timerTextView: TextView = binding.tvTimer //таймер загальної захисної дії апарату
         val timer = object : CountDownTimer(timeProtect.toLong() * 60 * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = millisUntilFinished / (60 * 1000)
                 val seconds = (millisUntilFinished % (60 * 1000)) / 1000
                 val timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
                 timerTextView.text = timeLeftFormatted
+                val progress = (millisUntilFinished / 1000).toInt() // Прогресс в секундах
+                val maxProgress = (timeProtect * 60).toInt() // Максимальное значение прогресса в секундах
+                binding.progressBarBalon.progress = progress
+                binding.progressBarBalon.max = maxProgress
             }
             override fun onFinish() {
                 var mediaPlayer = MediaPlayer.create(applicationContext, R.raw.gudok) // звуковий сигнал що оповіщуе про закінчення часу
