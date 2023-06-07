@@ -24,6 +24,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.internal.ViewUtils.dpToPx
 import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.zmei.gdzs.constant.Constant
 import com.zmei.gdzs.databinding.ActivityMain3Binding
@@ -86,14 +87,21 @@ class MainActivity3 : AppCompatActivity() {
         })
         //при натисканні кнопки проводиться розрахунок тиску та часу
         binding.buttonCalcFire.setOnClickListener {
-            val layoutParams = binding.buttonCalcFire.layoutParams as ConstraintLayout.LayoutParams
-
-            layoutParams.startToStart= ConstraintLayout.LayoutParams.UNSET
-            layoutParams.endToEnd = ConstraintLayout.LayoutParams.UNSET
-
-            layoutParams.marginEnd = 10
-
-            binding.buttonCalcFire.requestLayout()
+            val parentLayout = binding.buttonCalcFire.parent as ConstraintLayout
+            parentLayout.post {
+                val layoutParamsButton = binding.buttonCalcFire.layoutParams as ConstraintLayout.LayoutParams
+                val layoutParamsConstraint = binding.constraintFindFire.layoutParams as ConstraintLayout.LayoutParams
+                val layoutParamsBalon = binding.imageBalon.layoutParams as ConstraintLayout.LayoutParams
+                val layoutParamsSpace = binding.spaceSave.layoutParams as ConstraintLayout.LayoutParams
+                layoutParamsButton.startToStart = R.id.constraintFindFire
+                layoutParamsConstraint.startToStart = R.id.spaceSave
+                layoutParamsBalon.endToEnd = R.id.spaceSave
+                layoutParamsConstraint.endToEnd = R.id.constrainMaster
+                layoutParamsButton.endToEnd = R.id.constraintFindFire
+                binding.buttonCalcFire.layoutParams = layoutParamsButton
+                binding.constraintFindFire.layoutParams = layoutParamsConstraint
+            }
+            binding.imageBalon.visibility = View.VISIBLE
             binding.constraintFindFire.visibility = View.VISIBLE
             binding.buttonFire.visibility = View.VISIBLE
             binding.textViewReturn1.visibility = View.INVISIBLE

@@ -17,7 +17,7 @@
     <string name="billing_data">Розрахункові дані</string>
     <string name="firePlace">Почати роботу в осередку пожежі</string>
     <string name="minPleasure">Найменший тиск в ланці: </string>
-    <string name="timeFind">Час виявлення осередку: </string>
+    <string name="timeFind">Час виявлення: </string>
     <string name="pressure_end">Розрахунок тиску </string>
     <string name="pressureExit">Тиск повернення :</string>
     <string name="pressureGo">Тиск використанний на шлях:</string>
