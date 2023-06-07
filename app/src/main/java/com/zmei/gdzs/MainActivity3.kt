@@ -102,6 +102,7 @@ class MainActivity3 : AppCompatActivity() {
                 binding.constraintFindFire.layoutParams = layoutParamsConstraint
             }
             binding.imageBalon.visibility = View.VISIBLE
+            binding.progressBarBalon.visibility = View.VISIBLE
             binding.constraintFindFire.visibility = View.VISIBLE
             binding.buttonFire.visibility = View.VISIBLE
             binding.textViewReturn1.visibility = View.INVISIBLE

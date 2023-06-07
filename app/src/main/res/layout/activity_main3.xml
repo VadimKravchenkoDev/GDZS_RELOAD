@@ -23,17 +23,6 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
             tools:layout_editor_absoluteX="5dp">
 
-            <ProgressBar
-                android:id="@+id/progressBarBalon"
-                android:progressDrawable="@drawable/vert_progressbar"
-                android:indeterminate="false"
-                android:layout_width="58dp"
-                android:layout_height="215dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
             <ImageView
                 android:id="@+id/imageBalon"
                 android:layout_width="84dp"
@@ -44,6 +33,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/balon2" />
+
+            <ProgressBar
+                android:id="@+id/progressBarBalon"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="41dp"
+                android:layout_height="176dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="45dp"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/vert_progressbar"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/imageBalon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.567"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
