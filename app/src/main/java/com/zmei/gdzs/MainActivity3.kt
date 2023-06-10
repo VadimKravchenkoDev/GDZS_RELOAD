@@ -218,8 +218,9 @@ class MainActivity3 : AppCompatActivity() {
                 val seconds = (millisUntilFinished % (60 * 1000)) / 1000
                 val timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
                 timerTextView.text = timeLeftFormatted
+                //нижче код для встановлення рівня прогресс бара та зміна кольору в залежності від часу на таймері
                 val progress = (millisUntilFinished / 1000).toInt() // Прогресс в секундах
-                val maxProgress = (timeProtect * 60).toInt() // Максимальное значение прогресса в секундах
+                val maxProgress = (timeProtect * 60).toInt() // Максимальне значение прогресса в секундах
                 binding.progressBarBalon.progress = progress
                 binding.progressBarBalon.max = maxProgress
                 val progressDrawable = binding.progressBarBalon.progressDrawable as LayerDrawable
@@ -228,20 +229,19 @@ class MainActivity3 : AppCompatActivity() {
                 val progressOrange = progressLayer.findDrawableByLayerId(R.id.progressOrange)
                 val progressRed = progressLayer.findDrawableByLayerId(R.id.progressRed)
                 val progressBlue = progressLayer.findDrawableByLayerId(R.id.progressBlue)
-
-                if (progress >= maxProgress * 2 / 3) {
-                    progressOrange.alpha = 0
-                    progressRed.alpha = 0
-                    progressBlue.alpha = 255
-                } else if (progress >= maxProgress / 3) {
-                    progressOrange.alpha = 255
-                    progressRed.alpha = 0
-                    progressBlue.alpha = 0
-                } else {
-                    progressOrange.alpha = 0
-                    progressBlue.alpha = 0
-                    progressRed.alpha = 255
-                }
+                    if (progress >= maxProgress * 2 / 3) {
+                        progressOrange.alpha = 0
+                        progressRed.alpha = 0
+                        progressBlue.alpha = 255
+                    } else if (progress >= maxProgress / 3) {
+                        progressOrange.alpha = 255
+                        progressRed.alpha = 0
+                        progressBlue.alpha = 0
+                    } else {
+                        progressOrange.alpha = 0
+                        progressBlue.alpha = 0
+                        progressRed.alpha = 255
+                    }
             }
             override fun onFinish() {
                 var mediaPlayer = MediaPlayer.create(applicationContext, R.raw.gudok) // звуковий сигнал що оповіщуе про закінчення часу
