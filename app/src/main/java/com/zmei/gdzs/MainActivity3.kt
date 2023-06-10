@@ -120,7 +120,6 @@ class MainActivity3 : AppCompatActivity() {
             binding.outlinedTextFieldReturn.visibility = View.INVISIBLE
             binding.buttonCalcFire.isEnabled=false
         }
-
         binding.buttonFire.setOnClickListener {
             var textTimeFire = binding.textTimeFire.text.toString()
             minPressureNearFire = binding.edMinPressure.text.toString().toIntOrNull() ?: 0
@@ -211,12 +210,12 @@ class MainActivity3 : AppCompatActivity() {
             //minPressureNearFire = binding.edMinPressure.text.toString().toInt()
             val pressureOnExit = minPressureNearFire - pressureSpendWork
             binding.editPressureExit.hint = pressureOnExit.toString()
+            binding.buttonSecurityLog.visibility = View.VISIBLE
         }
         val rootView = findViewById<View>(android.R.id.content)
         // Додаємо обробник подій натискання на кореневе представлення
         rootView.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                // Скрываем клавиатуру
+            if (event.action == MotionEvent.ACTION_DOWN) { // Скрываем клавиатуру
                 hideKeyboard()
             }
             false
@@ -302,6 +301,11 @@ class MainActivity3 : AppCompatActivity() {
             }
         }
         if (isActivityPaused==false) timerFire.start()
+        binding.buttonSecurityLog.setOnClickListener {
+            val intent = Intent(this, MainActivity4::class.java)
+            intent.putExtra("333", "333")
+            startActivity(intent)
+        }
     }
     private fun addMinutesToTime(time: String, minutes: Int): String {
         //Функція для додавання хвилин до поточного часу

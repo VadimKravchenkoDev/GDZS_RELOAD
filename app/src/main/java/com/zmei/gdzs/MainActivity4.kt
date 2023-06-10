@@ -25,6 +25,8 @@ class MainActivity4 : AppCompatActivity() {
                 binding.textTimeActual.background = ColorDrawable(Color.TRANSPARENT)
             }
         }
+        val protectTime = intent.getStringExtra("333")
+        binding.textProtection.text = protectTime
     /*    binding.buttonFindFire.setOnClickListener {
             val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)

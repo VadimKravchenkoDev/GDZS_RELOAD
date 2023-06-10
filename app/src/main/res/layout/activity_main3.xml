@@ -18,6 +18,7 @@
 
 
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/comstrainBalon"
             android:layout_width="wrap_content"
@@ -485,6 +486,17 @@
             app:layout_constraintEnd_toStartOf="@+id/constraintFindFire"
             app:layout_constraintStart_toEndOf="@+id/comstrainBalon"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonSecurityLog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#E31506"
+            android:text="@string/log"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
