@@ -36,6 +36,7 @@
     <string name="work">Таймер роботи</string>
     <string name="notFindFirePart1">Таймер повернення</string>
     <string name="notFindFirePart2">якщо не знайдено осередку пожежі</string>
+    <string name="startExit">Почати вихід ланки</string>
 
 
     <string-array name="action">

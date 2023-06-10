@@ -112,6 +112,7 @@ class MainActivity3 : AppCompatActivity() {
             binding.textViewReturn1.visibility = View.INVISIBLE
             binding.textViewReturn2.visibility = View.INVISIBLE
             binding.outlinedTextFieldReturn.visibility = View.INVISIBLE
+            binding.buttonCalcFire.isEnabled=false
         }
         binding.buttonFire.setOnClickListener {
             var textTimeFire = binding.textTimeFire.text.toString()
@@ -122,11 +123,12 @@ class MainActivity3 : AppCompatActivity() {
             minPressureNearFire > minPressure -> Toast.makeText(this, "Некоректний тиск ", Toast.LENGTH_SHORT).show()
             minPressureNearFire < (minPressure/2+Constant.reservDrager) -> Toast.makeText(this, "Некоректний тиск ", Toast.LENGTH_SHORT).show()
                 else -> {
+                    binding.buttonExit.visibility = View.VISIBLE
                     binding.constraintStartWork.visibility = View.VISIBLE
                     val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
                         if (typeAparat == 1 || typeAparat == 3) {//при виборі типу апаратів з расходом 7 атмосфер
-                            var pressureGo = minPressure - minPressureNearFire //  час захисної дії апарату
+                            var pressureGo = (minPressure - minPressureNearFire) //  час захисної дії апарату
                             if (action == 1) {  //при виборі середнього навантаження роботи
                                 var pressureExit: Int = pressureGo + Constant.reservDrager
                                 binding.textPressureGo.text = pressureExit.toString() + "атм."//тиск використанний на прямування до осередку
@@ -143,7 +145,7 @@ class MainActivity3 : AppCompatActivity() {
                                         binding.textExit.text = exitTime
                                     }
                         } else if (typeAparat == 2) {//при виборі типу апаратів з расходом 5 атмосфер
-                                    var pressureGo = minPressure - minPressureNearFire
+                                    var pressureGo = (minPressure - minPressureNearFire)
                                     if (action == 1) {
                                         var pressureExit: Int = pressureGo + Constant.reservASV
                                         binding.textPressureGo.text = pressureExit.toString() + "атм."
@@ -182,6 +184,14 @@ class MainActivity3 : AppCompatActivity() {
                     binding.buttonFire.isEnabled = false
                 }
             }
+        }
+        binding.buttonExit.setOnClickListener {//при натисканні прибираеться таймер та автоматично вводиться поточний час та тиск
+            binding.outlinedTextField4.visibility = View.GONE
+            val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+            binding.textExit.text = currentTime
+            binding.textExit.setTextColor(Color.RED)
+            binding.textPressureGo.visibility = View.INVISIBLE
+            binding.editPressureExit.visibility = View.VISIBLE
         }
         val rootView = findViewById<View>(android.R.id.content)
         // Додаємо обробник подій натискання на кореневе представлення
