@@ -6,7 +6,10 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.drawable.ClipDrawable
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.LayerDrawable
 import android.media.MediaPlayer
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +26,7 @@ import android.widget.TextClock
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.internal.ViewUtils.dpToPx
 import com.google.android.material.internal.ViewUtils.hideKeyboard
@@ -218,6 +222,26 @@ class MainActivity3 : AppCompatActivity() {
                 val maxProgress = (timeProtect * 60).toInt() // Максимальное значение прогресса в секундах
                 binding.progressBarBalon.progress = progress
                 binding.progressBarBalon.max = maxProgress
+                val progressDrawable = binding.progressBarBalon.progressDrawable as LayerDrawable
+                val clipDrawable = progressDrawable.findDrawableByLayerId(android.R.id.progress) as ClipDrawable
+                val progressLayer = clipDrawable.drawable as LayerDrawable
+                val progressOrange = progressLayer.findDrawableByLayerId(R.id.progressOrange)
+                val progressRed = progressLayer.findDrawableByLayerId(R.id.progressRed)
+                val progressBlue = progressLayer.findDrawableByLayerId(R.id.progressBlue)
+
+                if (progress >= maxProgress * 2 / 3) {
+                    progressOrange.alpha = 0
+                    progressRed.alpha = 0
+                    progressBlue.alpha = 255
+                } else if (progress >= maxProgress / 3) {
+                    progressOrange.alpha = 255
+                    progressRed.alpha = 0
+                    progressBlue.alpha = 0
+                } else {
+                    progressOrange.alpha = 0
+                    progressBlue.alpha = 0
+                    progressRed.alpha = 255
+                }
             }
             override fun onFinish() {
                 var mediaPlayer = MediaPlayer.create(applicationContext, R.raw.gudok) // звуковий сигнал що оповіщуе про закінчення часу
