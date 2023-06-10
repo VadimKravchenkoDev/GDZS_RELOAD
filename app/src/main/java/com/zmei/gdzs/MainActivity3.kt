@@ -33,11 +33,17 @@ import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.zmei.gdzs.constant.Constant
 import com.zmei.gdzs.databinding.ActivityMain3Binding
 import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.*
+import java.util.concurrent.TimeUnit
+
 class MainActivity3 : AppCompatActivity() {
     lateinit var binding: ActivityMain3Binding
     private var isActivityPaused = false
     private var timeWork : Int = 0
+    private var minPressureNearFire: Int = 0
     override fun onPause() {
         super.onPause()
         isActivityPaused = true
@@ -114,9 +120,10 @@ class MainActivity3 : AppCompatActivity() {
             binding.outlinedTextFieldReturn.visibility = View.INVISIBLE
             binding.buttonCalcFire.isEnabled=false
         }
+
         binding.buttonFire.setOnClickListener {
             var textTimeFire = binding.textTimeFire.text.toString()
-            var minPressureNearFire: Int = binding.edMinPressure.text.toString().toIntOrNull() ?: 0
+            minPressureNearFire = binding.edMinPressure.text.toString().toIntOrNull() ?: 0
             when {
             textTimeFire == "Обрати час" -> Toast.makeText(this, "Введіть час", Toast.LENGTH_SHORT).show()
             minPressureNearFire == 0 -> Toast.makeText(this, "Введіть тиск ", Toast.LENGTH_SHORT).show()
@@ -187,11 +194,23 @@ class MainActivity3 : AppCompatActivity() {
         }
         binding.buttonExit.setOnClickListener {//при натисканні прибираеться таймер та автоматично вводиться поточний час та тиск
             binding.outlinedTextField4.visibility = View.GONE
-            val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
-            binding.textExit.text = currentTime
-            binding.textExit.setTextColor(Color.RED)
+            val currentTimeString = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+            binding.textExit.text = currentTimeString
+            binding.textExit.setTextColor(Color.BLUE)
+            binding.textView.setTextColor(Color.BLUE)
+            binding.textView15.setTextColor(Color.BLUE)
             binding.textPressureGo.visibility = View.INVISIBLE
             binding.editPressureExit.visibility = View.VISIBLE
+            //нижче ми через різницю поточного часу та часу початку роботу розраховуємо час та тиск використаний на гасінні пожежі
+            val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+            val timeFire = timeFormat.parse(binding.textTimeFire.text.toString())
+            val timeExit = timeFormat.parse(binding.textExit.text.toString())
+            val differenceMillis = timeExit.time - timeFire.time
+            val differenceMinutes = (differenceMillis / (1000 * 60)).toInt()
+            val pressureSpendWork = differenceMinutes*7
+            //minPressureNearFire = binding.edMinPressure.text.toString().toInt()
+            val pressureOnExit = minPressureNearFire - pressureSpendWork
+            binding.editPressureExit.hint = pressureOnExit.toString()
         }
         val rootView = findViewById<View>(android.R.id.content)
         // Додаємо обробник подій натискання на кореневе представлення
