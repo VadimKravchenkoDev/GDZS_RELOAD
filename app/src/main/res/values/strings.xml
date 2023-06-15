@@ -40,9 +40,9 @@
     <string name="log">Заповнити журнал</string>
     <!--Menu Drawer Strings -->
     <string name="ac_cat1">Акаунт</string>
-    <string name="ac_sign_up">Акаунт</string>
-    <string name="ac_sign_in">Зареєструватися</string>
-    <string name="ac_sign_out">Вхід</string>
+    <string name="ac_sign_up">Зареєструватися</string>
+    <string name="ac_sign_in">Вхід</string>
+    <string name="ac_sign_out">Вихід</string>
     <string name="guidebook_cat2">Довідник</string>
     <string name="settings_cat3">Налаштування</string>
     <string name="about_cat4">Про додаток</string>
