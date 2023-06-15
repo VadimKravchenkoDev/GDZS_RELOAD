@@ -7,10 +7,7 @@
     android:fitsSystemWindows="true"
     android:id="@+id/drawerLayout"
     tools:openDrawer="start"
-
-
     >
-
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navView"
         app:headerLayout="@layout/nav_header_main"
@@ -18,6 +15,5 @@
         android:layout_width="wrap_content"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-
         android:layout_height="match_parent" />
 </androidx.drawerlayout.widget.DrawerLayout>
