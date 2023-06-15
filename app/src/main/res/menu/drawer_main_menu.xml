@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item android:title="@string/ac_cat1">
+        <menu>
+            <item android:title="@string/ac_sign_in"
+                  android:id="@+id/ac_sign_in"
+                />
+            <item android:title="@string/ac_sign_up"
+                android:id="@+id/ac_sign_up"
+                />
+            <item android:title="@string/ac_sign_out"
+                  android:id="@+id/ac_sign_out"
+                />
+        </menu>
+    </item>
+    <item android:title="@string/guidebook_cat2"></item>
+    <item android:title="@string/settings_cat3"></item>
+    <item android:title="@string/about_cat4"></item>
+</menu>
