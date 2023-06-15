@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.zmei.gdzs.R
-import com.zmei.gdzs.databinding.ZvenoActivityBinding
+import com.kravchenko_vadim.gdzs.R
+import com.kravchenko_vadim.gdzs.databinding.ZvenoActivityBinding
 
 class AdapterClass : RecyclerView.Adapter<AdapterClass.HolderClass>() {
     val zvenoList = ArrayList<ZvenoDataClass>()

@@ -1,4 +1,4 @@
-package com.zmei.gdzs.constant
+package com.kravchenko_vadim.gdzs.constant
 
 object Constant {
 

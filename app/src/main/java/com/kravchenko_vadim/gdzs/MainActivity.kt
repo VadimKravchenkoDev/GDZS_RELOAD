@@ -1,12 +1,9 @@
-package com.zmei.gdzs
+package com.kravchenko_vadim.gdzs
 
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import androidx.activity.result.ActivityResultLauncher
-import com.zmei.gdzs.databinding.ActivityMainBinding
+import com.kravchenko_vadim.gdzs.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding

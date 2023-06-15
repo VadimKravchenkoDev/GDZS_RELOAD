@@ -1,4 +1,4 @@
-package com.zmei.gdzs
+package com.kravchenko_vadim.gdzs
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -6,12 +6,9 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.graphics.drawable.ClipDrawable
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
 import android.media.MediaPlayer
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -22,22 +19,14 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.TextClock
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.internal.ViewUtils.dpToPx
-import com.google.android.material.internal.ViewUtils.hideKeyboard
-import com.zmei.gdzs.constant.Constant
-import com.zmei.gdzs.databinding.ActivityMain3Binding
+import com.kravchenko_vadim.gdzs.constant.Constant
+import com.kravchenko_vadim.gdzs.databinding.ActivityMain3Binding
 import java.text.SimpleDateFormat
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class MainActivity3 : AppCompatActivity() {
     lateinit var binding: ActivityMain3Binding

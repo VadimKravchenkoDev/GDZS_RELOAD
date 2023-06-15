@@ -1,4 +1,4 @@
-package com.zmei.gdzs
+package com.kravchenko_vadim.gdzs
 
 import AdapterClass
 import android.app.TimePickerDialog
@@ -12,10 +12,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.zmei.gdzs.constant.Constant
-import com.zmei.gdzs.databinding.ActivityMain2Binding
+import com.kravchenko_vadim.gdzs.constant.Constant
+import com.kravchenko_vadim.gdzs.databinding.ActivityMain2Binding
 import drawable.ItemOffsetDecoration
-import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {

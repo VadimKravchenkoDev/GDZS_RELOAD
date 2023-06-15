@@ -1,4 +1,4 @@
-package com.zmei.gdzs
+package com.kravchenko_vadim.gdzs
 
 import org.junit.Test
 

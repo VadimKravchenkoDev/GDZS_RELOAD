@@ -1,16 +1,11 @@
-package com.zmei.gdzs
+package com.kravchenko_vadim.gdzs
 
 import android.app.TimePickerDialog
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import com.zmei.gdzs.constant.Constant
-import com.zmei.gdzs.databinding.ActivityMain4Binding
+import com.kravchenko_vadim.gdzs.databinding.ActivityMain4Binding
 import java.util.*
 
 class MainActivity4 : AppCompatActivity() {

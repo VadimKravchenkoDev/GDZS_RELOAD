@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.zmei.gdzs'
+    namespace 'com.kravchenko_vadim.gdzs'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.zmei.gdzs"
+        applicationId "com.kravchenko_vadim.gdzs"
         minSdk 24
         targetSdk 33
         versionCode 1
