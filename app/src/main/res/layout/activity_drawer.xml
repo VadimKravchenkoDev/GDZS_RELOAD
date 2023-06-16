@@ -6,8 +6,11 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/drawerLayout"
-    tools:openDrawer="start"
-    >
+    tools:openDrawer="start">
+    <include
+        layout="@layout/activity_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navView"
         app:headerLayout="@layout/nav_header_main"
