@@ -8,7 +8,7 @@
     android:id="@+id/drawerLayout"
     tools:openDrawer="start">
     <include
-        layout="@layout/activity_header"
+        layout="@layout/activity_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <com.google.android.material.navigation.NavigationView

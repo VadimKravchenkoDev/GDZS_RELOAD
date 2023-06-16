@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="170dp"
     android:background="#454242">
-
     <ImageView
         android:id="@+id/imAccountImage"
         android:layout_width="wrap_content"
@@ -14,8 +13,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
-
+        android:src="@drawable/ic_launcher_foreground" />
     <TextView
         android:id="@+id/tvAccountEmail"
         android:layout_width="0dp"

@@ -12,20 +12,15 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">#D1D0D0</item>
         <!-- Customize your theme here. -->
-        <item name="windowActionBar">true</item>
+        <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:screenOrientation">portrait</item>
-
-
     </style>
-
     <style name="Theme.GDZS.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
     <style name="Theme.GDZS.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="Theme.GDZS.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

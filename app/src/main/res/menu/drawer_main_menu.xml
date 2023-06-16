@@ -15,7 +15,10 @@
                 />
         </menu>
     </item>
-    <item android:title="@string/guidebook_cat2"></item>
-    <item android:title="@string/settings_cat3"></item>
-    <item android:title="@string/about_cat4"></item>
+    <item android:title="@string/guidebook_cat2"
+        android:id="@+id/guidebook_cat2"></item>
+    <item android:title="@string/settings_cat3"
+        android:id="@+id/settings_cat3"></item>
+    <item android:title="@string/about_cat4"
+        android:id="@+id/about_cat4"></item>
 </menu>
