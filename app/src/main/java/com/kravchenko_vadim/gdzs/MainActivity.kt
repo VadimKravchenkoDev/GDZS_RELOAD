@@ -11,13 +11,18 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import com.kravchenko_vadim.gdzs.databinding.ActivityMainBinding
+import com.kravchenko_vadim.gdzs.dialogHelper.DialogHelper
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var binding: ActivityMainBinding
+    private var dialogs = DialogHelper(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
         val toggle = ActionBarDrawerToggle(this, binding.drawerLayout, toolbar, R.string.open, R.string.close)

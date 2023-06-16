@@ -48,6 +48,12 @@
     <string name="about_cat4">Про додаток</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <!--Sign dialog -->
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="sign_up">Реєстрація</string>
+    <string name="sign_up_action">Увійти</string>
+    <string name="forget_password">Забули пароль?</string>
 
 
 
