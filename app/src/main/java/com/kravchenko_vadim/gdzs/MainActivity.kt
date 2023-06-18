@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
@@ -21,8 +22,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
         val toggle = ActionBarDrawerToggle(this, binding.drawerLayout, toolbar, R.string.open, R.string.close)
@@ -33,6 +32,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
+
         binding.buttonNext.setOnClickListener {
             val intent = Intent(this, MainActivity2::class.java)
             startActivity(intent)
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()
             }
             R.id.ac_sign_up -> {
-                Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()
+            dialogs.createSignDialog()
             }
             R.id.ac_sign_out -> {
                 Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()
