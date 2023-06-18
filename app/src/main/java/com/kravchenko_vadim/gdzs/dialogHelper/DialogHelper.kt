@@ -26,7 +26,6 @@ class DialogHelper(act:MainActivity) {
                 accHelper.signUpWithEmail(binding.edSignEmail.text.toString(),
                     binding.edSignPassword.toString())
             } else {
-
             }
         }
         builder.setView(view)
