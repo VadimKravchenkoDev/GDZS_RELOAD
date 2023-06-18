@@ -11,7 +11,7 @@ class AccountHelper(act:MainActivity) {
         if (email.isNotEmpty() && password.isNotEmpty()){
             act.myAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful){
-                    sendEmailVerification(task.result.user)
+                    sendEmailVerification(task.result?.user!!)
                 }else {
                     Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
                 }
