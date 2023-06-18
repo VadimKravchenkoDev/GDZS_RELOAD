@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()
             }
             R.id.ac_sign_up -> {
-            dialogs.createSignDialog()
+            dialogs.createSignDialog(1)
             }
             R.id.ac_sign_out -> {
                 Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()
