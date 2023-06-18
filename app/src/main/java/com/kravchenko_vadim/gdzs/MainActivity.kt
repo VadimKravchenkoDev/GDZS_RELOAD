@@ -39,6 +39,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        uiUpdate(myAuth.currentUser)
+    }
     private fun init(){
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
@@ -59,7 +64,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 dialogs.createSignDialog(DialogConst.Sign_Up_State)
             }
             R.id.ac_sign_out -> {
-                Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()
+                uiUpdate(null)
+                myAuth.signOut()
             }
             R.id.guidebook_cat2 -> {
                 Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()
@@ -74,7 +80,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
-    fun uiUpdate(user:FirebaseUser){
-        
+    fun uiUpdate(user:FirebaseUser?){
+        tvAccount.text = if(user == null){
+            resources.getString(R.string.not_reg)
+        } else {
+           user.email
+        }
     }
 }
