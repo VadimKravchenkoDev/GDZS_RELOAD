@@ -52,6 +52,7 @@
     <string name="not_reg">Увійдіть або зареєструйтесь!</string>
     <!--Sign dialog -->
     <string name="email_hint">Email</string>
+    <string name="reset_email_was_sent">Відправлено листа на почту для відновлення пароля</string>
     <string name="password_hint">Password</string>
     <string name="sign_up_action">Зареєструватися</string>
     <string name="sign_in_action">Увійти</string>
@@ -59,7 +60,7 @@
     <string name="sign_up_error">Не вдалось зареєструватися!</string>
     <string name="sign_in_error">Не вдалось увійти!</string>
     <string name="send_verification_email_error">Не вдалось відправити email для підтвердження!</string>
-<string name="send_verification_done">На Вашу пошту відправлено посилання для підтвердження акаунту!</string>
+    <string name="send_verification_done">На Вашу пошту відправлено посилання для підтвердження акаунту!</string>
 
 
 

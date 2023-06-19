@@ -30,7 +30,7 @@
         android:textColorHint="#C5C3C3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSignTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDialogMessage" />
 
     <EditText
         android:id="@+id/edSignPassword"
@@ -67,5 +67,18 @@
         app:layout_constraintEnd_toEndOf="@+id/edSignEmail"
         app:layout_constraintStart_toStartOf="@+id/edSignEmail"
         app:layout_constraintTop_toBottomOf="@+id/btSignUpIn" />
+
+    <TextView
+        android:id="@+id/tvDialogMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="@string/ac_sign_up"
+        android:textColor="#E60505"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/edSignEmail"
+        app:layout_constraintStart_toStartOf="@+id/edSignEmail"
+        app:layout_constraintTop_toBottomOf="@+id/tvSignTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

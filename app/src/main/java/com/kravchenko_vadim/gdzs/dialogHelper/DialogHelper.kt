@@ -2,6 +2,7 @@ package com.kravchenko_vadim.gdzs.dialogHelper
 
 import android.app.AlertDialog
 import android.view.View
+import android.widget.Toast
 import com.kravchenko_vadim.gdzs.MainActivity
 import com.kravchenko_vadim.gdzs.R
 import com.kravchenko_vadim.gdzs.accountHelper.AccountHelper
@@ -28,7 +29,15 @@ class DialogHelper(act:MainActivity) {
     }
 
     private fun setOnClickResetPassword(binding: SignDialogBinding, dialog: AlertDialog?) {
-
+        if (binding.edSignEmail.text.isNotEmpty()){
+            act.myAuth.sendPasswordResetEmail(binding.edSignEmail.text.toString()).addOnCompleteListener { task ->
+                if (task.isSuccessful){
+                    Toast.makeText(act,  R.string.reset_email_was_sent, Toast.LENGTH_LONG).show()
+                }
+            }
+        } else{
+            binding.tvDialogMessage.visibility = View.VISIBLE
+        }
     }
 
     private fun setOnClickSignUpIn(index: Int, binding: SignDialogBinding, dialog: AlertDialog?) {
