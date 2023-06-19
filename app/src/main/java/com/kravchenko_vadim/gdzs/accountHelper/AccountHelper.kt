@@ -1,6 +1,9 @@
 package com.kravchenko_vadim.gdzs.accountHelper
 
 import android.widget.Toast
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseUser
 import com.kravchenko_vadim.gdzs.MainActivity
 import com.kravchenko_vadim.gdzs.R
@@ -29,6 +32,11 @@ class AccountHelper(act:MainActivity) {
                 }
             }
         }
+    }
+    private fun getSignInClient():GoogleSignInClient{
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("350006194847-gc3g770mfaff512r4gfr2hn2uq0had70.apps.googleusercontent.com").build()
+        return GoogleSignIn.getClient(act, gso)
     }
     private fun sendEmailVerification(user:FirebaseUser){
         user.sendEmailVerification().addOnCompleteListener { task->
