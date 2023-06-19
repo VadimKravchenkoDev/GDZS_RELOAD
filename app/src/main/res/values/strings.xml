@@ -53,6 +53,7 @@
     <!--Sign dialog -->
     <string name="email_hint">Email</string>
     <string name="reset_email_was_sent">Відправлено листа на почту для відновлення пароля</string>
+    <string name="dialog_reset_email_message"> Для відновлення паролю вкажіть вашу почтову скриньку</string>
     <string name="password_hint">Password</string>
     <string name="sign_up_action">Зареєструватися</string>
     <string name="sign_in_action">Увійти</string>

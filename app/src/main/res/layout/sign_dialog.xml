@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
-        android:text="@string/ac_sign_up"
+        android:text="@string/dialog_reset_email_message"
         android:textColor="#E60505"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/edSignEmail"

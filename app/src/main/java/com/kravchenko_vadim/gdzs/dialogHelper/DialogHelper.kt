@@ -35,6 +35,7 @@ class DialogHelper(act:MainActivity) {
                     Toast.makeText(act,  R.string.reset_email_was_sent, Toast.LENGTH_LONG).show()
                 }
             }
+            dialog?.dismiss()
         } else{
             binding.tvDialogMessage.visibility = View.VISIBLE
         }
