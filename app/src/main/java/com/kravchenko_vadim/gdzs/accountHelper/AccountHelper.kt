@@ -7,9 +7,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseUser
 import com.kravchenko_vadim.gdzs.MainActivity
 import com.kravchenko_vadim.gdzs.R
+import com.kravchenko_vadim.gdzs.constant.GoogleAccConst
 
 class AccountHelper(act:MainActivity) {
     private val act = act
+    private lateinit var signInClient: GoogleSignInClient
+
     fun signUpWithEmail(email:String, password: String){
         if (email.isNotEmpty() && password.isNotEmpty()){
             act.myAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
@@ -33,10 +36,16 @@ class AccountHelper(act:MainActivity) {
             }
         }
     }
+
     private fun getSignInClient():GoogleSignInClient{
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("350006194847-gc3g770mfaff512r4gfr2hn2uq0had70.apps.googleusercontent.com").build()
         return GoogleSignIn.getClient(act, gso)
+    }
+    fun signInWithGoogle(){
+        signInClient = getSignInClient()
+        val intent = signInClient.signInIntent
+        act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE )
     }
     private fun sendEmailVerification(user:FirebaseUser){
         user.sendEmailVerification().addOnCompleteListener { task->
