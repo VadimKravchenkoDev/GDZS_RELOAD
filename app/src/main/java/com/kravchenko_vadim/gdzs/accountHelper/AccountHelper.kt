@@ -55,11 +55,12 @@ class AccountHelper(act:MainActivity) {
     }
     fun firebaseAuthWithGoogle(idToken: String){
         val credencial = GoogleAuthProvider.getCredential(idToken, null)
-        act.auth.signInWithCredential(credencial).addOnCompleteListener {
-            if (it.isSuccessful){
-                Log.d("log", "succes")
+        act.auth.signInWithCredential(credencial).addOnCompleteListener { task ->
+            if (task.isSuccessful){
+                Toast.makeText(act, "Реєстрація прошла успішно", Toast.LENGTH_SHORT).show()
+                act.uiUpdate(task.result?.user)
             } else {
-                Log.d("log", "error")
+                Toast.makeText(act, "Помилка при реєстрації", Toast.LENGTH_SHORT).show()
             }
         }
     }
