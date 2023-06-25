@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kravchenko_vadim.gdzs.MainActivity
@@ -26,6 +27,11 @@ class AccountHelper(act:MainActivity) {
                     act.uiUpdate(task.result?.user)
                 }else {
                     Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
+                    Log.d("mylog", "Exception: " + task.exception)
+                    if(task.exception is FirebaseAuthUserCollisionException){
+                        val exception = task.exception as FirebaseAuthUserCollisionException
+                        Log.d("mylog", "Exception: ${exception.errorCode}")
+                    }
                 }
             }
         }
