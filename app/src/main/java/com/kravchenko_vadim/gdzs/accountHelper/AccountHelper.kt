@@ -1,10 +1,14 @@
 package com.kravchenko_vadim.gdzs.accountHelper
 
+import android.content.Intent
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.kravchenko_vadim.gdzs.MainActivity
 import com.kravchenko_vadim.gdzs.R
 import com.kravchenko_vadim.gdzs.constant.GoogleAccConst
@@ -12,6 +16,7 @@ import com.kravchenko_vadim.gdzs.constant.GoogleAccConst
 class AccountHelper(act:MainActivity) {
     private val act = act
     private lateinit var signInClient: GoogleSignInClient
+
 
     fun signUpWithEmail(email:String, password: String){
         if (email.isNotEmpty() && password.isNotEmpty()){
@@ -39,13 +44,24 @@ class AccountHelper(act:MainActivity) {
     private fun getSignInClient():GoogleSignInClient{
         val gso = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("350006194847-gc3g770mfaff512r4gfr2hn2uq0had70.apps.googleusercontent.com").build()
+            .requestIdToken("350006194847-gc3g770mfaff512r4gfr2hn2uq0had70.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
         return GoogleSignIn.getClient(act, gso)
     }
-    fun signInWithGoogle(){
+    fun signInWithGoogle() {
         signInClient = getSignInClient()
-        val intent = signInClient.signInIntent
-        act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE )
+        act.launcher.launch(signInClient.signInIntent)
+    }
+    fun firebaseAuthWithGoogle(idToken: String){
+        val credencial = GoogleAuthProvider.getCredential(idToken, null)
+        act.auth.signInWithCredential(credencial).addOnCompleteListener {
+            if (it.isSuccessful){
+                Log.d("log", "succes")
+            } else {
+                Log.d("log", "error")
+            }
+        }
     }
     private fun sendEmailVerification(user:FirebaseUser){
         user.sendEmailVerification().addOnCompleteListener { task->

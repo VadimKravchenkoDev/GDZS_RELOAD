@@ -8,13 +8,20 @@ import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.kravchenko_vadim.gdzs.accountHelper.AccountHelper
 import com.kravchenko_vadim.gdzs.constant.DialogConst
 import com.kravchenko_vadim.gdzs.constant.GoogleAccConst
 import com.kravchenko_vadim.gdzs.databinding.ActivityMainBinding
@@ -25,27 +32,41 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var binding: ActivityMainBinding
     private var dialogs = DialogHelper(this)
     val myAuth = FirebaseAuth.getInstance()
+    lateinit var auth: FirebaseAuth
+    lateinit var launcher: ActivityResultLauncher<Intent>
+    val accountHelper = AccountHelper(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        auth = Firebase.auth
+        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+            try{
+                val account = task.getResult(ApiException::class.java)
+                if (account != null){
+                    accountHelper.firebaseAuthWithGoogle(account.idToken!!)
+                }
+            }catch (e:ApiException){
+                Log.d("log", "Api exception")
+            }
+        }
         init()
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-
         binding.buttonNext.setOnClickListener {
             val intent = Intent(this, MainActivity2::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
-            Log.d("Mylog", "sign in result")
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE) {
+            // Обработка результатов авторизации через Google
+        }
     }
     override fun onStart() {
         super.onStart()
