@@ -47,7 +47,7 @@ class AccountHelper(act:MainActivity) {
             .requestIdToken("350006194847-gc3g770mfaff512r4gfr2hn2uq0had70.apps.googleusercontent.com")
             .requestEmail()
             .build()
-        return GoogleSignIn.getClient(act, gso)
+        return GoogleSignIn.getClient(act.applicationContext, gso)
     }
     fun signInWithGoogle() {
         signInClient = getSignInClient()

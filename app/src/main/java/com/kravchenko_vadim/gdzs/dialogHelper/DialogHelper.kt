@@ -30,7 +30,6 @@ class DialogHelper(act:MainActivity) {
         }
         dialog.show()
     }
-
     private fun setOnClickResetPassword(binding: SignDialogBinding, dialog: AlertDialog?) {
         if (binding.edSignEmail.text.isNotEmpty()){
             act.myAuth.sendPasswordResetEmail(binding.edSignEmail.text.toString()).addOnCompleteListener { task ->
@@ -43,7 +42,6 @@ class DialogHelper(act:MainActivity) {
             binding.tvDialogMessage.visibility = View.VISIBLE
         }
     }
-
     private fun setOnClickSignUpIn(index: Int, binding: SignDialogBinding, dialog: AlertDialog?) {
         dialog?.dismiss()
         if (index == DialogConst.Sign_Up_State){
@@ -54,7 +52,6 @@ class DialogHelper(act:MainActivity) {
                 binding.edSignPassword.text.toString())
         }
     }
-
     private fun setDialogState(index: Int, binding: SignDialogBinding) {
         if (index == DialogConst.Sign_Up_State){
             binding.tvSignTitle.text = act.resources.getString(R.string.ac_sign_up)
