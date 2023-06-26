@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -20,25 +21,32 @@ class AccountHelper(act:MainActivity) {
     private lateinit var signInClient: GoogleSignInClient
 
 
-    fun signUpWithEmail(email:String, password: String){
-        if (email.isNotEmpty() && password.isNotEmpty()){
-            act.myAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                if (task.isSuccessful){
-                    sendEmailVerification(task.result?.user!!)
-                    act.uiUpdate(task.result?.user)
-                }else {
-                    //Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
-                    Log.d("mylog", "Exception: " + task.exception)
-                    Toast.makeText(act, "Ошибка регистрации: " + task.exception?.message, Toast.LENGTH_LONG).show()
-                    if(task.exception is FirebaseAuthUserCollisionException){
-                        val exception = task.exception as FirebaseAuthUserCollisionException
-                        if (exception.errorCode == FirebaseConstant.ERORR_EMAIL_ALREADY_IN_USE){
-                            Log.d("mylog", "Exception: " + task.exception)
-                            Toast.makeText(act, FirebaseConstant.ERORR_EMAIL_ALREADY_IN_USE, Toast.LENGTH_LONG).show()
+    fun signUpWithEmail(email: String, password: String) {
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            act.myAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        sendEmailVerification(task.result?.user!!)
+                        act.uiUpdate(task.result?.user)
+                    } else {
+                        //Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
+                        //Log.d("mylog", "Exception: " + task.exception)
+                        //Log.d("mylog", "Exception: ${exception.errorCode}")
+                        //Toast.makeText(act, "Ошибка регистрации: " + task.exception?.message, Toast.LENGTH_LONG).show()
+                        if (task.exception is FirebaseAuthUserCollisionException) {
+                            val exception = task.exception as FirebaseAuthUserCollisionException
+                            if (exception.errorCode == FirebaseConstant.ERROR_EMAIL_ALREADY_IN_USE) {
+                                Toast.makeText(act, FirebaseConstant.ERROR_EMAIL_ALREADY_IN_USE, Toast.LENGTH_LONG).show()
+                            }
+                        } else if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                            val exception = task.exception as FirebaseAuthInvalidCredentialsException
+                            if (exception.errorCode == FirebaseConstant.ERROR_INVALID_EMAIL) {
+                                Toast.makeText(act, FirebaseConstant.ERROR_INVALID_EMAIL, Toast.LENGTH_LONG).show()
+                            }
                         }
+
                     }
                 }
-            }
         }
     }
     fun signInWithEmail(email:String, password: String){
@@ -47,7 +55,16 @@ class AccountHelper(act:MainActivity) {
                 if (task.isSuccessful){
                     act.uiUpdate(task.result?.user)
                 }else {
-                    Toast.makeText(act, act.resources.getString(R.string.sign_in_error), Toast.LENGTH_LONG).show()
+                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                        val exception = task.exception as FirebaseAuthInvalidCredentialsException
+                        if (exception.errorCode == FirebaseConstant.ERROR_INVALID_EMAIL) {
+                            Toast.makeText(
+                                act,
+                                FirebaseConstant.ERROR_INVALID_EMAIL,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
                 }
             }
         }
