@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kravchenko_vadim.gdzs.MainActivity
 import com.kravchenko_vadim.gdzs.R
+import com.kravchenko_vadim.gdzs.constant.FirebaseConstant
 import com.kravchenko_vadim.gdzs.constant.GoogleAccConst
 
 class AccountHelper(act:MainActivity) {
@@ -26,11 +27,15 @@ class AccountHelper(act:MainActivity) {
                     sendEmailVerification(task.result?.user!!)
                     act.uiUpdate(task.result?.user)
                 }else {
-                    Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
+                    //Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
                     Log.d("mylog", "Exception: " + task.exception)
+                    Toast.makeText(act, "Ошибка регистрации: " + task.exception?.message, Toast.LENGTH_LONG).show()
                     if(task.exception is FirebaseAuthUserCollisionException){
                         val exception = task.exception as FirebaseAuthUserCollisionException
-                        Log.d("mylog", "Exception: ${exception.errorCode}")
+                        if (exception.errorCode == FirebaseConstant.ERORR_EMAIL_ALREADY_IN_USE){
+                            Log.d("mylog", "Exception: " + task.exception)
+                            Toast.makeText(act, FirebaseConstant.ERORR_EMAIL_ALREADY_IN_USE, Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             }
