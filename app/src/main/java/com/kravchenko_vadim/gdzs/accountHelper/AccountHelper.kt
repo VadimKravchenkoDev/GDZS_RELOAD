@@ -7,10 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.*
 import com.kravchenko_vadim.gdzs.MainActivity
 import com.kravchenko_vadim.gdzs.R
 import com.kravchenko_vadim.gdzs.constant.FirebaseConstant
@@ -30,7 +27,7 @@ class AccountHelper(act:MainActivity) {
                         act.uiUpdate(task.result?.user)
                     } else {
                         //Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
-                        //Log.d("mylog", "Exception: " + task.exception)
+                        Log.d("mylog", "Exception: " + task.exception)
                         //Log.d("mylog", "Exception: ${exception.errorCode}")
                         //Toast.makeText(act, "Ошибка регистрации: " + task.exception?.message, Toast.LENGTH_LONG).show()
                         if (task.exception is FirebaseAuthUserCollisionException) {
@@ -44,7 +41,14 @@ class AccountHelper(act:MainActivity) {
                                 Toast.makeText(act, FirebaseConstant.ERROR_INVALID_EMAIL, Toast.LENGTH_LONG).show()
                             }
                         }
-
+                        if (task.exception is FirebaseAuthWeakPasswordException) {
+                            val exception = task.exception as FirebaseAuthWeakPasswordException
+                            Log.d("mylog", "Exception: " + exception.errorCode)
+                            if (exception.errorCode == FirebaseConstant.ERROR_WEAK_PASSWORD) {
+                                Toast.makeText(act, FirebaseConstant.ERROR_WEAK_PASSWORD, Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
                     }
                 }
         }
@@ -57,12 +61,11 @@ class AccountHelper(act:MainActivity) {
                 }else {
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         val exception = task.exception as FirebaseAuthInvalidCredentialsException
+                        Log.d("mylog", "Exception: + ${exception.errorCode}")
                         if (exception.errorCode == FirebaseConstant.ERROR_INVALID_EMAIL) {
-                            Toast.makeText(
-                                act,
-                                FirebaseConstant.ERROR_INVALID_EMAIL,
-                                Toast.LENGTH_LONG
-                            ).show()
+                            Toast.makeText(act, FirebaseConstant.ERROR_INVALID_EMAIL, Toast.LENGTH_LONG).show()
+                        } else if (exception.errorCode == FirebaseConstant.ERROR_WRONG_PASSWORD) {
+                            Toast.makeText(act, FirebaseConstant.ERROR_WRONG_PASSWORD, Toast.LENGTH_LONG).show()
                         }
                     }
                 }
@@ -89,6 +92,7 @@ class AccountHelper(act:MainActivity) {
                 act.uiUpdate(task.result?.user)
             } else {
                 Toast.makeText(act, "Помилка при реєстрації", Toast.LENGTH_SHORT).show()
+                Log.d("mylog", "Exception: + ${task.exception}")
             }
         }
     }
