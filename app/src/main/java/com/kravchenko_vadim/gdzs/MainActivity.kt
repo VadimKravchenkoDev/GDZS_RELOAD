@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             try{
                 val account = task.getResult(ApiException::class.java)
                 if (account != null){
-                    accountHelper.firebaseAuthWithGoogle(account.idToken!!)
+                    dialogs.accHelper.signInWithGoogle(account.idToken)
                 }
             }catch (e:ApiException){
                 Log.d("log", "Api exception")

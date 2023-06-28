@@ -93,7 +93,12 @@ class AccountHelper(act:MainActivity) {
     }
     fun signInWithGoogle() {
         signInClient = getSignInClient()
-        act.launcher.launch(signInClient.signInIntent)
+        val intent = signInClient.signInIntent
+        act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
+    }
+    fun signOutGoogle() {
+        getSignInClient().signOut()
+
     }
     fun firebaseAuthWithGoogle(idToken: String){
         val credencial = GoogleAuthProvider.getCredential(idToken, null)
