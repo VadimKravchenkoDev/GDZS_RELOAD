@@ -1,9 +1,7 @@
 package com.kravchenko_vadim.gdzs.accountHelper
 
-import android.content.Intent
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -89,13 +87,9 @@ class AccountHelper(act:MainActivity) {
             .requestIdToken("350006194847-gc3g770mfaff512r4gfr2hn2uq0had70.apps.googleusercontent.com")
             .requestEmail()
             .build()
-        return GoogleSignIn.getClient(act.applicationContext, gso)
+        return GoogleSignIn.getClient(act, gso)
     }
-    fun signInWithGoogle() {
-        signInClient = getSignInClient()
-        val intent = signInClient.signInIntent
-        act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
-    }
+
     fun signOutGoogle() {
         getSignInClient().signOut()
 
@@ -104,7 +98,7 @@ class AccountHelper(act:MainActivity) {
         val credencial = GoogleAuthProvider.getCredential(idToken, null)
         act.auth.signInWithCredential(credencial).addOnCompleteListener { task ->
             if (task.isSuccessful){
-                Toast.makeText(act, "Реєстрація прошла успішно", Toast.LENGTH_SHORT).show()
+                Toast.makeText(act, "Реєстрація пройшла успішно", Toast.LENGTH_SHORT).show()
                 act.uiUpdate(task.result?.user)
             } else {
                 Toast.makeText(act, "Помилка при реєстрації", Toast.LENGTH_SHORT).show()
@@ -120,5 +114,11 @@ class AccountHelper(act:MainActivity) {
                 Toast.makeText(act, act.resources.getString(R.string.send_verification_email_error), Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    fun signInWithGoogle() {
+        signInClient = getSignInClient()
+        val intent = signInClient.signInIntent
+        act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
     }
 }
