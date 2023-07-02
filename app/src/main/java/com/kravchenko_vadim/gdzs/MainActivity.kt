@@ -32,8 +32,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var dialogs = DialogHelper(this)
     val myAuth = FirebaseAuth.getInstance()
     lateinit var auth: FirebaseAuth
-    lateinit var launcher: ActivityResultLauncher<Intent>
-    val accountHelper = AccountHelper(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -61,7 +59,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
@@ -73,11 +70,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }catch (e:ApiException){
                 Log.d("log", "Api exception")
             }
-
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-
     override fun onStart() {
         super.onStart()
         uiUpdate(myAuth.currentUser)
@@ -107,7 +102,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()
             }
             R.id.settings_cat3 -> {
-                Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivitySettings::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             }
             R.id.about_cat4 -> {
                 Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()

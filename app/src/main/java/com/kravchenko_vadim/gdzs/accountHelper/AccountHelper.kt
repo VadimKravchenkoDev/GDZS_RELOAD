@@ -42,8 +42,7 @@ class AccountHelper(act:MainActivity) {
                             val exception = task.exception as FirebaseAuthWeakPasswordException
                             Log.d("mylog", "Exception: " + exception.errorCode)
                             if (exception.errorCode == FirebaseConstant.ERROR_WEAK_PASSWORD) {
-                                Toast.makeText(act, FirebaseConstant.ERROR_WEAK_PASSWORD, Toast.LENGTH_LONG
-                                ).show()
+                                Toast.makeText(act, FirebaseConstant.ERROR_WEAK_PASSWORD, Toast.LENGTH_LONG).show()
                             }
                         }
                     }

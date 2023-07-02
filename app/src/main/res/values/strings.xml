@@ -62,9 +62,9 @@
     <string name="sign_in_error">Не вдалось увійти!</string>
     <string name="send_verification_email_error">Не вдалось відправити email для підтвердження!</string>
     <string name="send_verification_done">На Вашу пошту відправлено посилання для підтвердження акаунту!</string>
-<!--Google and Mail-->
-<string name="link_done">Email успішно підключено до Google аккаунту</string>
-<string name="enter_to_g">У вас вже є аккаунт з цією Email адресою</string>
+    <!--Google and Mail-->
+    <string name="link_done">Email успішно підключено до Google аккаунту</string>
+    <string name="enter_to_g">У вас вже є аккаунт з цією Email адресою</string>
 
 
     <string-array name="action">
