@@ -65,8 +65,12 @@
     <!--Google and Mail-->
     <string name="link_done">Email успішно підключено до Google аккаунту</string>
     <string name="enter_to_g">У вас вже є аккаунт з цією Email адресою</string>
+    <!--settings-->
+    <string name="general">Основні налаштування</string>
+    <string name="text_size">Оберіть розмір тексту</string>
+    <string name="theme_settings">Оберіть колір теми</string>
 
-
+    <!--List of menu-->
     <string-array name="action">
         <item>Оберіть тип роботи:</item>
         <item>Пожежа</item>
@@ -74,21 +78,15 @@
         <item>Заняття</item>
         <item>Навчання</item>
     </string-array>
-
     <string-array name="apparatus">
         <item>Оберіть тип апарату:</item>
         <item>Drager</item>
         <item>АСП-2</item>
         <item>MSA</item>
     </string-array>
-
     <string-array name="workload">
         <item>Оберіть тип навантаження:</item>
         <item>Середнє навантаження</item>
         <item>Тяжке навантаження</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
 </resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="text_size_array">
+        <item></item>
+    </string-array>
+    <string-array name="text_size_value">
+        <item>10 sp</item>
+        <item>12 sp</item>
+        <item>14 sp</item>
+        <item>16 sp</item>
+    </string-array>
+    <string-array name="chose_theme_array">
+        <item>Блакитна тема</item>
+        <item>Зелена тема</item>
+        <item>Сіра тема</item>
+    </string-array>
+    <string-array name="chose_theme_value">
+        <item>Блакитна</item>
+        <item>Зелена</item>
+        <item>Сіра</item>
+    </string-array>
+</resources>
