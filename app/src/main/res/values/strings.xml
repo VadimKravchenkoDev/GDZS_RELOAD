@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GDZS</string>
     <string name="next">Почати роботу</string>
-    <string name="welcome">Вітаємо в електронному табелі роботи ланок ГДЗС</string>
+    <string name="welcome">ПОСТ БЕЗПЕКИ</string>
     <string name="calculate">Калькулятор поста безпеки</string>
     <string name="calculate1">Розрахувати час та тиск </string>
     <string name="enter"> Далі</string>
@@ -25,10 +25,10 @@
     <string name="timeExit">Час повернення</string>
     <string name="timeWork">Час роботи біля осередку пожежі</string>
     <string name="timeProtect">Час захисної дії апаратів</string>
-    <string name="timer">Залишок часу</string>
+    <string name="timer">Залишок</string>
     <string name="timer2">Таймер виходу</string>
     <string name="realTime">Годинник</string>
-    <string name="fireTimer">Таймер зв\'язку</string>
+    <string name="fireTimer">Зв\'язок</string>
     <string name="accessToWork">Працювати при тиску нижче ліміту</string>
     <string name="warning">Попередження</string>
     <string name="warningMassage">Всі данні будуть видалені, ви впевненні?</string>

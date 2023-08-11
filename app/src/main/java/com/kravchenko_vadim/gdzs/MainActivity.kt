@@ -37,17 +37,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth = Firebase.auth
-        /*launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-            try{
-                val account = task.getResult(ApiException::class.java)
-                if (account != null){
-                    dialogs.accHelper.signInWithGoogle(account.idToken)
-                }
-            }catch (e:ApiException){
-                Log.d("log", "Api exception")
-            }
-        }*/
         init()
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,

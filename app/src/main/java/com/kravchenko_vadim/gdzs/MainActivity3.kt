@@ -33,6 +33,9 @@ class MainActivity3 : AppCompatActivity() {
     private var isActivityPaused = false
     private var timeWork : Int = 0
     private var minPressureNearFire: Int = 0
+    private lateinit var timer: CountDownTimer
+    private lateinit var timerWorkNotFind: CountDownTimer
+    private lateinit var timerFire: CountDownTimer
     override fun onPause() {
         super.onPause()
         isActivityPaused = true
@@ -340,6 +343,21 @@ class MainActivity3 : AppCompatActivity() {
             builder.setNegativeButton("Cancel") { dialog, which ->
             }
             return builder.create()
+        }
+    }
+    override fun onStop() {
+        super.onStop()
+
+        if (::timer.isInitialized) {
+            timer.cancel()
+        }
+
+        if (::timerWorkNotFind.isInitialized) {
+            timerWorkNotFind.cancel()
+        }
+
+        if (::timerFire.isInitialized) {
+            timerFire.cancel()
         }
     }
 }
