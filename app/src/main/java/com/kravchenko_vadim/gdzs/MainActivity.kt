@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var tvAccount : TextView
     lateinit var binding: ActivityMainBinding
     private var dialogs = DialogHelper(this)
-    val myAuth = FirebaseAuth.getInstance()
+    var myAuth = FirebaseAuth.getInstance()
     lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +38,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(binding.root)
         auth = Firebase.auth
         init()
-        getWindow().setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
         binding.buttonNext.setOnClickListener {
             val intent = Intent(this, MainActivity2::class.java)
             startActivity(intent)
