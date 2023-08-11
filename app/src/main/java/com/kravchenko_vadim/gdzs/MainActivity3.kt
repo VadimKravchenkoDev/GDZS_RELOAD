@@ -73,7 +73,6 @@ class MainActivity3 : AppCompatActivity() {
         binding.textTimeFire.setOnClickListener {
             showTimePickerDialog { selectedTime ->
                 binding.textTimeFire.text = selectedTime
-                //binding.textTimeFire.background = ColorDrawable(Color.TRANSPARENT)
             }
         }
         //поле для вводу мінімального тиску при знаходжені осередку пожежі
