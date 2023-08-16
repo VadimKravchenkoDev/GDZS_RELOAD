@@ -12,7 +12,6 @@ import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
@@ -22,9 +21,15 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.DialogFragment
 import com.kravchenko_vadim.gdzs.constant.Constant
 import com.kravchenko_vadim.gdzs.databinding.ActivityMain3Binding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,15 +54,14 @@ class MainActivity3 : AppCompatActivity() {
         binding = ActivityMain3Binding.inflate(layoutInflater)
         setContentView(binding.root)
         val textInputEditText = binding.watch //годинник
-        val handler = Handler()
-        val updateRunnable = object : Runnable {
-            override fun run() {
+        val scope = CoroutineScope(Dispatchers.Main) // зміна секунд в реальному часі на годиннику
+        scope.launch {
+            while (true) {
                 val currentTime = SimpleDateFormat("HH:mm:ss").format(Date())
                 textInputEditText.setText(currentTime)
-                handler.postDelayed(this, 1000) // оновлення тексту годинника кожну секунду
+                delay(1000) // 1 секунда оновлення часу
             }
         }
-        handler.postDelayed(updateRunnable, 0)
         val action = intent.getIntExtra("action", 0)
         val minPressure = intent.getIntExtra("minPressure",0)
         val timeAction = intent.getStringExtra("timeAction")
@@ -191,14 +195,13 @@ class MainActivity3 : AppCompatActivity() {
             binding.textView15.setTextColor(Color.BLUE)
             binding.textPressureGo.visibility = View.INVISIBLE
             binding.editPressureExit.visibility = View.VISIBLE
-            //нижче ми через різницю поточного часу та часу початку роботу розраховуємо час та тиск використаний на гасінні пожежі
+            //нижче через різницю поточного часу та часу початку роботу розраховуємо час та тиск використаний на гасінні пожежі
             val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
             val timeFire = timeFormat.parse(binding.textTimeFire.text.toString())
             val timeExit = timeFormat.parse(binding.textExit.text.toString())
             val differenceMillis = timeExit.time - timeFire.time
             val differenceMinutes = (differenceMillis / (1000 * 60)).toInt()
             val pressureSpendWork = differenceMinutes*7
-            //minPressureNearFire = binding.edMinPressure.text.toString().toInt()
             val pressureOnExit = minPressureNearFire - pressureSpendWork
             binding.editPressureExit.hint = pressureOnExit.toString()
             binding.buttonSecurityLog.visibility = View.VISIBLE
@@ -296,6 +299,11 @@ class MainActivity3 : AppCompatActivity() {
             val intent = Intent(this, MainActivity4::class.java)
             intent.putExtra("333", "333")
             startActivity(intent)
+            val options = ActivityOptionsCompat.makeCustomAnimation(
+                this,
+                R.anim.fade_in, R.anim.fade_out
+            )
+            ActivityCompat.startActivity(this, intent, options.toBundle())
         }
     }
     private fun addMinutesToTime(time: String, minutes: Int): String {
@@ -346,15 +354,12 @@ class MainActivity3 : AppCompatActivity() {
     }
     override fun onStop() {
         super.onStop()
-
         if (::timer.isInitialized) {
             timer.cancel()
         }
-
         if (::timerWorkNotFind.isInitialized) {
             timerWorkNotFind.cancel()
         }
-
         if (::timerFire.isInitialized) {
             timerFire.cancel()
         }

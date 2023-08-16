@@ -11,6 +11,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kravchenko_vadim.gdzs.constant.Constant
 import com.kravchenko_vadim.gdzs.databinding.ActivityMain2Binding
@@ -114,7 +116,11 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                                 intent.putExtra("action", selected3)
                                 intent.putExtra("timeAction", timeBt)
                                 startActivity(intent)
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                         val options = ActivityOptionsCompat.makeCustomAnimation(
+                             this,
+                             R.anim.fade_in, R.anim.fade_out
+                         )
+                         ActivityCompat.startActivity(this, intent, options.toBundle())
                      }
                 }
             }
