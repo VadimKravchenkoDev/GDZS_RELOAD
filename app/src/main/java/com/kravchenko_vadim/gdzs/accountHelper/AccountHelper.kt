@@ -88,7 +88,6 @@ class AccountHelper(act:MainActivity) {
             .build()
         return GoogleSignIn.getClient(act, gso)
     }
-
     fun signOutGoogle() {
         getSignInClient().signOut()
 
@@ -114,7 +113,6 @@ class AccountHelper(act:MainActivity) {
             }
         }
     }
-
     fun signInWithGoogle() {
         signInClient = getSignInClient()
         val intent = signInClient.signInIntent

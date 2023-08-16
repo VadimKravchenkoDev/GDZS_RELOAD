@@ -1,5 +1,6 @@
 package com.kravchenko_vadim.gdzs
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -31,9 +32,10 @@ import com.kravchenko_vadim.gdzs.dialogHelper.DialogHelper
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var tvAccount : TextView
     lateinit var binding: ActivityMainBinding
-    private var dialogs = DialogHelper(this)
+    private lateinit var dialogs: DialogHelper
     var myAuth = FirebaseAuth.getInstance()
     lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -50,20 +52,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             )
             ActivityCompat.startActivity(this, intent, options.toBundle())
         }
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try{
-                val account = task.getResult(ApiException::class.java)
-                if (account != null){
-                    dialogs.accHelper.firebaseAuthWithGoogle(account.idToken!!)
+        googleSignInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                try {
+                    val account = task.getResult(ApiException::class.java)
+                    if (account != null) {
+                        dialogs.accHelper.firebaseAuthWithGoogle(account.idToken!!)
+                    }
+                } catch (e: ApiException) {
+                    Log.d("log", "Api exception")
                 }
-            }catch (e:ApiException){
-                Log.d("log", "Api exception")
             }
         }
-        super.onActivityResult(requestCode, resultCode, data)
     }
     override fun onStart() {
         super.onStart()
@@ -96,7 +97,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.settings_cat3 -> {
                 val intent = Intent(this, MainActivitySettings::class.java)
                 startActivity(intent)
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                val options = ActivityOptionsCompat.makeCustomAnimation(
+                    this,
+                    R.anim.fade_in, R.anim.fade_out
+                )
+                ActivityCompat.startActivity(this, intent, options.toBundle())
             }
             R.id.about_cat4 -> {
                 Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()

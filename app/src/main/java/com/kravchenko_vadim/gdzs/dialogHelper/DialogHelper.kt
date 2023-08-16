@@ -1,16 +1,18 @@
 package com.kravchenko_vadim.gdzs.dialogHelper
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import com.kravchenko_vadim.gdzs.MainActivity
 import com.kravchenko_vadim.gdzs.R
 import com.kravchenko_vadim.gdzs.accountHelper.AccountHelper
 import com.kravchenko_vadim.gdzs.constant.DialogConst
 import com.kravchenko_vadim.gdzs.databinding.SignDialogBinding
 
-class DialogHelper(act:MainActivity) {
-    private val act = act
+class DialogHelper(private val activity: MainActivity, private val googleSignInLauncher: ActivityResultLauncher<Intent>) {
+    private val act = activity
     val accHelper = AccountHelper(act)
     fun createSignDialog(index:Int){
         val builder = AlertDialog.Builder(act)
@@ -44,12 +46,17 @@ class DialogHelper(act:MainActivity) {
     }
     private fun setOnClickSignUpIn(index: Int, binding: SignDialogBinding, dialog: AlertDialog?) {
         dialog?.dismiss()
-        if (index == DialogConst.Sign_Up_State){
-            accHelper.signUpWithEmail(binding.edSignEmail.text.toString(),
-                binding.edSignPassword.text.toString())
-        } else {
-            accHelper.signInWithEmail(binding.edSignEmail.text.toString(),
-                binding.edSignPassword.text.toString())
+        when (index) {
+            DialogConst.Sign_Up_State -> {
+                accHelper.signUpWithEmail(binding.edSignEmail.text.toString(), binding.edSignPassword.text.toString())
+            }
+            DialogConst.Sign_In_State -> {
+                val signInIntent = accHelper.getSignInIntent()
+                googleSignInLauncher.launch(signInIntent)
+            }
+            else -> {
+                accHelper.signInWithEmail(binding.edSignEmail.text.toString(), binding.edSignPassword.text.toString())
+            }
         }
     }
     private fun setDialogState(index: Int, binding: SignDialogBinding) {
