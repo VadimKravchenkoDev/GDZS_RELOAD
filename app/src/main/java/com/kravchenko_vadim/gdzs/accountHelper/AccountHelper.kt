@@ -1,5 +1,6 @@
 package com.kravchenko_vadim.gdzs.accountHelper
 
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -90,7 +91,6 @@ class AccountHelper(act:MainActivity) {
     }
     fun signOutGoogle() {
         getSignInClient().signOut()
-
     }
     fun firebaseAuthWithGoogle(idToken: String){
         val credencial = GoogleAuthProvider.getCredential(idToken, null)
@@ -113,9 +113,10 @@ class AccountHelper(act:MainActivity) {
             }
         }
     }
-    fun signInWithGoogle() {
+    fun signInWithGoogle(): Intent {
         signInClient = getSignInClient()
         val intent = signInClient.signInIntent
         act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
+        return signInClient.signInIntent
     }
 }

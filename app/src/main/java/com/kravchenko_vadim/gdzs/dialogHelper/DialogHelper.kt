@@ -51,7 +51,7 @@ class DialogHelper(private val activity: MainActivity, private val googleSignInL
                 accHelper.signUpWithEmail(binding.edSignEmail.text.toString(), binding.edSignPassword.text.toString())
             }
             DialogConst.Sign_In_State -> {
-                val signInIntent = accHelper.getSignInIntent()
+                val signInIntent = accHelper.signInWithGoogle()
                 googleSignInLauncher.launch(signInIntent)
             }
             else -> {

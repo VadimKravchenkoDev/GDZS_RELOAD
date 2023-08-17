@@ -87,7 +87,7 @@ class MainActivity2 : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             selected1 == 0 -> showErrorMessage("Оберіть вид роботи!")
             selected2 == 0 -> showErrorMessage("Оберіть вид апаратів")
             selected3 == 0 -> showErrorMessage("Оберіть вид навантаження")
-            timeBt == "-Обрати час-" -> showErrorMessage("Оберіть час входу ланки")
+            timeBt == "Обрати час" -> showErrorMessage("Оберіть час входу ланки")
             sizeList == 1 -> showErrorMessage("Мінімум 2 чол. в ланці")
             checkAllFieldsFilled() == false -> showErrorMessage("Введіть призвища та тиск")
             /* якщо все заповнено вірно то при тисненні кнопки запускається екран розрахунків*/

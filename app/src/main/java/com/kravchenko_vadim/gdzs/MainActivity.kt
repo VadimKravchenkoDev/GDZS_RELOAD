@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -23,9 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.kravchenko_vadim.gdzs.accountHelper.AccountHelper
 import com.kravchenko_vadim.gdzs.constant.DialogConst
-import com.kravchenko_vadim.gdzs.constant.GoogleAccConst
 import com.kravchenko_vadim.gdzs.databinding.ActivityMainBinding
 import com.kravchenko_vadim.gdzs.dialogHelper.DialogHelper
 
@@ -65,6 +62,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
         }
+        dialogs = DialogHelper(this, googleSignInLauncher)
     }
     override fun onStart() {
         super.onStart()
