@@ -8,16 +8,25 @@
     android:fitsSystemWindows="true"
     android:windowFullscreen="true"
     tools:openDrawer="start">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainConstrain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#D1D0D0"
         tools:context=".MainActivity">
-        <include
-            layout="@layout/activity_toolbar"
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#6E6B6B"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/imageFireman"
             android:layout_width="wrap_content"
@@ -27,6 +36,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/buttonNext"
             android:layout_width="wrap_content"
@@ -39,6 +49,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
             android:id="@+id/textWelcome"
             android:layout_width="330dp"
@@ -54,6 +65,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navView"
         android:layout_width="wrap_content"
@@ -61,6 +73,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/drawer_main_menu"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:menu="@menu/drawer_main_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

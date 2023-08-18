@@ -28,12 +28,14 @@ import com.kravchenko_vadim.gdzs.constant.Constant
 import com.kravchenko_vadim.gdzs.databinding.ActivityMain3Binding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity3 : AppCompatActivity() {
+class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     lateinit var binding: ActivityMain3Binding
     private var isActivityPaused = false
     private var timeWork : Int = 0
@@ -54,8 +56,7 @@ class MainActivity3 : AppCompatActivity() {
         binding = ActivityMain3Binding.inflate(layoutInflater)
         setContentView(binding.root)
         val textInputEditText = binding.watch //годинник
-        val scope = CoroutineScope(Dispatchers.Main) // зміна секунд в реальному часі на годиннику
-        scope.launch {
+        launch {
             while (true) {
                 val currentTime = SimpleDateFormat("HH:mm:ss").format(Date())
                 textInputEditText.setText(currentTime)
@@ -363,6 +364,11 @@ class MainActivity3 : AppCompatActivity() {
         if (::timerFire.isInitialized) {
             timerFire.cancel()
         }
+    }
+
+    override fun onDestroy() {
+        cancel()
+        super.onDestroy()
     }
 }
 
