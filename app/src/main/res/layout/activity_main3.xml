@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#D1D0D0"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#D1D0D0">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrainMaster"
@@ -15,8 +14,6 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         tools:context=".TimerCalculatorWorkActivity">
-
-
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -220,7 +217,6 @@
             app:layout_constraintStart_toStartOf="@+id/buttonFire"
             app:layout_constraintTop_toBottomOf="@+id/buttonFire"
             tools:visibility="visible">
-
 
 
             <TextView
