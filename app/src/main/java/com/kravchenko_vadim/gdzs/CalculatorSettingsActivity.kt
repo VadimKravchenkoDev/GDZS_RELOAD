@@ -14,15 +14,15 @@ import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import com.kravchenko_vadim.gdzs.constant.Constant
-import com.kravchenko_vadim.gdzs.databinding.ActivityMain2Binding
+import com.kravchenko_vadim.gdzs.databinding.ActivityCalculatorSettingsBinding
 import drawable.ItemOffsetDecoration
 import java.util.*
 
 class CalculatorSettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-    lateinit var binding: ActivityMain2Binding
+    lateinit var binding: ActivityCalculatorSettingsBinding
     private val adapter: AdapterClass   by lazy { AdapterClass() } //ініціалізація списку ланки ГДЗС
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityMain2Binding.inflate(layoutInflater)
+        binding = ActivityCalculatorSettingsBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         spinners()  // функція для роботи спінерів

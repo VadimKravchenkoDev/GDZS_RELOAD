@@ -11,10 +11,13 @@ import com.kravchenko_vadim.gdzs.accountHelper.AccountHelper
 import com.kravchenko_vadim.gdzs.constant.DialogConst
 import com.kravchenko_vadim.gdzs.databinding.SignDialogBinding
 
-class DialogHelper(private val activity: MainActivity, private val googleSignInLauncher: ActivityResultLauncher<Intent>) {
+class DialogHelper(
+    private val activity: MainActivity,
+    private val googleSignInLauncher: ActivityResultLauncher<Intent>
+) {
     private val act = activity
     val accHelper = AccountHelper(act)
-    fun createSignDialog(index:Int){
+    fun createSignDialog(index: Int) {
         val builder = AlertDialog.Builder(act)
         val binding = SignDialogBinding.inflate(act.layoutInflater)
         val view = binding.root
@@ -32,35 +35,47 @@ class DialogHelper(private val activity: MainActivity, private val googleSignInL
         }
         dialog.show()
     }
+
     private fun setOnClickResetPassword(binding: SignDialogBinding, dialog: AlertDialog?) {
-        if (binding.edSignEmail.text.isNotEmpty()){
-            act.myAuth.sendPasswordResetEmail(binding.edSignEmail.text.toString()).addOnCompleteListener { task ->
-                if (task.isSuccessful){
-                    Toast.makeText(act,  R.string.reset_email_was_sent, Toast.LENGTH_LONG).show()
+        if (binding.edSignEmail.text.isNotEmpty()) {
+            act.myAuth.sendPasswordResetEmail(binding.edSignEmail.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(act, R.string.reset_email_was_sent, Toast.LENGTH_LONG).show()
+                    }
                 }
-            }
             dialog?.dismiss()
-        } else{
+        } else {
             binding.tvDialogMessage.visibility = View.VISIBLE
         }
     }
+
     private fun setOnClickSignUpIn(index: Int, binding: SignDialogBinding, dialog: AlertDialog?) {
         dialog?.dismiss()
         when (index) {
             DialogConst.Sign_Up_State -> {
-                accHelper.signUpWithEmail(binding.edSignEmail.text.toString(), binding.edSignPassword.text.toString())
+                accHelper.signUpWithEmail(
+                    binding.edSignEmail.text.toString(),
+                    binding.edSignPassword.text.toString()
+                )
             }
+
             DialogConst.Sign_In_State -> {
                 val signInIntent = accHelper.signInWithGoogle()
                 googleSignInLauncher.launch(signInIntent)
             }
+
             else -> {
-                accHelper.signInWithEmail(binding.edSignEmail.text.toString(), binding.edSignPassword.text.toString())
+                accHelper.signInWithEmail(
+                    binding.edSignEmail.text.toString(),
+                    binding.edSignPassword.text.toString()
+                )
             }
         }
     }
+
     private fun setDialogState(index: Int, binding: SignDialogBinding) {
-        if (index == DialogConst.Sign_Up_State){
+        if (index == DialogConst.Sign_Up_State) {
             binding.tvSignTitle.text = act.resources.getString(R.string.ac_sign_up)
             binding.btSignUpIn.text = act.resources.getString(R.string.sign_up_action)
         } else {

@@ -25,9 +25,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.DialogFragment
 import com.kravchenko_vadim.gdzs.constant.Constant
-import com.kravchenko_vadim.gdzs.databinding.ActivityMain3Binding
+import com.kravchenko_vadim.gdzs.databinding.ActivityTimerCalculatorWorkBinding
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
@@ -36,7 +35,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainScope() {
-    lateinit var binding: ActivityMain3Binding
+    lateinit var binding: ActivityTimerCalculatorWorkBinding
     private var isActivityPaused = false
     private var timeWork: Int = 0
     private var minPressureNearFire: Int = 0
@@ -55,7 +54,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMain3Binding.inflate(layoutInflater)
+        binding = ActivityTimerCalculatorWorkBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val textInputEditText = binding.watch //годинник
         launch {
@@ -360,7 +359,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
         }
         if (isActivityPaused == false) timerFire.start()
         binding.buttonSecurityLog.setOnClickListener {
-            val intent = Intent(this, MainActivity4::class.java)
+            val intent = Intent(this, LogActivity::class.java)
             intent.putExtra("333", "333")
             startActivity(intent)
             val options = ActivityOptionsCompat.makeCustomAnimation(
