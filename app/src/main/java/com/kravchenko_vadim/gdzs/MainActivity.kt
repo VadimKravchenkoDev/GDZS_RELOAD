@@ -11,11 +11,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.kravchenko_vadim.gdzs.constant.DialogConst
 import com.kravchenko_vadim.gdzs.databinding.ActivityMainBinding
+import com.kravchenko_vadim.gdzs.dialogHelper.DialogHelper
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var binding: ActivityMainBinding
+    private val dialogHelper = DialogHelper(this)
+    val myFirebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -50,12 +55,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.ac_sign_in -> {
-                Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()
-            }
 
             R.id.ac_sign_up -> {
-                Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()
+                dialogHelper.createSignDialog(DialogConst.Sign_Up_State)
+            }
+            R.id.ac_sign_in -> {
+                dialogHelper.createSignDialog(DialogConst.Sign_In_State)
             }
 
             R.id.ac_sign_out -> {
