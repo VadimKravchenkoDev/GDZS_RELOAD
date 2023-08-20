@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
@@ -12,12 +13,14 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.kravchenko_vadim.gdzs.constant.DialogConst
 import com.kravchenko_vadim.gdzs.databinding.ActivityMainBinding
 import com.kravchenko_vadim.gdzs.dialogHelper.DialogHelper
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private lateinit var textNameAccount: TextView
     lateinit var binding: ActivityMainBinding
     private val dialogHelper = DialogHelper(this)
     val myFirebaseAuth = FirebaseAuth.getInstance()
@@ -25,7 +28,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        init()
+        init() //navigation view
         binding.buttonNext.setOnClickListener {
             val intent = Intent(this, CalculatorSettingsActivity::class.java)
             startActivity(intent)
@@ -38,7 +41,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-
+    override fun onStart() {
+        super.onStart()
+        uiUpdate(myFirebaseAuth.currentUser)
+    }
     private fun init() {
         setSupportActionBar(binding.toolbar)
         val toggle = ActionBarDrawerToggle(
@@ -51,6 +57,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         binding.navView.setNavigationItemSelectedListener(this)
+        textNameAccount = binding.navView.getHeaderView(0).findViewById(R.id.textNameAccountEmail)// ім'я акаунту
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -59,12 +66,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.ac_sign_up -> {
                 dialogHelper.createSignDialog(DialogConst.Sign_Up_State)
             }
+
             R.id.ac_sign_in -> {
                 dialogHelper.createSignDialog(DialogConst.Sign_In_State)
             }
 
             R.id.ac_sign_out -> {
-                Toast.makeText(this, "pressed", Toast.LENGTH_SHORT).show()
+                uiUpdate(null)
+                myFirebaseAuth.signOut()
             }
 
             R.id.guidebook_cat2 -> {
@@ -88,6 +97,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
-
+    //ім'я акаунту в Navigation view
+    fun uiUpdate(user: FirebaseUser?){
+        textNameAccount.text = if (user == null){
+            resources.getString(R.string.not_reg)
+        }else{
+            user.email
+        }
+    }
 
 }
