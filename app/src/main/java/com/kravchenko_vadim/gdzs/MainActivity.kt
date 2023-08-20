@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kravchenko_vadim.gdzs.constant.DialogConst
+import com.kravchenko_vadim.gdzs.constant.GoogleAccConst
 import com.kravchenko_vadim.gdzs.databinding.ActivityMainBinding
 import com.kravchenko_vadim.gdzs.dialogHelper.DialogHelper
 
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.navView.getHeaderView(0).findViewById(R.id.tvAccountEmail)
     }
     private lateinit var dialogs: DialogHelper
-    private val myAuth = FirebaseAuth.getInstance()
+    val myAuth = FirebaseAuth.getInstance()
     lateinit var auth: FirebaseAuth
     private lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     try {
                         val account = task.getResult(ApiException::class.java)
                         if (account != null) {
-                            dialogs.accHelper.firebaseAuthWithGoogle(account.idToken!!)
+                            dialogs.accHelper.signInFirebaseWithGoogle(account.idToken!!)
                         }
                     } catch (e: ApiException) {
                         Log.d("log", "Api exception")
@@ -67,6 +68,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         dialogs = DialogHelper(this, googleSignInLauncher)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE){
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                if (account!= null){
+                    dialogs.accHelper.signInFirebaseWithGoogle(account.idToken!!)
+                }
+            }catch (e:ApiException){
+                Log.d("log", "Api exception")
+            }
+
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
+    }
     override fun onStart() {
         super.onStart()
         uiUpdate(myAuth.currentUser)

@@ -109,7 +109,7 @@ class AccountHelper(act: MainActivity) {
     private fun getSignInClient(): GoogleSignInClient {
         val gso = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("350006194847-gc3g770mfaff512r4gfr2hn2uq0had70.apps.googleusercontent.com")
+            .requestIdToken(act.getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         return GoogleSignIn.getClient(act, gso)
@@ -119,14 +119,14 @@ class AccountHelper(act: MainActivity) {
         getSignInClient().signOut()
     }
 
-    fun firebaseAuthWithGoogle(idToken: String) {
+    fun signInFirebaseWithGoogle(idToken: String) {
         val credencial = GoogleAuthProvider.getCredential(idToken, null)
         act.auth.signInWithCredential(credencial).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(act, "Реєстрація пройшла успішно", Toast.LENGTH_SHORT).show()
+                Toast.makeText(act, "Реєстрація пройшла успішно", Toast.LENGTH_LONG).show()
                 act.uiUpdate(task.result?.user)
             } else {
-                Toast.makeText(act, "Помилка при реєстрації", Toast.LENGTH_SHORT).show()
+                Toast.makeText(act, "Помилка при реєстрації", Toast.LENGTH_LONG).show()
                 Log.d("mylog", "Exception: + ${task.exception}")
             }
         }
