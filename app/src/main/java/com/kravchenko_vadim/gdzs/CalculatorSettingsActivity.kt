@@ -111,12 +111,12 @@ class CalculatorSettingsActivity : AppCompatActivity(), AdapterView.OnItemSelect
                 when {
                     dragerMsiPresuure -> {
                         //відправка отриманих данних на слідуючий єкран
+                        val intent = Intent(this, TimerCalculatorWorkActivity::class.java)
                         intent.putExtra("minPressure", minPressure)
                         intent.putExtra("aparat", selected2)
                         intent.putExtra("action", selected3)
                         intent.putExtra("timeAction", timeBt)
-                        startActivity(intent)
-                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                        ActivityAnimation.startActivityWithAnimation(this, intent)
                     }
 
                     (minPressure <= Constant.minPressureDrager && (selected2 == 1 || selected2 == 3)) -> showErrorMessage(
@@ -130,16 +130,12 @@ class CalculatorSettingsActivity : AppCompatActivity(), AdapterView.OnItemSelect
 
                     (maxPressure >= Constant.maxPressureASP && selected2 == 2) -> showErrorMessage("Максимальний тиск 230 атм.!")
                     else -> {
+                        val intent = Intent(this, TimerCalculatorWorkActivity::class.java)
                         intent.putExtra("minPressure", minPressure)
                         intent.putExtra("aparat", selected2)
                         intent.putExtra("action", selected3)
                         intent.putExtra("timeAction", timeBt)
-                        startActivity(intent)
-                        val options = ActivityOptionsCompat.makeCustomAnimation(
-                            this,
-                            R.anim.fade_in, R.anim.fade_out
-                        )
-                        ActivityCompat.startActivity(this, intent, options.toBundle())
+                        ActivityAnimation.startActivityWithAnimation(this, intent)
                     }
                 }
             }

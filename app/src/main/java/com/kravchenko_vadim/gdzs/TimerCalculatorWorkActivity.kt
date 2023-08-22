@@ -359,14 +359,11 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
         }
         if (isActivityPaused == false) timerFire.start()
         binding.buttonSecurityLog.setOnClickListener {
+
+
             val intent = Intent(this, LogActivity::class.java)
             intent.putExtra("333", "333")
-            startActivity(intent)
-            val options = ActivityOptionsCompat.makeCustomAnimation(
-                this,
-                R.anim.fade_in, R.anim.fade_out
-            )
-            ActivityCompat.startActivity(this, intent, options.toBundle())
+            ActivityAnimation.startActivityWithAnimation(this, intent)
         }
     }
 

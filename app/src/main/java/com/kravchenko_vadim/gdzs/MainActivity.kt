@@ -30,14 +30,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(binding.root)
         init() //navigation view
         binding.buttonNext.setOnClickListener {
-            val intent = Intent(this, CalculatorSettingsActivity::class.java)
-            startActivity(intent)
             // запуск активити з анімацією
-            val options = ActivityOptionsCompat.makeCustomAnimation(
-                this,
-                R.anim.fade_in, R.anim.fade_out
-            )
-            ActivityCompat.startActivity(this, intent, options.toBundle())
+            val intent = Intent(this, CalculatorSettingsActivity::class.java)
+            ActivityAnimation.startActivityWithAnimation(this, intent)
         }
     }
 
@@ -82,12 +77,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.settings_cat3 -> {
                 val intent = Intent(this, MainActivitySettings::class.java)
-                startActivity(intent)
-                val options = ActivityOptionsCompat.makeCustomAnimation(
-                    this,
-                    R.anim.fade_in, R.anim.fade_out
-                )
-                ActivityCompat.startActivity(this, intent, options.toBundle())
+                ActivityAnimation.startActivityWithAnimation(this, intent)
             }
 
             R.id.about_cat4 -> {
