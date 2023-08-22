@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -17,9 +18,25 @@ import com.kravchenko_vadim.gdzs.databinding.ActivityCalculatorSettingsBinding
 import drawable.ItemOffsetDecoration
 import java.util.*
 
-class CalculatorSettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class CalculatorSettingsActivity : AppCompatActivity() {
     lateinit var binding: ActivityCalculatorSettingsBinding
     private val adapter: AdapterClass by lazy { AdapterClass() } //ініціалізація списку ланки ГДЗС
+    private val onItemSelectedListener: AdapterView.OnItemSelectedListener =
+        object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                Log.d("mylog", "onItemSelected")
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                Log.d("mylog", "onNothingSelected")
+            }
+        }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityCalculatorSettingsBinding.inflate(layoutInflater)
@@ -62,21 +79,21 @@ class CalculatorSettingsActivity : AppCompatActivity(), AdapterView.OnItemSelect
             ArrayAdapter.createFromResource(this, R.array.action, R.layout.spinner_prompt_item)
         spinnerAdapter1.setDropDownViewResource(R.layout.spinner_item)
         spinner1.adapter = spinnerAdapter1
-        spinner1.onItemSelectedListener = this
+        spinner1.onItemSelectedListener = onItemSelectedListener
         /* додаемо спинер з вибором активности */
         val spinner2: Spinner = binding.spinnerAction2
         val spinnerAdapter2 =
             ArrayAdapter.createFromResource(this, R.array.apparatus, R.layout.spinner_prompt_item)
         spinnerAdapter2.setDropDownViewResource(R.layout.spinner_item)
         spinner2.adapter = spinnerAdapter2
-        spinner2.onItemSelectedListener = this
+        spinner2.onItemSelectedListener = onItemSelectedListener
         /* додаемо спинер з вибором типу апаратів */
         val spinner3: Spinner = binding.spinnerAction3
         val spinnerAdapter3 =
             ArrayAdapter.createFromResource(this, R.array.workload, R.layout.spinner_prompt_item)
         spinnerAdapter3.setDropDownViewResource(R.layout.spinner_item)
         spinner3.adapter = spinnerAdapter3
-        spinner3.onItemSelectedListener = this
+        spinner3.onItemSelectedListener = onItemSelectedListener
         /* додаемо спинер з вибором типу навантаження */
     }
 
@@ -148,11 +165,6 @@ class CalculatorSettingsActivity : AppCompatActivity(), AdapterView.OnItemSelect
         /*функція яка використовується для виводу повідомлень*/
     }
 
-    override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>) {
-    }
 
     private fun showTimePickerDialog() {// функція для вибору часу
         val calendar = Calendar.getInstance()
