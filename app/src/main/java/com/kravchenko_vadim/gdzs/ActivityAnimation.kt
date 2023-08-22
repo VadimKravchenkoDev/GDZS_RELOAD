@@ -5,8 +5,7 @@ import android.content.Intent
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 
-class ActivityAnimation {
-    companion object {
+object ActivityAnimation {
         fun startActivityWithAnimation(context: Context, intent: Intent) {
             val options = ActivityOptionsCompat.makeCustomAnimation(
                 context,
@@ -15,4 +14,3 @@ class ActivityAnimation {
             ActivityCompat.startActivity(context, intent, options.toBundle())
         }
     }
-}

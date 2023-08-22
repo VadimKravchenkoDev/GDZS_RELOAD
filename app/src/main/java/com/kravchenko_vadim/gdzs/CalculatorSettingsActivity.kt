@@ -11,8 +11,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import com.kravchenko_vadim.gdzs.constant.Constant
 import com.kravchenko_vadim.gdzs.databinding.ActivityCalculatorSettingsBinding
 import drawable.ItemOffsetDecoration
@@ -20,7 +18,7 @@ import java.util.*
 
 class CalculatorSettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     lateinit var binding: ActivityCalculatorSettingsBinding
-    private val adapter: AdapterClass   by lazy { AdapterClass() } //ініціалізація списку ланки ГДЗС
+    private val adapter: AdapterClass by lazy { AdapterClass() } //ініціалізація списку ланки ГДЗС
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityCalculatorSettingsBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -99,17 +97,22 @@ class CalculatorSettingsActivity : AppCompatActivity(), AdapterView.OnItemSelect
             /* якщо все заповнено вірно то при тисненні кнопки запускається екран розрахунків*/
             else -> {
                 binding.textAction.visibility = View.GONE
-                val intent = Intent(this, TimerCalculatorWorkActivity::class.java)
                 val minPressure =
                     adapter.zvenoList.minByOrNull { it.pressure.toInt() }?.pressure?.toInt()
                         ?: 0 /*пошук мінімального тиску*/
                 val maxPressure =
                     adapter.zvenoList.maxByOrNull { it.pressure.toInt() }?.pressure?.toInt()
                         ?: 0 /*пошук максимального тиску*/
-                val dragerMsiPresuure =
+                val dragerMsiPresuureOk =
                     (binding.accessToWork.isChecked && minPressure >= (Constant.reservDrager + 2) && (selected2 == 1 || selected2 == 3)) || (binding.accessToWork.isChecked && (minPressure >= (Constant.reservASV + 2) && selected2 == 2))
+                val minPressureDragerError =
+                    (minPressure <= Constant.minPressureDrager && (selected2 == 1 || selected2 == 3))
+                val minPressureAsvErorr = (minPressure <= Constant.minPressureASP && selected2 == 2)
+                val maxPressureDragerError =
+                    (maxPressure >= Constant.maxPressureDrager && (selected2 == 1 || selected2 == 3))
+                val maxPressureAsvErorr = (maxPressure >= Constant.maxPressureASP && selected2 == 2)
                 when {
-                    dragerMsiPresuure -> {
+                    dragerMsiPresuureOk -> {
                         //відправка отриманих данних на слідуючий єкран
                         val intent = Intent(this, TimerCalculatorWorkActivity::class.java)
                         intent.putExtra("minPressure", minPressure)
@@ -119,16 +122,10 @@ class CalculatorSettingsActivity : AppCompatActivity(), AdapterView.OnItemSelect
                         ActivityAnimation.startActivityWithAnimation(this, intent)
                     }
 
-                    (minPressure <= Constant.minPressureDrager && (selected2 == 1 || selected2 == 3)) -> showErrorMessage(
-                        "Мінімальний тиск 270 атм.!"
-                    )
-
-                    (minPressure <= Constant.minPressureASP && selected2 == 2) -> showErrorMessage("Мінімальний тиск 180 атм.!")
-                    (maxPressure >= Constant.maxPressureDrager && (selected2 == 1 || selected2 == 3)) -> showErrorMessage(
-                        "Максимальний тиск 330 атм.!"
-                    )
-
-                    (maxPressure >= Constant.maxPressureASP && selected2 == 2) -> showErrorMessage("Максимальний тиск 230 атм.!")
+                    minPressureDragerError -> showErrorMessage("Мінімальний тиск 270 атм.!")
+                    minPressureAsvErorr -> showErrorMessage("Мінімальний тиск 180 атм.!")
+                    maxPressureDragerError -> showErrorMessage("Максимальний тиск 330 атм.!")
+                    maxPressureAsvErorr -> showErrorMessage("Максимальний тиск 230 атм.!")
                     else -> {
                         val intent = Intent(this, TimerCalculatorWorkActivity::class.java)
                         intent.putExtra("minPressure", minPressure)
