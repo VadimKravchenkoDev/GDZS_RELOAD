@@ -1,6 +1,7 @@
 package com.kravchenko_vadim.gdzs
 
 import AdapterClass
+import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -19,6 +20,7 @@ import java.util.*
 class CalculatorSettingsActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     lateinit var binding: ActivityCalculatorSettingsBinding
     private val adapter: AdapterClass by lazy { AdapterClass() } //ініціалізація списку ланки ГДЗС
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityCalculatorSettingsBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
