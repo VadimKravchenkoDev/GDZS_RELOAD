@@ -3,7 +3,6 @@ package com.kravchenko_vadim.gdzs
 import AdapterClass
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +10,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.kravchenko_vadim.gdzs.constant.Constant
 import com.kravchenko_vadim.gdzs.databinding.ActivityCalculatorSettingsBinding
@@ -70,6 +68,9 @@ class CalculatorSettingsActivity : AppCompatActivity() {
             }
             false
         }
+        binding.buttonCalc.setOnClickListener {
+            onClick()
+        }
     }
 
     // функція для роботи спінерів
@@ -97,7 +98,7 @@ class CalculatorSettingsActivity : AppCompatActivity() {
         /* додаемо спинер з вибором типу навантаження */
     }
 
-    fun onClick(view: View) { //функція яка перевіряє введені данні, відправляє їх на слудуючу сторінку, відкриває новий єкран
+    private fun onClick() { //функція яка перевіряє введені данні, відправляє їх на слудуючу сторінку, відкриває новий єкран
         val spinner1: Spinner = binding.spinnerAction
         val spinner2: Spinner = binding.spinnerAction2
         val spinner3: Spinner = binding.spinnerAction3
@@ -165,7 +166,6 @@ class CalculatorSettingsActivity : AppCompatActivity() {
         /*функція яка використовується для виводу повідомлень*/
     }
 
-
     private fun showTimePickerDialog() {// функція для вибору часу
         val calendar = Calendar.getInstance()
         val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
@@ -191,15 +191,6 @@ class CalculatorSettingsActivity : AppCompatActivity() {
         if (lastIndex > 0) {
             adapter.zvenoList.removeAt(lastIndex)
             adapter.notifyItemRemoved(lastIndex)
-        }
-    }
-
-    private fun hideKeyboard() {//фунція для приховування клавіатури при натисканні на єкран
-        val inputMethodManager =
-            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val currentFocusView = currentFocus
-        if (currentFocusView != null) {
-            inputMethodManager.hideSoftInputFromWindow(currentFocusView.windowToken, 0)
         }
     }
 }

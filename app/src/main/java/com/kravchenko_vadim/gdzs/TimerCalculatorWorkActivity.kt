@@ -21,8 +21,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.DialogFragment
 import com.kravchenko_vadim.gdzs.constant.Constant
 import com.kravchenko_vadim.gdzs.databinding.ActivityTimerCalculatorWorkBinding
@@ -386,15 +384,6 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
             callback(selectedTime)
         }, hourOfDay, minute, true)
         timePickerDialog.show()
-    }
-
-    private fun hideKeyboard() {//фунція для приховування клавіатури при натисканні на єкран
-        val inputMethodManager =
-            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val currentFocusView = currentFocus
-        if (currentFocusView != null) {
-            inputMethodManager.hideSoftInputFromWindow(currentFocusView.windowToken, 0)
-        }
     }
 
     override fun onBackPressed() {
