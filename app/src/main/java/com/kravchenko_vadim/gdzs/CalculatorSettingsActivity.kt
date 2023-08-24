@@ -74,7 +74,7 @@ class CalculatorSettingsActivity : AppCompatActivity() {
     }
 
     // функція для роботи спінерів
-    fun spinners() {
+    private fun spinners() {
         val spinner1: Spinner = binding.spinnerAction
         val spinnerAdapter1 =
             ArrayAdapter.createFromResource(this, R.array.action, R.layout.spinner_prompt_item)
