@@ -319,7 +319,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
             }
 
             override fun onFinish() {
-                var mediaPlayer = MediaPlayer.create(
+                val mediaPlayer = MediaPlayer.create(
                     applicationContext,
                     R.raw.gudok
                 ) // звуковий сигнал що оповіщуе про закінчення часу
@@ -343,7 +343,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
             }
 
             override fun onFinish() {
-                var mediaPlayer = MediaPlayer.create(
+                val mediaPlayer = MediaPlayer.create(
                     applicationContext,
                     R.raw.perevirka
                 ) // звуковий сигнал що оповіщуе про час перевірки зв'язку
@@ -355,7 +355,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                 }
             }
         }
-        if (isActivityPaused == false) timerFire.start()
+        if (!isActivityPaused) timerFire.start()
         binding.buttonSecurityLog.setOnClickListener {
 
 
