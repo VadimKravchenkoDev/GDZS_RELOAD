@@ -24,6 +24,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import com.kravchenko_vadim.gdzs.constant.Constant
 import com.kravchenko_vadim.gdzs.databinding.ActivityTimerCalculatorWorkBinding
+import com.kravchenko_vadim.gdzs.timers.TimerWork
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -226,6 +227,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                         }
                     }
                     timerWork.start()
+
                     binding.buttonFire.isEnabled = false
                 }
             }

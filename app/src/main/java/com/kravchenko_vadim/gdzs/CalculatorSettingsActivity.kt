@@ -22,10 +22,7 @@ class CalculatorSettingsActivity : AppCompatActivity() {
     private val onItemSelectedListener: AdapterView.OnItemSelectedListener =
         object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
                 Log.d("mylog", "onItemSelected")
             }
@@ -47,9 +44,7 @@ class CalculatorSettingsActivity : AppCompatActivity() {
             if (adapter.zvenoList.size < 5) {
                 adapter.addZveno()
             } else if (adapter.zvenoList.size >= 5) Toast.makeText(
-                this,
-                "Максимум 5 чол. у звені",
-                Toast.LENGTH_SHORT
+                this, "Максимум 5 чол. у звені", Toast.LENGTH_SHORT
             ).show()
         }
         binding.btRemove.setOnClickListener {// при тиснені на кнопку прибирается 1 поле для газодимозахисника
@@ -63,7 +58,7 @@ class CalculatorSettingsActivity : AppCompatActivity() {
         // Додаємо обробник подій натискання на кореневе представлення
         rootView.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
-                // Скрываем клавиатуру
+                // Скриваемо клавиатуру
                 hideKeyboard()
             }
             false
@@ -80,22 +75,22 @@ class CalculatorSettingsActivity : AppCompatActivity() {
             ArrayAdapter.createFromResource(this, R.array.action, R.layout.spinner_prompt_item)
         spinnerAdapter1.setDropDownViewResource(R.layout.spinner_item)
         spinner1.adapter = spinnerAdapter1
-        spinner1.onItemSelectedListener = onItemSelectedListener
-        /* додаемо спинер з вибором активности */
+        spinner1.onItemSelectedListener =
+            onItemSelectedListener/* додаемо спинер з вибором активности */
         val spinner2: Spinner = binding.spinnerAction2
         val spinnerAdapter2 =
             ArrayAdapter.createFromResource(this, R.array.apparatus, R.layout.spinner_prompt_item)
         spinnerAdapter2.setDropDownViewResource(R.layout.spinner_item)
         spinner2.adapter = spinnerAdapter2
-        spinner2.onItemSelectedListener = onItemSelectedListener
-        /* додаемо спинер з вибором типу апаратів */
+        spinner2.onItemSelectedListener =
+            onItemSelectedListener/* додаемо спинер з вибором типу апаратів */
         val spinner3: Spinner = binding.spinnerAction3
         val spinnerAdapter3 =
             ArrayAdapter.createFromResource(this, R.array.workload, R.layout.spinner_prompt_item)
         spinnerAdapter3.setDropDownViewResource(R.layout.spinner_item)
         spinner3.adapter = spinnerAdapter3
-        spinner3.onItemSelectedListener = onItemSelectedListener
-        /* додаемо спинер з вибором типу навантаження */
+        spinner3.onItemSelectedListener =
+            onItemSelectedListener/* додаемо спинер з вибором типу навантаження */
     }
 
     private fun onClick() { //функція яка перевіряє введені данні, відправляє їх на слудуючу сторінку, відкриває новий єкран
@@ -113,8 +108,7 @@ class CalculatorSettingsActivity : AppCompatActivity() {
             selected3 == 0 -> showErrorMessage("Оберіть вид навантаження")
             timeBt == "Обрати час" -> showErrorMessage("Оберіть час входу ланки")
             sizeList == 1 -> showErrorMessage("Мінімум 2 чол. в ланці")
-            checkAllFieldsFilled().not() -> showErrorMessage("Введіть призвища та тиск")
-            /* якщо все заповнено вірно то при тисненні кнопки запускається екран розрахунків*/
+            checkAllFieldsFilled().not() -> showErrorMessage("Введіть призвища та тиск")/* якщо все заповнено вірно то при тисненні кнопки запускається екран розрахунків*/
             else -> {
                 binding.textAction.visibility = View.GONE
                 val minPressure =
@@ -124,7 +118,7 @@ class CalculatorSettingsActivity : AppCompatActivity() {
                     adapter.zvenoList.maxByOrNull { it.pressure.toInt() }?.pressure?.toInt()
                         ?: 0 /*пошук максимального тиску*/
                 val dragerMsiPresuureOk =
-                    (binding.accessToWork.isChecked && minPressure >= (Constant.reservDrager + 2) && (selected2 == 1 || selected2 == 3)) || (binding.accessToWork.isChecked && (minPressure >= (Constant.reservASV + 2) && selected2 == 2))
+                    (binding.accessToWork.isChecked  && (selected2 == 1 || selected2 == 3) || (binding.accessToWork.isChecked && selected2 == 2))
                 val minPressureDragerError =
                     (minPressure <= Constant.minPressureDrager && (selected2 == 1 || selected2 == 3))
                 val minPressureAsvErorr = (minPressure <= Constant.minPressureASP && selected2 == 2)
@@ -162,8 +156,7 @@ class CalculatorSettingsActivity : AppCompatActivity() {
     private fun showErrorMessage(errorMessage: String) {
         binding.textAction.visibility = View.VISIBLE
         binding.textAction.text = errorMessage
-        binding.textAction.setTextColor(Color.RED)
-        /*функція яка використовується для виводу повідомлень*/
+        binding.textAction.setTextColor(Color.RED)/*функція яка використовується для виводу повідомлень*/
     }
 
     private fun showTimePickerDialog() {// функція для вибору часу
