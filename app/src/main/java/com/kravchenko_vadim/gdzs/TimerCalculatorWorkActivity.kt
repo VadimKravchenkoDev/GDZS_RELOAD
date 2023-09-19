@@ -40,9 +40,9 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
     private var timeWork: Int = 0
     private var minPressureNearFire: Int = 0
     private var timerBond: TimerBond? = null
-    private lateinit var timerWorkNotFound: TimerWorkNotFound
-    private lateinit var timerProtection: TimerProtection
-    private lateinit var timerWork: TimerWork
+    private var timerWorkNotFound: TimerWorkNotFound? = null
+    private var timerProtection: TimerProtection? = null
+    private var timerWork: TimerWork? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTimerCalculatorWorkBinding.inflate(layoutInflater)
@@ -200,7 +200,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                     }
                     timerWorkNotFound?.stopTimer()
                     timerWork = TimerWork(binding, timeWork)
-                    timerWork.initialize()
+                    timerWork?.initialize()
                     binding.buttonFire.isEnabled = false
                 }
             }
@@ -234,9 +234,9 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
             false
         }
         timerWorkNotFound = TimerWorkNotFound(binding, timeProtect)
-        timerWorkNotFound.initialize()
+        timerWorkNotFound?.initialize()
         timerProtection = TimerProtection(binding, timeProtect)
-        timerProtection.initialize()
+        timerProtection?.initialize()
         timerBond = TimerBond(binding)
         timerBond?.initialize()
 
