@@ -82,7 +82,6 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                val newText = s.toString()
             }
         })
         //при натисканні кнопки проводиться розрахунок тиску та часу
@@ -115,7 +114,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
             binding.buttonCalcFire.isEnabled = false
         }
         binding.buttonFire.setOnClickListener {
-            var textTimeFire = binding.textTimeFire.text.toString()
+            val textTimeFire = binding.textTimeFire.text.toString()
             minPressureNearFire = binding.edMinPressure.text.toString().toIntOrNull() ?: 0
             when {
                 textTimeFire == "Обрати час" -> Toast.makeText(
@@ -149,26 +148,28 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                         getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
                     if (typeAparat == 1 || typeAparat == 3) {//при виборі типу апаратів з расходом 7 атмосфер
-                        var pressureGo =
+                        val pressureGo =
                             (minPressure - minPressureNearFire) //  час захисної дії апарату
                         if (action == 1) {  //при виборі середнього навантаження роботи
-                            var pressureExit: Int = pressureGo + Constant.reservDrager
+                            val pressureExit: Int = pressureGo + Constant.reservDrager
+                            val textPressureGoText = pressureExit.toString() + "атм."
                             binding.textPressureGo.text =
-                                pressureExit.toString() + "атм."//тиск використанний на прямування до осередку
+                                textPressureGoText//тиск використанний на прямування до осередку
                             timeWork =
                                 (((minPressure - (pressureGo * 2)) - Constant.reservDrager) / 7)
-                            var minutesExit: Int = (pressureGo / 7) + timeWork
+                            val minutesExit: Int = (pressureGo / 7) + timeWork
                             val exitTime = addMinutesToTime(
                                 timeAction.toString(),
                                 minutesExit
                             )//час на годиннику коли потрібно виходити
                             binding.textExit.text = exitTime
                         } else if (action == 2) {  //при виборі важкого навантаження роботи
-                            var pressureExit: Int = (2 * pressureGo) + Constant.reservDrager
-                            binding.textPressureGo.text = pressureExit.toString() + "атм."
+                            val pressureExit: Int = (2 * pressureGo) + Constant.reservDrager
+                            val textPressureGoText = pressureExit.toString() + "атм."
+                            binding.textPressureGo.text = textPressureGoText
                             timeWork =
                                 (((minPressure - (pressureGo * 3)) - Constant.reservDrager) / 7)
-                            var minutesExit: Int = (pressureGo / 7) * 2 + timeWork
+                            val minutesExit: Int = (pressureGo / 7) * 2 + timeWork
                             val exitTime = addMinutesToTime(
                                 timeAction.toString(),
                                 minutesExit
@@ -176,19 +177,21 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                             binding.textExit.text = exitTime
                         }
                     } else if (typeAparat == 2) {//при виборі типу апаратів з расходом 5 атмосфер
-                        var pressureGo = (minPressure - minPressureNearFire)
+                        val pressureGo = (minPressure - minPressureNearFire)
                         if (action == 1) {
-                            var pressureExit: Int = pressureGo + Constant.reservASV
-                            binding.textPressureGo.text = pressureExit.toString() + "атм."
+                            val pressureExit: Int = pressureGo + Constant.reservASV
+                            val textPressureGoText = pressureExit.toString() + "атм."
+                            binding.textPressureGo.text = textPressureGoText
                             timeWork = (((minPressure - (pressureGo * 2)) - Constant.reservASV) / 5)
-                            var minutesExit: Int = (pressureGo / 5) + timeWork
+                            val minutesExit: Int = (pressureGo / 5) + timeWork
                             val exitTime = addMinutesToTime(timeAction.toString(), minutesExit)
                             binding.textExit.text = exitTime
                         } else if (action == 2) {
-                            var pressureExit: Int = (2 * pressureGo) + Constant.reservASV
-                            binding.textPressureGo.text = pressureExit.toString() + "атм."
+                            val pressureExit: Int = (2 * pressureGo) + Constant.reservASV
+                            val textPressureGoText = pressureExit.toString() + "атм."
+                            binding.textPressureGo.text = textPressureGoText
                             timeWork = (((minPressure - (pressureGo * 3)) - Constant.reservASV) / 5)
-                            var minutesExit: Int = (pressureGo / 5) * 2 + timeWork
+                            val minutesExit: Int = (pressureGo / 5) * 2 + timeWork
                             val exitTime = addMinutesToTime(timeAction.toString(), minutesExit)
                             binding.textExit.text = exitTime
                         }
@@ -200,6 +203,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                             val seconds = (millisUntilFinished % (60 * 1000)) / 1000
                             val timeLeftFormatted =
                                 String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+                            Log.e("mylog", timeLeftFormatted)
                             textTimerWork.text = timeLeftFormatted
                         }
 
@@ -217,7 +221,6 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                         }
                     }
                     timerWork.start()
-
                     binding.buttonFire.isEnabled = false
                 }
             }
@@ -257,9 +260,8 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                 val seconds = (millisUntilFinished % (60 * 1000)) / 1000
                 val timeLeftFormatted =
                     String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
-                Log.d("mylog", timeLeftFormatted)
+                Log.i("mylog", timeLeftFormatted)
                 textTimerNotFind.text = timeLeftFormatted
-
             }
 
             override fun onFinish() {
@@ -334,7 +336,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                 val seconds = (millisUntilFinished % (60 * 1000)) / 1000
                 val timeLeftFormatted =
                     String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
-                Log.d("mylog", timeLeftFormatted)
+                Log.w("mylog", timeLeftFormatted)
                 timerFireText.text = timeLeftFormatted
             }
 
@@ -351,8 +353,6 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
         }
         timerFire.start()
         binding.buttonSecurityLog.setOnClickListener {
-
-
             val intent = Intent(this, LogActivity::class.java)
             intent.putExtra("333", "333")
             ActivityAnimation.startActivityWithAnimation(this, intent)
@@ -384,6 +384,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
         timer.cancel()
         timerWorkNotFind.cancel()
         timerFire.cancel()
+        //timerWork.cancel()
         /* val dialogFragment = MyDialogFragment()
          dialogFragment.show(supportFragmentManager, "MyDialogFragment")*/
     }
@@ -402,6 +403,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
             return builder.create()
         }
     }
+
     override fun onDestroy() {
         cancel()
         super.onDestroy()
