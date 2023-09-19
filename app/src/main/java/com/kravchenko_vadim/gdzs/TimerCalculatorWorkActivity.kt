@@ -348,6 +348,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                 mediaPlayer.start()
                 mediaPlayer.setOnCompletionListener {
                     mediaPlayer?.stop()
+                    start()
                 }
             }
         }
