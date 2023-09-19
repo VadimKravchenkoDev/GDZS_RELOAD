@@ -6,8 +6,6 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ClipDrawable
-import android.graphics.drawable.LayerDrawable
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,6 +23,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import com.kravchenko_vadim.gdzs.constant.Constant
 import com.kravchenko_vadim.gdzs.databinding.ActivityTimerCalculatorWorkBinding
+import com.kravchenko_vadim.gdzs.timers.TimerBond
+import com.kravchenko_vadim.gdzs.timers.TimerProtection
+import com.kravchenko_vadim.gdzs.timers.TimerWork
+import com.kravchenko_vadim.gdzs.timers.TimerWorkNotFound
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -37,10 +39,10 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
     lateinit var binding: ActivityTimerCalculatorWorkBinding
     private var timeWork: Int = 0
     private var minPressureNearFire: Int = 0
-    private lateinit var timer: CountDownTimer
-    private lateinit var timerWorkNotFind: CountDownTimer
-    private lateinit var timerFire: CountDownTimer
-
+    private var timerBond: TimerBond? = null
+    private lateinit var timerWorkNotFound: TimerWorkNotFound
+    private lateinit var timerProtection: TimerProtection
+    private lateinit var timerWork: TimerWork
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTimerCalculatorWorkBinding.inflate(layoutInflater)
@@ -196,31 +198,9 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                             binding.textExit.text = exitTime
                         }
                     }
-                    val textTimerWork: TextView = binding.timerWork //таймер
-                    val timerWork = object : CountDownTimer(timeWork.toLong() * 60 * 1000, 1000) {
-                        override fun onTick(millisUntilFinished: Long) {
-                            val minutes = millisUntilFinished / (60 * 1000)
-                            val seconds = (millisUntilFinished % (60 * 1000)) / 1000
-                            val timeLeftFormatted =
-                                String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
-                            Log.e("mylog", timeLeftFormatted)
-                            textTimerWork.text = timeLeftFormatted
-                        }
-
-                        override fun onFinish() {
-                            var mediaPlayer = MediaPlayer.create(
-                                applicationContext,
-                                R.raw.gudok
-                            ) // звуковий сигнал що оповіщуе про закінчення часу
-                            mediaPlayer.start()
-                            mediaPlayer.setOnCompletionListener {
-                                mediaPlayer?.stop()
-                                textTimerWork.text = "00.00"
-                                cancel()
-                            }
-                        }
-                    }
-                    timerWork.start()
+                    timerWorkNotFound?.stopTimer()
+                    timerWork = TimerWork(binding, timeWork)
+                    timerWork.initialize()
                     binding.buttonFire.isEnabled = false
                 }
             }
@@ -253,106 +233,13 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
             }
             false
         }
-        val textTimerNotFind: TextView = binding.timerNotFind //таймер якщо не знайдено осередку
-        val timerWorkNotFind = object : CountDownTimer(timeProtect.toLong() / 2 * 60 * 1000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val minutes = millisUntilFinished / (60 * 1000)
-                val seconds = (millisUntilFinished % (60 * 1000)) / 1000
-                val timeLeftFormatted =
-                    String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
-                Log.i("mylog", timeLeftFormatted)
-                textTimerNotFind.text = timeLeftFormatted
-            }
+        timerWorkNotFound = TimerWorkNotFound(binding, timeProtect)
+        timerWorkNotFound.initialize()
+        timerProtection = TimerProtection(binding, timeProtect)
+        timerProtection.initialize()
+        timerBond = TimerBond(binding)
+        timerBond?.initialize()
 
-            override fun onFinish() {
-                var mediaPlayer = MediaPlayer.create(
-                    applicationContext,
-                    R.raw.gudok
-                ) // звуковий сигнал що оповіщуе про закінчення часу
-                mediaPlayer.start()
-                mediaPlayer.setOnCompletionListener {
-                    mediaPlayer?.stop()
-                    textTimerNotFind.text = "00.00"
-                    cancel()
-                }
-            }
-        }
-        timerWorkNotFind.start()
-        val timerTextView: TextView = binding.tvTimer //таймер загальної захисної дії апарату
-        val timer = object : CountDownTimer(timeProtect.toLong() * 60 * 1000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val minutes = millisUntilFinished / (60 * 1000)
-                val seconds = (millisUntilFinished % (60 * 1000)) / 1000
-                val timeLeftFormatted =
-                    String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
-                Log.d("mylog", timeLeftFormatted)
-                timerTextView.text = timeLeftFormatted
-                //нижче код для встановлення рівня прогресс бара та зміна кольору в залежності від часу на таймері
-                val progress = (millisUntilFinished / 1000).toInt() // Прогресс в секундах
-                val maxProgress =
-                    (timeProtect * 60).toInt() // Максимальне значение прогресса в секундах
-                binding.progressBarBalon.progress = progress
-                binding.progressBarBalon.max = maxProgress
-                val progressDrawable = binding.progressBarBalon.progressDrawable as LayerDrawable
-                val clipDrawable =
-                    progressDrawable.findDrawableByLayerId(android.R.id.progress) as ClipDrawable
-                val progressLayer = clipDrawable.drawable as LayerDrawable
-                val progressOrange = progressLayer.findDrawableByLayerId(R.id.progressOrange)
-                val progressRed = progressLayer.findDrawableByLayerId(R.id.progressRed)
-                val progressBlue = progressLayer.findDrawableByLayerId(R.id.progressBlue)
-                if (progress >= maxProgress * 2 / 3) {
-                    progressOrange.alpha = 0
-                    progressRed.alpha = 0
-                    progressBlue.alpha = 255
-                } else if (progress >= maxProgress / 3) {
-                    progressOrange.alpha = 255
-                    progressRed.alpha = 0
-                    progressBlue.alpha = 0
-                } else {
-                    progressOrange.alpha = 0
-                    progressBlue.alpha = 0
-                    progressRed.alpha = 255
-                }
-            }
-
-            override fun onFinish() {
-                val mediaPlayer = MediaPlayer.create(
-                    applicationContext,
-                    R.raw.gudok
-                ) // звуковий сигнал що оповіщуе про закінчення часу
-                mediaPlayer.start()
-                mediaPlayer.setOnCompletionListener {
-                    mediaPlayer?.stop()
-                    timerTextView.text = "00.00"
-                    cancel()
-                }
-            }
-        }
-        timer.start()
-        val timerFireText: TextView = binding.tvTimerFire //таймер зв'зку
-        val timerFire = object : CountDownTimer(10 * 60 * 1000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val minutes = millisUntilFinished / (60 * 1000)
-                val seconds = (millisUntilFinished % (60 * 1000)) / 1000
-                val timeLeftFormatted =
-                    String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
-                Log.w("mylog", timeLeftFormatted)
-                timerFireText.text = timeLeftFormatted
-            }
-
-            override fun onFinish() {
-                val mediaPlayer = MediaPlayer.create(
-                    applicationContext,
-                    R.raw.perevirka
-                ) // звуковий сигнал що оповіщуе про час перевірки зв'язку
-                mediaPlayer.start()
-                mediaPlayer.setOnCompletionListener {
-                    mediaPlayer?.stop()
-                    start()
-                }
-            }
-        }
-        timerFire.start()
         binding.buttonSecurityLog.setOnClickListener {
             val intent = Intent(this, LogActivity::class.java)
             intent.putExtra("333", "333")
@@ -382,12 +269,8 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
     }
 
     override fun onBackPressed() {
-        timer.cancel()
-        timerWorkNotFind.cancel()
-        timerFire.cancel()
-        //timerWork.cancel()
-        /* val dialogFragment = MyDialogFragment()
-         dialogFragment.show(supportFragmentManager, "MyDialogFragment")*/
+        val dialogFragment = MyDialogFragment()
+         dialogFragment.show(supportFragmentManager, "MyDialogFragment")
     }
 
     class MyDialogFragment : DialogFragment() {
@@ -406,6 +289,10 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
     }
 
     override fun onDestroy() {
+        timerBond?.stopTimer()
+        timerProtection?.stopTimer()
+        timerWorkNotFound?.stopTimer()
+        timerWork?.stopTimer()
         cancel()
         super.onDestroy()
     }

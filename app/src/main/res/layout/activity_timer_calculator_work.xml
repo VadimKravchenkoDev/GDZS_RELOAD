@@ -330,7 +330,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tvTimerFire"
+                    android:id="@+id/tv_timer_bond"
                     android:layout_width="125dp"
                     android:layout_height="55dp"
                     android:layout_below="@+id/constraintTime"
