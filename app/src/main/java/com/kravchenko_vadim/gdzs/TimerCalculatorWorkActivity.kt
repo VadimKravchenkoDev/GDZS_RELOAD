@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -24,7 +25,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import com.kravchenko_vadim.gdzs.constant.Constant
 import com.kravchenko_vadim.gdzs.databinding.ActivityTimerCalculatorWorkBinding
-import com.kravchenko_vadim.gdzs.timers.TimerWork
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -35,21 +35,11 @@ import java.util.*
 
 class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     lateinit var binding: ActivityTimerCalculatorWorkBinding
-    private var isActivityPaused = false
     private var timeWork: Int = 0
     private var minPressureNearFire: Int = 0
     private lateinit var timer: CountDownTimer
     private lateinit var timerWorkNotFind: CountDownTimer
     private lateinit var timerFire: CountDownTimer
-    override fun onPause() {
-        super.onPause()
-        isActivityPaused = true
-    }
-
-    override fun onResume() {
-        super.onResume()
-        isActivityPaused = false
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -267,7 +257,9 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                 val seconds = (millisUntilFinished % (60 * 1000)) / 1000
                 val timeLeftFormatted =
                     String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+                Log.d("mylog", timeLeftFormatted)
                 textTimerNotFind.text = timeLeftFormatted
+
             }
 
             override fun onFinish() {
@@ -291,6 +283,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                 val seconds = (millisUntilFinished % (60 * 1000)) / 1000
                 val timeLeftFormatted =
                     String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+                Log.d("mylog", timeLeftFormatted)
                 timerTextView.text = timeLeftFormatted
                 //нижче код для встановлення рівня прогресс бара та зміна кольору в залежності від часу на таймері
                 val progress = (millisUntilFinished / 1000).toInt() // Прогресс в секундах
@@ -341,6 +334,7 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                 val seconds = (millisUntilFinished % (60 * 1000)) / 1000
                 val timeLeftFormatted =
                     String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+                Log.d("mylog", timeLeftFormatted)
                 timerFireText.text = timeLeftFormatted
             }
 
@@ -352,12 +346,10 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
                 mediaPlayer.start()
                 mediaPlayer.setOnCompletionListener {
                     mediaPlayer?.stop()
-                    if (isActivityPaused) cancel()
-                    else start()
                 }
             }
         }
-        if (!isActivityPaused) timerFire.start()
+        timerFire.start()
         binding.buttonSecurityLog.setOnClickListener {
 
 
@@ -389,8 +381,11 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
     }
 
     override fun onBackPressed() {
-        val dialogFragment = MyDialogFragment()
-        dialogFragment.show(supportFragmentManager, "MyDialogFragment")
+        timer.cancel()
+        timerWorkNotFind.cancel()
+        timerFire.cancel()
+        /* val dialogFragment = MyDialogFragment()
+         dialogFragment.show(supportFragmentManager, "MyDialogFragment")*/
     }
 
     class MyDialogFragment : DialogFragment() {
@@ -407,20 +402,6 @@ class TimerCalculatorWorkActivity : AppCompatActivity(), CoroutineScope by MainS
             return builder.create()
         }
     }
-
-    override fun onStop() {
-        super.onStop()
-        if (::timer.isInitialized) {
-            timer.cancel()
-        }
-        if (::timerWorkNotFind.isInitialized) {
-            timerWorkNotFind.cancel()
-        }
-        if (::timerFire.isInitialized) {
-            timerFire.cancel()
-        }
-    }
-
     override fun onDestroy() {
         cancel()
         super.onDestroy()

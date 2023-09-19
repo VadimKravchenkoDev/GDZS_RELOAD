@@ -28,7 +28,7 @@
         android:ems="8"
         android:gravity="center"
         android:hint="@string/sername"
-        android:inputType="textPersonName"
+        android:inputType="text|textPersonName"
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/edPressure"
         app:layout_constraintHorizontal_bias="1"
