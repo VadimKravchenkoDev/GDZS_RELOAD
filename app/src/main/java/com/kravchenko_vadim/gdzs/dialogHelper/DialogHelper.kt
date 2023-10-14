@@ -28,9 +28,11 @@ class DialogHelper(act: MainActivity) {
         binding.btSignUpIn.setOnClickListener {
             dialog.dismiss()
             if (index == DialogConst.Sign_Up_State){
-                accHelper.signUpWithEmail(binding.edSignEmail.text.toString(), binding.edSignPassword.text.toString())
+                accHelper.signUpWithEmail(binding.edSignEmail.text.toString(),
+                    binding.edSignPassword.text.toString())
             }else{
-                accHelper.signInWithEmail(binding.edSignEmail.text.toString(), binding.edSignPassword.text.toString())
+                accHelper.signInWithEmail(binding.edSignEmail.text.toString(),
+                    binding.edSignPassword.text.toString())
 
             }
         }
