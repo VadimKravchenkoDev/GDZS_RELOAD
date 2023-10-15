@@ -1,6 +1,7 @@
 package com.kravchenko_vadim.gdzs.dialogHelper
 
 import android.app.AlertDialog
+import android.view.View
 import com.kravchenko_vadim.gdzs.MainActivity
 import com.kravchenko_vadim.gdzs.R
 import com.kravchenko_vadim.gdzs.accountHelper.AccountHelper
@@ -16,14 +17,7 @@ class DialogHelper(act: MainActivity) {
         val view = binding.root
         builder.setView(view)
 
-        if (index == DialogConst.Sign_Up_State){
-            binding.tvSignTitle.text = act.resources.getString(R.string.ac_sign_up)
-            binding.btSignUpIn.text = act.resources.getString(R.string.sign_up_action)
-
-        } else {
-            binding.tvSignTitle.text = act.resources.getString(R.string.ac_sign_in)
-            binding.btSignUpIn.text = act.resources.getString(R.string.sign_in_action)
-        }
+        setDialogState(index, binding)
         val dialog = builder.create()
         binding.btSignUpIn.setOnClickListener {
             dialog.dismiss()
@@ -36,6 +30,18 @@ class DialogHelper(act: MainActivity) {
         }
 
         dialog.show()
+    }
+
+    private fun setDialogState(index: Int, binding: SignDialogBinding) {
+        if (index == DialogConst.Sign_Up_State){
+            binding.tvSignTitle.text = act.resources.getString(R.string.ac_sign_up)
+            binding.btSignUpIn.text = act.resources.getString(R.string.sign_up_action)
+
+        } else {
+            binding.tvSignTitle.text = act.resources.getString(R.string.ac_sign_in)
+            binding.btSignUpIn.text = act.resources.getString(R.string.sign_in_action)
+            binding.btForgetPass.visibility = View.VISIBLE
+        }
     }
 
 }
