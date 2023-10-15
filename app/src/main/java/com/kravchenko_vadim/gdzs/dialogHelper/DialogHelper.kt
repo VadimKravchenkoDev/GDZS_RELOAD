@@ -20,6 +20,7 @@ class DialogHelper(act: MainActivity) {
 
         setDialogState(index, binding)
         val dialog = builder.create()
+
         binding.btSignUpIn.setOnClickListener {
             setOnClickSignUpIn(index, binding, dialog)
         }
@@ -31,14 +32,15 @@ class DialogHelper(act: MainActivity) {
     }
 
     private fun setOnClickResetPassword(binding: SignDialogBinding, dialog: AlertDialog?) {
-        if (binding.edSignEmail.text.isNotEmpty()){
-            act.myFirebaseAuth.sendPasswordResetEmail(binding.edSignEmail.text.toString()).
-            addOnCompleteListener {task-> if (task.isSuccessful){
-                Toast.makeText(act, R.string.reset_email_was_sent, Toast.LENGTH_LONG).show()
-            }
-            }
+        if (binding.edSignEmail.text.isNotEmpty()) {
+            act.myFirebaseAuth.sendPasswordResetEmail(binding.edSignEmail.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(act, R.string.reset_email_was_sent, Toast.LENGTH_LONG).show()
+                    }
+                }
             dialog?.dismiss()
-        } else{
+        } else {
             binding.tvDialogMessage.visibility = View.VISIBLE
         }
     }
@@ -69,6 +71,7 @@ class DialogHelper(act: MainActivity) {
             binding.btSignUpIn.text = act.resources.getString(R.string.sign_in_action)
             binding.btForgetPass.visibility = View.VISIBLE
         }
+
     }
 
 }
