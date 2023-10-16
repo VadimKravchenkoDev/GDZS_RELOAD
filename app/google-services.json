@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "350006194847-53dvm341tkcug1cu2e8rm0p63ubm4h3b.apps.googleusercontent.com",
+          "client_id": "350006194847-hpcnu8nk1q609qhcn3392uk648cpiqpc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.kravchenko_vadim.gdzs",
-            "certificate_hash": "296d1f676816f73f9d34de9811f50ca872327870"
+            "certificate_hash": "1ca0e9c0cbd56d3fdb950c3839f07ba701091a46"
           }
         },
         {

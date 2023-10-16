@@ -64,7 +64,7 @@ class AccountHelper(act: MainActivity) {
         val credential = GoogleAuthProvider.getCredential(token, null)
         act.myFirebaseAuth.signInWithCredential(credential).addOnCompleteListener {
             task-> if(task.isSuccessful){
-                Toast.makeText(act, "Sign in done", Toast.LENGTH_LONG).show()
+                Toast.makeText(act, "Реєстрація прошла успішно", Toast.LENGTH_LONG).show()
         }
         }
     }
