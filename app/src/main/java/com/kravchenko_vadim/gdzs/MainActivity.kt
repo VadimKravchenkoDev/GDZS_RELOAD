@@ -4,6 +4,7 @@ package com.kravchenko_vadim.gdzs
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -15,6 +16,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.kravchenko_vadim.gdzs.constant.DialogConst
+import com.kravchenko_vadim.gdzs.constant.GoogleAccConst
 import com.kravchenko_vadim.gdzs.databinding.ActivityMainBinding
 import com.kravchenko_vadim.gdzs.dialogHelper.DialogHelper
 
@@ -34,6 +36,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val intent = Intent(this, CalculatorSettingsActivity::class.java)
             ActivityAnimation.startActivityWithAnimation(this, intent)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE){
+            Log.d("mylog", "Sign in result")
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onStart() {

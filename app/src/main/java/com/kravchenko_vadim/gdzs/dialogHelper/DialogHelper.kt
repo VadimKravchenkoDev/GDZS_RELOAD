@@ -27,7 +27,9 @@ class DialogHelper(act: MainActivity) {
         binding.btForgetPass.setOnClickListener {
             setOnClickResetPassword(binding, dialog)
         }
-
+        binding.btGoogleSignIn.setOnClickListener {
+            accHelper.signInWithGoogle()
+        }
         dialog.show()
     }
 
