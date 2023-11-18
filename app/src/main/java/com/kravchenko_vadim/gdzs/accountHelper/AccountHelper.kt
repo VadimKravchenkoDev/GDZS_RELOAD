@@ -1,5 +1,6 @@
 package com.kravchenko_vadim.gdzs.accountHelper
 
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -61,12 +62,20 @@ class AccountHelper(act: MainActivity) {
     }
 
     fun signInFirebaseWithGoogle(token:String){
+        Log.d("MyLog", "Signing in with Google")
         val credential = GoogleAuthProvider.getCredential(token, null)
         act.myFirebaseAuth.signInWithCredential(credential).addOnCompleteListener {
             task-> if(task.isSuccessful){
-                Toast.makeText(act, "Реєстрація прошла успішно", Toast.LENGTH_LONG).show()
-        }
-        }
+            Log.d("MyLog", "Sign in with Google successful")
+                Toast.makeText(act, "Реєстрація пройшла успішно", Toast.LENGTH_LONG).show()
+        }else {
+            Log.e("MyLog", "Sign in with Google failed: ${task.exception?.message}")
+            Toast.makeText(
+                act,
+                act.resources.getString(R.string.sign_in_error),
+                Toast.LENGTH_LONG
+            ).show()
+        }}
     }
 
     private fun sendEmailVerification(user: FirebaseUser) {

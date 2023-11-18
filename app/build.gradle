@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.kravchenko_vadim.gdzs"
-        minSdk 24
+        minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -35,6 +35,11 @@ android {
     buildFeatures {
         viewBinding true
     }
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+        // Добавьте другие исключения, если они есть
+    }
 }
 
 dependencies {
@@ -44,16 +49,16 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.7.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.7.0'
-    implementation 'com.google.firebase:firebase-auth:22.1.1'
-    implementation 'com.google.firebase:firebase-database:20.2.2'
+    implementation 'com.google.firebase:firebase-auth:22.3.0'
+    implementation 'com.google.firebase:firebase-database:20.3.0'
     implementation 'com.google.firebase:firebase-core:21.1.1'
-    implementation 'com.google.gms:google-services:4.3.15'
-    implementation 'com.google.firebase:firebase-auth-ktx:22.1.1'
+    implementation 'com.google.gms:google-services:4.4.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:22.3.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
     implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:20.6.0")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
 }
