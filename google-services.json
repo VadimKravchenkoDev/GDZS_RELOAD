@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "350006194847",
+    "project_id": "gdzs-f566b",
+    "storage_bucket": "gdzs-f566b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350006194847:android:998d0d42c50e8fe8a9e8aa",
+        "android_client_info": {
+          "package_name": "com.kravchenko_vadim.gdzs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "350006194847-hpcnu8nk1q609qhcn3392uk648cpiqpc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kravchenko_vadim.gdzs",
+            "certificate_hash": "1ca0e9c0cbd56d3fdb950c3839f07ba701091a46"
+          }
+        },
+        {
+          "client_id": "350006194847-gc3g770mfaff512r4gfr2hn2uq0had70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3tEUYA0VdLVMkybw8XTbdU8eRXnF2My4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "350006194847-bhug5h4sgjbcsr3pmindsogck8a1nfaj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
