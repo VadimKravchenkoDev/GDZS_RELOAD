@@ -2,9 +2,11 @@ package com.kravchenko_vadim.gdzs.accountHelper
 
 import android.util.Log
 import android.widget.Toast
+import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -61,9 +63,28 @@ class AccountHelper(act: MainActivity) {
         act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
     }
 
-    fun signInFirebaseWithGoogle(token:String){
+    fun signInFirebaseWithGoogle(token:String) {
         Log.d("MyLog", "Signing in with Google")
         val credential = GoogleAuthProvider.getCredential(token, null)
+
+        val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(act.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        val googleSignInClient = GoogleSignIn.getClient(act, googleSignInOptions)
+
+// Отзыв доступа при необходимости
+        googleSignInClient.revokeAccess().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Обработка успешного отзыва доступа
+                Log.d("MyLog", "Access revoked successfully")
+            } else {
+                // Обработка ошибки отзыва доступа
+                Log.e("MyLog", "Access revoke failed: ${task.exception?.message}")
+            }
+        }
+
         act.myFirebaseAuth.signInWithCredential(credential).addOnCompleteListener {
             task-> if(task.isSuccessful){
             Log.d("MyLog", "Sign in with Google successful")
@@ -77,6 +98,8 @@ class AccountHelper(act: MainActivity) {
             ).show()
         }}
     }
+
+
 
     private fun sendEmailVerification(user: FirebaseUser) {
         user.sendEmailVerification().addOnCompleteListener { task ->

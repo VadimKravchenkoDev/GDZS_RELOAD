@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (account != null){
                     Log.d("MyLog", "Google Sign In successful. Account ID: ${account.id}")
                     dialogHelper.accHelper.signInFirebaseWithGoogle(account.idToken!!)
-                    Log.d("MyLog", "Проверка: ${account.idToken}")
+                    Log.d("MyLog", "idToken: ${account.idToken}")
                 }
             }catch (e:ApiException){
                 Log.d("mylog", "Api error: ${e.message}")
