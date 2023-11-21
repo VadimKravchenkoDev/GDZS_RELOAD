@@ -89,4 +89,8 @@
         <item>Середнє навантаження</item>
         <item>Тяжке навантаження</item>
     </string-array>
+
+    <!--Error-->
+    <string name="ERROR_EMAIL_ALREADY_IN_USE">Ваш емейл вже зареєстровано!</string>
+    <string name="ERROR_INVALID_EMAIL">Некоректно введений емейл!</string>
 </resources>

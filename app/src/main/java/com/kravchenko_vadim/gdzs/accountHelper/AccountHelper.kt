@@ -8,10 +8,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kravchenko_vadim.gdzs.MainActivity
 import com.kravchenko_vadim.gdzs.R
+import com.kravchenko_vadim.gdzs.constant.FirebaseAuthConstans
 import com.kravchenko_vadim.gdzs.constant.GoogleAccConst
 
 class AccountHelper(act: MainActivity) {
@@ -26,15 +29,36 @@ class AccountHelper(act: MainActivity) {
                         sendEmailVerification(task.result?.user!!)
                         act.uiUpdate(task.result?.user)
                     } else {
-                        Toast.makeText(
-                            act,
-                            act.resources.getString(R.string.sign_up_error),
-                            Toast.LENGTH_LONG
-                        ).show()
+                        //Log.d("MyError", "Exception:" + task.exception)
+                        //Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
+                        if (task.exception is FirebaseAuthUserCollisionException) {
+                            val exception = task.exception as FirebaseAuthUserCollisionException
+                            if (exception.errorCode == FirebaseAuthConstans.ERROR_EMAIL_ALREADY_IN_USE) {
+                                Toast.makeText(
+                                    act,
+                                    act.resources.getString(R.string.ERROR_EMAIL_ALREADY_IN_USE),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        } else if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                                val exception =
+                                    task.exception as FirebaseAuthInvalidCredentialsException
+                                if (exception.errorCode == FirebaseAuthConstans.ERROR_INVALID_EMAIL) {
+                                    Log.d("MyError", "Exception: ${exception.errorCode}")
+                                    Toast.makeText(
+                                        act,
+                                        act.resources.getString(R.string.ERROR_INVALID_EMAIL),
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                               }
+
+                            }
+
                     }
                 }
         }
     }
+
     fun signInWithEmail(email: String, password: String) {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             act.myFirebaseAuth.signInWithEmailAndPassword(email, password)
@@ -52,29 +76,27 @@ class AccountHelper(act: MainActivity) {
                 }
         }
     }
-    private fun getSignInClient():GoogleSignInClient{
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
-        requestIdToken(act.getString(R.string.default_web_client_id)).build()
-        return GoogleSignIn.getClient(act,gso)
+
+    private fun getSignInClient(): GoogleSignInClient {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(act.getString(R.string.default_web_client_id)).requestEmail().build()
+        return GoogleSignIn.getClient(act, gso)
     }
-    fun signInWithGoogle(){
-        signInClient=getSignInClient()
+
+    fun signInWithGoogle() {
+        signInClient = getSignInClient()
         val intent = signInClient.signInIntent
         act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
     }
 
-    fun signInFirebaseWithGoogle(token:String) {
-        Log.d("MyLog", "Signing in with Google")
+    fun signInFirebaseWithGoogle(token: String) {
         val credential = GoogleAuthProvider.getCredential(token, null)
 
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(act.getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-
         val googleSignInClient = GoogleSignIn.getClient(act, googleSignInOptions)
-
-// Отзыв доступа при необходимости
         googleSignInClient.revokeAccess().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Обработка успешного отзыва доступа
@@ -85,20 +107,19 @@ class AccountHelper(act: MainActivity) {
             }
         }
 
-        act.myFirebaseAuth.signInWithCredential(credential).addOnCompleteListener {
-            task-> if(task.isSuccessful){
-            Log.d("MyLog", "Sign in with Google successful")
+        act.myFirebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 Toast.makeText(act, "Реєстрація пройшла успішно", Toast.LENGTH_LONG).show()
-        }else {
-            Log.e("MyLog", "Sign in with Google failed: ${task.exception?.message}")
-            Toast.makeText(
-                act,
-                act.resources.getString(R.string.sign_in_error),
-                Toast.LENGTH_LONG
-            ).show()
-        }}
+                act.uiUpdate(task.result?.user)
+            } else {
+                Toast.makeText(
+                    act,
+                    act.resources.getString(R.string.sign_in_error),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
     }
-
 
 
     private fun sendEmailVerification(user: FirebaseUser) {
