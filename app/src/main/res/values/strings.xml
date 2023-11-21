@@ -93,4 +93,7 @@
     <!--Error-->
     <string name="ERROR_EMAIL_ALREADY_IN_USE">Ваш емейл вже зареєстровано!</string>
     <string name="ERROR_INVALID_EMAIL">Некоректно введений емейл!</string>
+    <string name="ERROR_USER_NOT_FOUND">Даний користувач не зареєстрований</string>
+    <string name="ERROR_WRONG_PASSWORD">Введено не вірний пароль</string>
+
 </resources>
