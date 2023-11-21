@@ -95,5 +95,6 @@
     <string name="ERROR_INVALID_EMAIL">Некоректно введений емейл!</string>
     <string name="ERROR_USER_NOT_FOUND">Даний користувач не зареєстрований</string>
     <string name="ERROR_WRONG_PASSWORD">Введено не вірний пароль</string>
+    <string name="ERROR_WEAK_PASSWORD">У паролі повино бути мінімум 6 символів</string>
 
 </resources>

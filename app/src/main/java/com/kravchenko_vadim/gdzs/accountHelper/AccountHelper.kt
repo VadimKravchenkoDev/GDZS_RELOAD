@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kravchenko_vadim.gdzs.MainActivity
@@ -30,8 +31,7 @@ class AccountHelper(act: MainActivity) {
                         sendEmailVerification(task.result?.user!!)
                         act.uiUpdate(task.result?.user)
                     } else {
-                        //Log.d("MyError", "Google sign in Exception:+ ${task.exception}" )
-                        //Toast.makeText(act, act.resources.getString(R.string.sign_up_error), Toast.LENGTH_LONG).show()
+                        Log.d("MyLog", "Google sign in Exception:+ ${task.exception}")
                         if (task.exception is FirebaseAuthUserCollisionException) {
                             val exception = task.exception as FirebaseAuthUserCollisionException
                             if (exception.errorCode == FirebaseAuthConstans.ERROR_EMAIL_ALREADY_IN_USE) {
@@ -53,6 +53,19 @@ class AccountHelper(act: MainActivity) {
                                 ).show()
                             }
                         }
+                        if (task.exception is FirebaseAuthWeakPasswordException) {
+                                val exception =
+                                    task.exception as FirebaseAuthWeakPasswordException
+                                Log.e("MyError", "Exception: ${exception.errorCode}")
+                                if (exception.errorCode == FirebaseAuthConstans.ERROR_WEAK_PASSWORD) {
+                                    Toast.makeText(
+                                        act,
+                                        act.resources.getString(R.string.ERROR_WEAK_PASSWORD),
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+
                     }
                 }
         }
@@ -66,7 +79,7 @@ class AccountHelper(act: MainActivity) {
                     if (task.isSuccessful) {
                         act.uiUpdate(task.result?.user)
                     } else {
-                        Log.d("MyError", "Google sign in Exception:+ ${task.exception}" )
+                        Log.d("MyError", "Google sign in Exception:+ ${task.exception}")
 
                         if (task.exception is FirebaseAuthInvalidCredentialsException) {
                             val exception =
@@ -78,7 +91,7 @@ class AccountHelper(act: MainActivity) {
                                     act.resources.getString(R.string.ERROR_INVALID_EMAIL),
                                     Toast.LENGTH_LONG
                                 ).show()
-                            }  else {
+                            } else {
                                 if (task.exception is FirebaseAuthInvalidCredentialsException) {
                                     val exception =
                                         task.exception as FirebaseAuthInvalidCredentialsException
@@ -94,9 +107,8 @@ class AccountHelper(act: MainActivity) {
                                     }
                                 }
                             }
-                        }
-                        else {
-                            Log.d("MyError", "Google sign in Exception:+ ${task.exception}" )
+                        } else {
+                            Log.d("MyError", "Google sign in Exception:+ ${task.exception}")
 
                             if (task.exception is FirebaseAuthInvalidUserException) {
                                 val exception =
