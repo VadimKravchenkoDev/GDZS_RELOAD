@@ -2,14 +2,10 @@ package com.kravchenko_vadim.gdzs.accountHelper
 
 import android.util.Log
 import android.widget.Toast
-import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.ActionCodeSettings
-import com.google.firebase.auth.EmailAuthCredential
 import com.google.firebase.auth.EmailAuthProvider
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -37,13 +33,13 @@ class AccountHelper(act: MainActivity) {
                         if (task.exception is FirebaseAuthUserCollisionException) {
                             val exception = task.exception as FirebaseAuthUserCollisionException
                             if (exception.errorCode == FirebaseAuthConstans.ERROR_EMAIL_ALREADY_IN_USE) {
-                                Toast.makeText(
-                                    act,
-                                    act.resources.getString(R.string.ERROR_EMAIL_ALREADY_IN_USE),
-                                    Toast.LENGTH_LONG
-                                ).show()
+//                                Toast.makeText(
+//                                    act,
+//                                    act.resources.getString(R.string.ERROR_EMAIL_ALREADY_IN_USE),
+//                                    Toast.LENGTH_LONG
+//                                ).show()
                                 //Link email
-                                linkEmailTog(email, password)
+                                linkEmailToG(email, password)
                             }
                         } else if (task.exception is FirebaseAuthInvalidCredentialsException) {
                             val exception =
@@ -133,17 +129,27 @@ class AccountHelper(act: MainActivity) {
                 }
         }
     }
-private fun linkEmailTog(email: String, password: String){
+private fun linkEmailToG(email: String, password: String){
     val credential = EmailAuthProvider.getCredential(email, password)
-    act.myFirebaseAuth.currentUser?.linkWithCredential(credential)?.addOnCompleteListener { task ->
-        if (task.isSuccessful){
-            Toast.makeText(
-                act,
-                act.resources.getString(R.string.link_done),
-                Toast.LENGTH_LONG
-            ).show()
-        }
+    if (act.myFirebaseAuth.currentUser!=null) {
+        act.myFirebaseAuth.currentUser?.linkWithCredential(credential)
+            ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        act,
+                        act.resources.getString(R.string.link_done),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+    } else {
+        Toast.makeText(
+            act,
+            act.resources.getString(R.string.ERROR_EMAIL_ALREADY_IN_USE),
+            Toast.LENGTH_LONG
+        ).show()
     }
+
 }
 
     private fun getSignInClient(): GoogleSignInClient {
