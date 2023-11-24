@@ -118,7 +118,7 @@ class CalculatorSettingsActivity : AppCompatActivity() {
                     adapter.zvenoList.maxByOrNull { it.pressure.toInt() }?.pressure?.toInt()
                         ?: 0 /*пошук максимального тиску*/
                 val dragerMsiPresuureOk =
-                    (binding.accessToWork.isChecked  && (selected2 == 1 || selected2 == 3) || (binding.accessToWork.isChecked && selected2 == 2))
+                    (binding.accessToWork.isChecked && (selected2 == 1 || selected2 == 3) || (binding.accessToWork.isChecked && selected2 == 2))
                 val minPressureDragerError =
                     (minPressure <= Constant.minPressureDrager && (selected2 == 1 || selected2 == 3))
                 val minPressureAsvErorr = (minPressure <= Constant.minPressureASP && selected2 == 2)

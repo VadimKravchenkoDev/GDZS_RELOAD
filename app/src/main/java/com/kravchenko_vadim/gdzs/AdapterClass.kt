@@ -21,7 +21,15 @@ class AdapterClass : RecyclerView.Adapter<AdapterClass.HolderClass>() {
                 override fun afterTextChanged(s: Editable?) {
                     zveno.sername = s.toString()
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             })
 
@@ -29,14 +37,23 @@ class AdapterClass : RecyclerView.Adapter<AdapterClass.HolderClass>() {
                 override fun afterTextChanged(s: Editable?) {
                     zveno.pressure = s.toString()
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             })
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderClass {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.zveno_activity, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.zveno_activity, parent, false)
         return HolderClass(view)
     }
 

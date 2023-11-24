@@ -7,6 +7,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.ActionCodeSettings
+import com.google.firebase.auth.EmailAuthCredential
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -40,6 +42,8 @@ class AccountHelper(act: MainActivity) {
                                     act.resources.getString(R.string.ERROR_EMAIL_ALREADY_IN_USE),
                                     Toast.LENGTH_LONG
                                 ).show()
+                                //Link email
+                                linkEmailTog(email, password)
                             }
                         } else if (task.exception is FirebaseAuthInvalidCredentialsException) {
                             val exception =
@@ -54,17 +58,17 @@ class AccountHelper(act: MainActivity) {
                             }
                         }
                         if (task.exception is FirebaseAuthWeakPasswordException) {
-                                val exception =
-                                    task.exception as FirebaseAuthWeakPasswordException
-                                Log.e("MyError", "Exception: ${exception.errorCode}")
-                                if (exception.errorCode == FirebaseAuthConstans.ERROR_WEAK_PASSWORD) {
-                                    Toast.makeText(
-                                        act,
-                                        act.resources.getString(R.string.ERROR_WEAK_PASSWORD),
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
+                            val exception =
+                                task.exception as FirebaseAuthWeakPasswordException
+                            Log.e("MyError", "Exception: ${exception.errorCode}")
+                            if (exception.errorCode == FirebaseAuthConstans.ERROR_WEAK_PASSWORD) {
+                                Toast.makeText(
+                                    act,
+                                    act.resources.getString(R.string.ERROR_WEAK_PASSWORD),
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
+                        }
 
                     }
                 }
@@ -129,6 +133,18 @@ class AccountHelper(act: MainActivity) {
                 }
         }
     }
+private fun linkEmailTog(email: String, password: String){
+    val credential = EmailAuthProvider.getCredential(email, password)
+    act.myFirebaseAuth.currentUser?.linkWithCredential(credential)?.addOnCompleteListener { task ->
+        if (task.isSuccessful){
+            Toast.makeText(
+                act,
+                act.resources.getString(R.string.link_done),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+}
 
     private fun getSignInClient(): GoogleSignInClient {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
