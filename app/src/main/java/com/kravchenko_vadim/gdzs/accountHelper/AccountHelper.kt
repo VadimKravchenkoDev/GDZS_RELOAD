@@ -78,6 +78,7 @@ class AccountHelper(act: MainActivity) {
 
                     if (task.isSuccessful) {
                         act.uiUpdate(task.result?.user)
+                        Toast.makeText(act, act.getString(R.string.sign_in_Google), Toast.LENGTH_LONG).show()
                     } else {
                         Log.d("MyError", "Google sign in Exception:+ ${task.exception}")
 
@@ -164,6 +165,10 @@ private fun linkEmailToG(email: String, password: String){
         act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
     }
 
+    fun signOutGoogle() {
+        getSignInClient().signOut()
+
+    }
     fun signInFirebaseWithGoogle(token: String) {
         val credential = GoogleAuthProvider.getCredential(token, null)
 

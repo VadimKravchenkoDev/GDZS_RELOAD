@@ -91,6 +91,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.ac_sign_out -> {
                 uiUpdate(null)
                 myFirebaseAuth.signOut()
+                dialogHelper.accHelper.signOutGoogle()
             }
 
             R.id.guidebook_cat2 -> {
