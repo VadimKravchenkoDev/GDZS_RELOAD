@@ -184,7 +184,7 @@ private fun linkEmailToG(email: String, password: String){
 
         act.myFirebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(act, "Реєстрація пройшла успішно", Toast.LENGTH_LONG).show()
+                Toast.makeText(act, act.getString(R.string.sign_in_Google), Toast.LENGTH_LONG).show()
                 act.uiUpdate(task.result?.user)
             } else {
                 Toast.makeText(
