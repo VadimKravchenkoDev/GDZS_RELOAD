@@ -75,10 +75,13 @@ class AccountHelper(act: MainActivity) {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             act.myFirebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
-
                     if (task.isSuccessful) {
                         act.uiUpdate(task.result?.user)
-                        Toast.makeText(act, act.getString(R.string.sign_in_Google), Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            act,
+                            act.getString(R.string.sign_in_Google),
+                            Toast.LENGTH_LONG
+                        ).show()
                     } else {
                         Log.d("MyError", "Google sign in Exception:+ ${task.exception}")
 
@@ -110,7 +113,6 @@ class AccountHelper(act: MainActivity) {
                             }
                         } else {
                             Log.d("MyError", "Google sign in Exception:+ ${task.exception}")
-
                             if (task.exception is FirebaseAuthInvalidUserException) {
                                 val exception =
                                     task.exception as FirebaseAuthInvalidUserException
@@ -126,32 +128,31 @@ class AccountHelper(act: MainActivity) {
                         }
 
                     }
-
                 }
         }
     }
-private fun linkEmailToG(email: String, password: String){
-    val credential = EmailAuthProvider.getCredential(email, password)
-    if (act.myFirebaseAuth.currentUser!=null) {
-        act.myFirebaseAuth.currentUser?.linkWithCredential(credential)
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(
-                        act,
-                        act.resources.getString(R.string.link_done),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
-    } else {
-        Toast.makeText(
-            act,
-            act.resources.getString(R.string.ERROR_EMAIL_ALREADY_IN_USE),
-            Toast.LENGTH_LONG
-        ).show()
-    }
 
-}
+    private fun linkEmailToG(email: String, password: String) {
+        val credential = EmailAuthProvider.getCredential(email, password)
+        if (act.myFirebaseAuth.currentUser != null) {
+            act.myFirebaseAuth.currentUser?.linkWithCredential(credential)
+                ?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            act,
+                            act.resources.getString(R.string.link_done),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+        } else {
+            Toast.makeText(
+                act,
+                act.resources.getString(R.string.ERROR_EMAIL_ALREADY_IN_USE),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
 
     private fun getSignInClient(): GoogleSignInClient {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -162,16 +163,15 @@ private fun linkEmailToG(email: String, password: String){
     fun signInWithGoogle() {
         signInClient = getSignInClient()
         val intent = signInClient.signInIntent
-        act.startActivityForResult(intent, GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE)
+        act.googleSignInLauncher.launch(intent)
     }
 
     fun signOutGoogle() {
         getSignInClient().signOut()
-
     }
+
     fun signInFirebaseWithGoogle(token: String) {
         val credential = GoogleAuthProvider.getCredential(token, null)
-
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(act.getString(R.string.default_web_client_id))
             .requestEmail()
@@ -186,10 +186,10 @@ private fun linkEmailToG(email: String, password: String){
                 Log.e("MyLog", "Access revoke failed: ${task.exception?.message}")
             }
         }
-
         act.myFirebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(act, act.getString(R.string.sign_in_Google), Toast.LENGTH_LONG).show()
+                Toast.makeText(act, act.getString(R.string.sign_in_Google), Toast.LENGTH_LONG)
+                    .show()
                 act.uiUpdate(task.result?.user)
             } else {
                 Toast.makeText(
@@ -201,7 +201,6 @@ private fun linkEmailToG(email: String, password: String){
             }
         }
     }
-
 
     private fun sendEmailVerification(user: FirebaseUser) {
         user.sendEmailVerification().addOnCompleteListener { task ->

@@ -58,6 +58,7 @@
     <string name="sign_up_action">Зареєструватися</string>
     <string name="sign_in_action">Увійти</string>
     <string name="forget_password">Забули пароль?</string>
+    <string name="google_email_not_found">Увійдіть в Google аккаунт в налаштуваннях телефону!</string>
     <string name="sign_up_error">Не вдалось зареєструватися!</string>
     <string name="sign_in_error">Не вдалось увійти!</string>
     <string name="sign_in_Google">Ви успішно увійшли!</string>

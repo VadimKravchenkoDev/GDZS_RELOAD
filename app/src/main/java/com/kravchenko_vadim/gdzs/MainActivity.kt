@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var binding: ActivityMainBinding
     private val dialogHelper = DialogHelper(this)
     val myFirebaseAuth = FirebaseAuth.getInstance()
+    lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -40,30 +43,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == GoogleAccConst.GOOGLE_SIGN_IN_REQUEST_CODE){
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try{
-                val account = task.getResult(ApiException::class.java)
-                if (account != null){
-                    Log.d("MyLog", "Google Sign In successful. Account ID: ${account.id}")
-                    dialogHelper.accHelper.signInFirebaseWithGoogle(account.idToken!!)
-                    Log.d("MyLog", "idToken: ${account.idToken}")
+    fun onActivityResult() {
+        googleSignInLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+                try {
+                    val account = task.getResult(ApiException::class.java)
+                    if (account != null) {
+                        Log.d("MyLog", "Google Sign In successful. Account ID: ${account.id}")
+                        dialogHelper.accHelper.signInFirebaseWithGoogle(account.idToken!!)
+                        Log.d("MyLog", "idToken: ${account.idToken}")
+                    }
+                } catch (e: ApiException) {
+                    Log.d("mylog", "Api error: ${e.message}")
+                    Toast.makeText(
+                        this,resources.getString(R.string.google_email_not_found),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-            }catch (e:ApiException){
-                Log.d("mylog", "Api error: ${e.message}")
             }
-        }
-
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onStart() {
         super.onStart()
         uiUpdate(myFirebaseAuth.currentUser)
     }
+
     private fun init() {
         setSupportActionBar(binding.toolbar)
+        onActivityResult()
         val toggle = ActionBarDrawerToggle(
             this,
             binding.drawerLayout,
@@ -74,7 +82,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         binding.navView.setNavigationItemSelectedListener(this)
-        textNameAccount = binding.navView.getHeaderView(0).findViewById(R.id.textNameAccountEmail)// ім'я акаунту
+        textNameAccount =
+            binding.navView.getHeaderView(0).findViewById(R.id.textNameAccountEmail)// ім'я акаунту
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -110,11 +119,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
     //ім'я акаунту в Navigation view
-    fun uiUpdate(user: FirebaseUser?){
-        textNameAccount.text = if (user == null){
+    fun uiUpdate(user: FirebaseUser?) {
+        textNameAccount.text = if (user == null) {
             resources.getString(R.string.not_reg)
-        }else{
+        } else {
             user.email
         }
     }
